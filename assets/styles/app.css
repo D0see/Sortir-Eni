@@ -1,3 +1,38 @@
 body {
     background-color: skyblue;
 }
+.navbar {
+    background-color: #00334A !important;
+}
+.navbar a {
+    color: white !important;
+}
+
+footer {
+    background-color: #00334A !important;
+    color: white !important;
+}
+body {
+    background-color: #CEDDDE;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+}
+
+.footer {
+    background-color: #00334A;
+    color: white;
+    text-align: center;
+    padding: 50px;
+    height: 120px;
+    font-size: 2.2rem;
+}
+
+
