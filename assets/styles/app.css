@@ -4,10 +4,10 @@ html, body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    background: #f6e0cf url('/img/Média.png') center/cover no-repeat;
+    background: #f6e0cf ;
     font-family: Arial, sans-serif;
     color: #333;
-    background-image: url("/img/Média.png");
+
 }
 
 
