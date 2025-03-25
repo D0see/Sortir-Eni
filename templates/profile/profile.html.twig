@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Profile de {{ participant.pseudo is defined ? participant.pseudo : participant.nom }}
+{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">
+        {# On affiche le pseudo si la propriété existe, sinon on peut afficher le nom #}
+        {{ participant.pseudo is defined ? participant.pseudo : participant.nom }}
+    </h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <strong>Prénom :</strong> {{ participant.prenom }}
+            </div>
+            <div class="mb-3">
+                <strong>Nom :</strong> {{ participant.nom }}
+            </div>
+            <div class="mb-3">
+                <strong>Téléphone :</strong> {{ participant.telephone }}
+            </div>
+            <div class="mb-3">
+                <strong>Email :</strong> {{ participant.mail }}
+            </div>
+            <div class="mb-3">
+                <strong>Ville de rattachement :</strong>
+                {# Exemple : si vous avez un champ site ou ville #}
+                {{ participant.site ? participant.site.nom : 'N/A' }}
+            </div>
+            <a href="{{ path('sortie_list') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+{% endblock %}
+
