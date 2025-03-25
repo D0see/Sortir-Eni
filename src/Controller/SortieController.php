@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -152,4 +154,16 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/show.html.twig',['sortie'=>$sortie]);
     }
+
+    #[Route('/show/{id}/add-participant', name: 'add_participant',requirements: ['id' => '\d+'],methods: ['GET'])]
+    public function addParticipant(Sortie $sortie, Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser()->getUserIdentifier();
+        $participant = $em->getRepository(Participant::class)->findOneBy(['pseudo' => $user]);
+        $sortie->addParticipant($participant);
+        $em->flush();
+        return $this->redirectToRoute('show_sortie', ['id' => $sortie->getId()]);
+
+    }
+
 }
