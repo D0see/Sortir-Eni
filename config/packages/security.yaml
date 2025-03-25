@@ -8,6 +8,11 @@ security:
             entity:
                 class: App\Entity\Participant
                 property: pseudo
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\Participant
+                property: pseudo
     firewalls:
 
         dev:
@@ -22,6 +27,16 @@ security:
             logout:
                 path: app_logout
                 target: /
+            custom_authenticator: App\Security\ParticipantAuthenticator
+            entry-point: App\Security\ParticipantAuthenticator
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                # by default, the feature is enabled by checking a checkbox in the
+                # login form, uncomment the following line to always enable it.
+                #always_remember_me: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
