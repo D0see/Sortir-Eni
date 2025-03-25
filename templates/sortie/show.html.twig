@@ -58,9 +58,15 @@
                     {{ sortie.lieu.longitude }}
                 </dd>
             </dl>
-            {% if sortie.participants | length < sortie.nbInscriptionsMax %}
-            <a href="/show/{{ sortie.id }}/add-participant"><button>S'inscrire</button></a>
-            {% endif %}
+
+                {% if sortie.participants | length < sortie.nbInscriptionsMax and app.user not in sortie.participants  %}
+                <a href="/show/{{ sortie.id }}/add-participant"><button>S'inscrire</button></a>
+                {% endif %}
+
+                {% if app.user in sortie.participants  %}
+                    <a href="/show/{{ sortie.id }}/remove-participant"><button>Se désinscrire</button></a>
+                {% endif %}
+
             <hr>
 
             <h3 class="mb-3">Liste des participants inscrits</h3>
