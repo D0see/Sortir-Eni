@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class SortieController extends AbstractController
 {
 
-    #[Route('/list', name: 'sortie_list', methods: ['GET'])]
+    #[Route('sortie/list', name: 'sortie_list', methods: ['GET'])]
     public function list(SortieRepository $sortieRepository)
     {
         $sorties = $sortieRepository->findAll();
@@ -25,7 +25,7 @@ class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('/sortie/create', name: 'sortie_create', methods: ['GET', 'POST'])]
+    #[Route('sortie/create', name: 'sortie_create', methods: ['GET', 'POST'])]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();

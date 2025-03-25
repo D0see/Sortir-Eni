@@ -1,9 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title  %} eee {% endblock %}
+{% block title %} Liste de sorties {% endblock %}
 
-{% block body%}
+{% block body %}
+    <p>hello</p>
+    {% for sortie in sorties %}
+        <h2>{{ sortie.nom }}</h2>
+        <p>{{ sortie.infosSortie }}</p>
+        <p>durée : {{ sortie.dureeEnHeures }} h</p>
+        <p>commence à {{ sortie.dateHeureDebut }}</p>
+        <p>inscriptions à partir de {{ sortie.dateOuverture }} jusqu'à {{ sortie.dateLimiteInscription }}</p>
+        <p>nombre d'inscrit maximum {{ sortie.nbInscriptionsMax }}</p>
 
-    <h1> hello world </h1>
+    {% endfor %}
 
 {% endblock %}
