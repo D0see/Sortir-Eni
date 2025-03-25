@@ -1,26 +1,43 @@
-body {
-    background-color: #f6e0cf !important;
-}
-.navbar {
-    background-color: #1B263B !important;
-}
-.navbar a {
-    color: #E0E0E0 !important;
-}
 
-body {
-    background-color: #CEDDDE;
-}
 html, body {
     height: 100%;
     margin: 0;
     display: flex;
     flex-direction: column;
+    background: #f6e0cf url('/img/Média.png') center/cover no-repeat;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-image: url("/img/Média.png");
 }
+
+
+.navbar {
+    background-color: #1B263B !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    color: #E0E0E0 !important;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #ffffff;
+}
+
 
 .content {
     flex: 1;
+    padding: 20px;
 }
+
 
 footer {
     background-color: #161e2f !important;
@@ -29,6 +46,57 @@ footer {
     padding: 20px;
     height: 60px;
     font-size: 1.2rem;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.form-label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #1B263B;
+    outline: none;
+}
+
+.alert {
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.btn-primary {
+    background-color: #1B263B;
+    border-color: #1B263B;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0d1b2a;
+    border-color: #0d1b2a;
 }
 
 
