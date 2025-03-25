@@ -7,9 +7,11 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -43,6 +45,18 @@ class ParticipantType extends AbstractType
             ->add('mail')
             ->add('administrateur')
             ->add('actif')
+            ->add('maPhoto',FileType::class,[
+                'label'=>'Photo de profil',
+                'mapped'=>false,
+                'required'=>false,
+                'constraints'=>[
+                    new Image(
+                        maxSize:'5M',
+                        maxSizeMessage: "C'est trop gros !",
+                        mimeTypesMessage: "Format non valide !"
+                    )
+                ]
+            ])
 //            ->add('sortiesParticipees', EntityType::class, [
 //                'class' => Sortie::class,
 //                'choice_label' => 'id',
