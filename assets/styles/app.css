@@ -1,17 +1,13 @@
 body {
-    background-color: skyblue;
+    background-color: #f6e0cf !important;
 }
 .navbar {
-    background-color: #00334A !important;
+    background-color: #1B263B !important;
 }
 .navbar a {
-    color: white !important;
+    color: #E0E0E0 !important;
 }
 
-footer {
-    background-color: #00334A !important;
-    color: white !important;
-}
 body {
     background-color: #CEDDDE;
 }
@@ -26,13 +22,13 @@ html, body {
     flex: 1;
 }
 
-.footer {
-    background-color: #00334A;
+footer {
+    background-color: #161e2f !important;
     color: white;
     text-align: center;
-    padding: 50px;
-    height: 120px;
-    font-size: 2.2rem;
+    padding: 20px;
+    height: 60px;
+    font-size: 1.2rem;
 }
 
 
