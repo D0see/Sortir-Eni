@@ -51,6 +51,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $actif = null;
 
+    //aq vamateb axal xazss
+
+    #[ORM\Column(length: 255)]
+    private ?string $maPhoto=null;
+
+
     /**
      * @var Collection<int, Sortie>
      */
@@ -205,6 +211,17 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->administrateur = $administrateur;
 
+        return $this;
+    }
+
+    public function getMaPhoto(): ?string
+    {
+        return $this->maPhoto;
+    }
+
+    public function setMaPhoto(?string $maPhoto): static
+    {
+        $this->maPhoto = $maPhoto;
         return $this;
     }
 

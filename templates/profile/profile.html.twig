@@ -10,6 +10,14 @@
         {{ participant.pseudo is defined ? participant.pseudo : participant.nom }}
     </h1>
 
+    {% if participant.maPhoto %}
+        <img src="{{ asset('uploads/' ~ participant.maPhoto) }}"
+             alt="Photo de profil"
+             style="max-width: 150px; border-radius: 50%;">
+    {% else %}
+        <p>Aucune photo de profil</p>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-6">
             <div class="mb-3">
@@ -30,6 +38,9 @@
                 {{ participant.site ? participant.site.nom : 'N/A' }}
             </div>
             <a href="{{ path('sortie_list') }}" class="btn btn-secondary">Retour</a>
+            <a href="{{ path('participant_edit') }}" class="btn btn-primary">
+                Modifier mon profil
+            </a>
         </div>
     </div>
 {% endblock %}

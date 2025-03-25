@@ -12,6 +12,7 @@ use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -31,7 +32,27 @@ class ParticipantController extends AbstractController
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 
+        //aq davamate chemi kodi
         if ($form->isSubmitted() && $form->isValid()) {
+            $photo=$form->get('maPhoto')->getData();
+            if ($photo){
+                $newFilename=uniqid().'.'.$photo->guessExtension();
+                try {
+                    // Déplacer le fichier dans le dossier défini
+                    $photo->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Gestion d'erreur lors de l'upload
+                    $this->addFlash('error', 'Erreur lors de l\'upload de la photo.');
+                    return $this->render('registration/participant_register.html.twig', [
+                        'registrationForm' => $form->createView(),
+                    ]);
+                }
+                $participant->setMaPhoto($newFilename);
+            }
+            //aq mtavrdeba chamatebuli kodi
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
