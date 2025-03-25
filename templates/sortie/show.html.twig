@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Afficher une sortie
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Afficher une sortie</h1>
+
+            <dl class="row">
+                <dt class="col-sm-4">Nom de la sortie</dt>
+                <dd class="col-sm-8">{{ sortie.nom }}</dd>
+
+                <dt class="col-sm-4">Date/Heure de la sortie</dt>
+                <dd class="col-sm-8">{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</dd>
+
+                <dt class="col-sm-4">Date limite d'inscription</dt>
+                <dd class="col-sm-8">{{ sortie.dateLimitInscriptions|date('d/m/Y H:i') }}</dd>
+
+                <dt class="col-sm-4">Nombre de places</dt>
+                <dd class="col-sm-8">{{ sortie.nbInscriptionsMax }}</dd>
+
+                <dt class="col-sm-4">Durée</dt>
+                <dd class="col-sm-8">{{ sortie.duree }} minutes</dd>
+
+                <dt class="col-sm-4">Description et infos</dt>
+                <dd class="col-sm-8">{{ sortie.infosSortie }}</dd>
+
+                <dt class="col-sm-4">Ville organisatrice</dt>
+                <dd class="col-sm-8">
+                    {{ sortie.siteOrganisateur ? sortie.siteOrganisateur.nom : 'N/A' }}
+                </dd>
+
+                <dt class="col-sm-4">Lieu</dt>
+                <dd class="col-sm-8">
+                    {{ sortie.lieu ? sortie.lieu.nom : 'N/A' }}
+                </dd>
+
+                <dt class="col-sm-4">Rue</dt>
+                <dd class="col-sm-8">
+                    {{ sortie.lieu is defined and sortie.lieu.rue is defined ? sortie.lieu.rue : 'N/A' }}
+                </dd>
+
+                <dt class="col-sm-4">Code postal</dt>
+                <dd class="col-sm-8">
+                    {{ sortie.lieu and sortie.lieu.ville ? sortie.lieu.ville.codePostal : 'N/A' }}
+                </dd>
+
+                <dt class="col-sm-4">Latitude</dt>
+                <dd class="col-sm-8">
+                    {{ sortie.lieu ? sortie.lieu.latitude : 'N/A' }}
+                </dd>
+
+                <dt class="col-sm-4">Longitude</dt>
+                <dd class="col-sm-8">
+                    {{ sortie.lieu ? sortie.lieu.longitude : 'N/A' }}
+                </dd>
+            </dl>
+
+            <hr>
+
+            <h3 class="mb-3">Liste des participants inscrits</h3>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Nom complet</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for participant in sortie.participantsInscrits %}
+                    <tr>
+                        <td>{{ participant.mail }}</td>
+                        <td>{{ participant.nom }} {{ participant.prenom }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">Aucun participant inscrit pour le moment</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
