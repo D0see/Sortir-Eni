@@ -88,15 +88,6 @@
             Annuler la sortie
         </button>
 
-        <!-- Bouton Supprimer la sortie : mini-formulaire POST -->
-        <form action="{{ path('sortie_delete', {id: sortie.id}) }}" method="POST" class="d-inline">
-            <!-- Si vous utilisez la protection CSRF -->
-            {# <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sortie.id) }}"> #}
-            <button type="submit" class="btn btn-danger me-2">
-                Supprimer la sortie
-            </button>
-        </form>
-
         <!-- Bouton Annuler (retour) -->
         <a href="{{ path('sortie_list') }}" class="btn btn-secondary">Retour</a>
     </div>
