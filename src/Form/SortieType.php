@@ -33,24 +33,24 @@ class SortieType extends AbstractType
             ->add('motifAnnulation')
             ->add('participants', EntityType::class, [
                 'class' => Participant::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
                 'multiple' => true,
             ])
             ->add('organisateur', EntityType::class, [
                 'class' => Participant::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             ->add('site', EntityType::class, [
                 'class' => Site::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             ->add('etat', EntityType::class, [
                 'class' => Etat::class,
-                'choice_label' => 'id',
+                'choice_label' => 'libelle',
             ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
         ;
     }
