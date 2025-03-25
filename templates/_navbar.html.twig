@@ -9,23 +9,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-
+                {% if app.user %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_main')}}" title="main">Menu</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="{{ path('sortie_list') }}">Les Sorties</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                    <a class="nav-link" href="{{ path('sortie_create') }}">Créé une Sortie</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('participant_register') }}">Inscription</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
