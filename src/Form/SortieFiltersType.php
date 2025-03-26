@@ -63,6 +63,7 @@ class SortieFiltersType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => SortieFiltersModel::class,
+            'method' => 'GET'
         ]);
     }
 }

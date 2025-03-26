@@ -20,7 +20,7 @@ use App\Services\filterService;
 class SortieController extends AbstractController
 {
 
-    #[Route('sortie/list', name: 'sortie_list', methods: ['GET', 'POST'])]
+    #[Route('sortie/list', name: 'sortie_list', methods: ['GET'])]
     public function list(Request $request, SortieRepository $sortieRepository, SortieFiltersModel $sortieFiltersModel, filterService $filterService): Response
     {
         $filter = new SortieFiltersModel();
@@ -31,8 +31,8 @@ class SortieController extends AbstractController
         $sorties = $sortieRepository->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $sorties = $filterService->filterSorties($sorties, $filter, $this->getUser());
-            $this->addFlash('success', 'Sorties triées');
-            dd($filter);
+            //dd($sorties);
+
             return $this->render('sortie/list.html.twig', [
                 'sorties' => $sorties,
                 'form' => $form->createView()
