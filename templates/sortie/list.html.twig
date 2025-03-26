@@ -14,6 +14,9 @@
                     <p class="card-text"><strong>Commence à:</strong> {{ sortie.dateHeureDebut.format('d/m/Y H:m') }}</p>
                     <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ sortie.dateOuverture.format('d/m/Y H:m') }} jusqu'à {{ sortie.dateLimiteInscription.format('d/m/Y H:m') }}</p>
                     <p class="card-text"><strong>Nombre d'inscrits max:</strong> {{ sortie.nbInscriptionsMax }}</p>
+                    <a class="btn btn-outline-primary" href="{{ path('show_sortie',{'id':sortie.id}) }}" title="Détail de la sortie">
+                        Détail
+                    </a>
                 </div>
             </div>
         {% endfor %}

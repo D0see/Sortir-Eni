@@ -38,9 +38,11 @@
                 {{ participant.site ? participant.site.nom : 'N/A' }}
             </div>
             <a href="{{ path('sortie_list') }}" class="btn btn-secondary">Retour</a>
+            {% if app.user.userIdentifier == participant.userIdentifier %}
             <a href="{{ path('modifier_mon_profil') }}" class="btn btn-primary">
                 Modifier mon profil
             </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

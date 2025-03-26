@@ -23,6 +23,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
                 </li>
+                    {#                    {% if is_granted("ROLE_ADMIN")  %}#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('inscription_participant') }}">Inscription</a>
+                        </li>
+                    {#                    {% endif %}#}
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
@@ -33,5 +38,11 @@
                 {% endif %}
             </ul>
         </div>
+        {% if app.user %}
+            <p style="font-size: 30px; color: #cccccc ; padding-right: 55px" > Bonjour: {{ app.user.pseudo }} </p>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('mon_profil') }}">Mon profil</a>
+            </li>
+        {% endif %}
     </div>
 </nav>
