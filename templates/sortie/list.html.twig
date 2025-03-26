@@ -5,6 +5,8 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="text-center mb-4">Liste des Sorties</h1>
+        {{ form_start(form) }}
+        {{ form_end(form) }}
         {% for sortie in sorties %}
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
