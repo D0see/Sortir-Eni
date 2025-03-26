@@ -20,8 +20,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ParticipantController extends AbstractController
 {
-    #[Route('/inscription', name: 'participant_register')]
-    public function register(
+    #[Route('participant/inscription', name: 'inscription_participant')]
+    public function inscription(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         Security $security, EntityManagerInterface $entityManager,
@@ -78,4 +78,50 @@ class ParticipantController extends AbstractController
         ]);
     }
 
+    #[Route('participant/monProfil', name: 'mon_profil')]
+    public function monProfile(): Response
+    {
+        $participant = $this->getUser();
+        // Sinon, on affiche le profil
+        return $this->render('profile/profile.html.twig', [
+            'participant' => $participant,
+        ]);
+    }
+
+    #[Route('/participant/modifierMonProfil', name: 'modifier_mon_profil', methods: ['GET','POST'])]
+    public function editProfile(
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
+        // 1) Récupérer l'utilisateur connecté
+        $participant = $this->getUser();
+
+        // 2) Créer le formulaire
+        $form = $this->createForm(ParticipantType::class, $participant);
+        $form->handleRequest($request);
+
+        // 3) Vérifier si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Sauvegarder en base
+            $em->flush();
+
+            $this->addFlash('success', 'Profil mis à jour avec succès.');
+            // Rediriger vers la page de profil
+            return $this->redirectToRoute('participant_profile');
+        }
+
+        // 4) Afficher le formulaire
+        return $this->render('profile/edit.html.twig', [
+            'editForm' => $form->createView(),
+        ]);
+    }
+    #[Route('/participant/{id}', name: 'afficher_participant', requirements: ['id' => '\d+'])]
+    public function show(Participant $participant): Response {
+        if ($this->getUser()->getId() == $participant->getId()) {
+            return $this->redirectToRoute("mon_profil");
+        };
+        return $this->render('profile/profile.html.twig', [
+            'participant' => $participant,
+        ]);
+    }
 }
