@@ -53,7 +53,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     //aq vamateb axal xazss
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $maPhoto=null;
 
 
