@@ -6,6 +6,8 @@
     <div class="container mt-4">
         <h1 class="text-center mb-4">Liste des Sorties</h1>
         <div class="row">
+        {{ form_start(form) }}
+        {{ form_end(form) }}
             {% for sortie in sorties|batch(2) %}
                 <div class="col-md-6 mb-4">
                     {% for s in sortie %}

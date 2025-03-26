@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\SortieFiltersType;
 use App\Form\SortieType;
+use App\Model\SortieFiltersModel;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
@@ -13,17 +15,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Services\filterService;
 
 class SortieController extends AbstractController
 {
 
     #[Route('sortie/list', name: 'sortie_list', methods: ['GET'])]
-    public function list(SortieRepository $sortieRepository)
+    public function list(Request $request, SortieRepository $sortieRepository, SortieFiltersModel $sortieFiltersModel, filterService $filterService): Response
     {
+        $filter = new SortieFiltersModel();
+
+        $form = $this->createForm(SortieFiltersType::class, $filter);
+        $form->handleRequest($request);
+
         $sorties = $sortieRepository->findAll();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sorties = $filterService->filterSorties($sorties, $filter, $this->getUser());
+            //dd($sorties);
+
+            return $this->render('sortie/list.html.twig', [
+                'sorties' => $sorties,
+                'form' => $form->createView()
+            ]);
+        }
 
         return $this->render('sortie/list.html.twig', [
             'sorties' => $sorties,
+            'form' => $form->createView()
         ]);
     }
 
@@ -41,7 +59,6 @@ class SortieController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'La sortie a bien été ajoutée !');
 
-            // Redirection (à adapter) :
             return $this->redirectToRoute('sortie_list');
         }
 
