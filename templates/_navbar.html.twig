@@ -1,9 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
     <div class="container-fluid">
         <a href="{{ path('app_main') }}" title="Revenir à l'accueil">
-            <img style="width: 60px;height: auto;" src="{{ asset('img/logoblanc.png') }}" alt="Logo">
+            <img style="width: 20px;height: auto;transform: scale(6.5);margin-left: 15px; margin-right: 20px;" src="{{ asset('img/logoblanc.png') }}" alt="Logo">
         </a>
-        <a class="navbar-brand" href="#" style="font-size: 200%">Sortie</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,6 +22,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
                 </li>
+                    {#                    {% if is_granted("ROLE_ADMIN")  %}#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('inscription_participant') }}">Inscription</a>
+                        </li>
+                    {#                    {% endif %}#}
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
@@ -33,5 +37,11 @@
                 {% endif %}
             </ul>
         </div>
+        {% if app.user %}
+            <div style="font-size: 20px; color: #cccccc ; padding-right: 55px" > Bonjour: {{ app.user.pseudo }} </div>
+            <li class="d-flex align-items-center ms-auto">
+                <a class="nav-link" href="{{ path('mon_profil') }}">Mon profil</a>
+            </li>
+        {% endif %}
     </div>
 </nav>

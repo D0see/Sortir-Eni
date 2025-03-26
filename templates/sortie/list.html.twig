@@ -5,17 +5,29 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="text-center mb-4">Liste des Sorties</h1>
-        {% for sortie in sorties %}
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">{{ sortie.nom }}</h5>
-                    <p class="card-text"><strong>Infos Sortie:</strong> {{ sortie.infosSortie }}</p>
-                    <p class="card-text"><strong>Durée:</strong> {{ sortie.dureeEnHeures }} h</p>
-                    <p class="card-text"><strong>Commence à:</strong> {{ sortie.dateHeureDebut.format('d/m/Y H:m') }}</p>
-                    <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ sortie.dateOuverture.format('d/m/Y H:m') }} jusqu'à {{ sortie.dateLimiteInscription.format('d/m/Y H:m') }}</p>
-                    <p class="card-text"><strong>Nombre d'inscrits max:</strong> {{ sortie.nbInscriptionsMax }}</p>
+        <div class="row">
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+            {% for sortie in sorties|batch(2) %}
+                <div class="col-md-6 mb-4">
+                    {% for s in sortie %}
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ s.nom }}</h5>
+                                <p class="card-text"><strong>Infos Sortie:</strong> {{ s.infosSortie }}</p>
+                                <p class="card-text"><strong>Durée:</strong> {{ s.dureeEnHeures }} h</p>
+                                <p class="card-text"><strong>Commence à:</strong> {{ s.dateHeureDebut.format('d/m/Y H:m') }}</p>
+                                <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ s.dateOuverture.format('d/m/Y H:m') }} jusqu'à {{ s.dateLimiteInscription.format('d/m/Y H:m') }}</p>
+                                <p class="card-text"><strong>Nombre d'inscrits max:</strong> {{ s.nbInscriptionsMax }}</p>
+                                <a class="btn btn-outline-primary" href="{{ path('show_sortie', {'id': s.id}) }}" title="Détail de la sortie">
+                                    Détail
+                                </a>
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

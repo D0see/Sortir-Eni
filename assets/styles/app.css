@@ -25,11 +25,38 @@ html, body {
     text-decoration: none;
     font-weight: bold;
     padding: 10px 15px;
-    transition: color 0.3s ease;
+    transition: color 1.5s ease;
+}
+
+.nav-link {
+    text-decoration: none;
+    padding: 5px;
+    border: 2px solid transparent;
+    transition: all 1.5s ease;
+}
+
+.nav-link:hover {
+    color: rgba(71, 152, 152, 0.78);
+    border-color: rgba(42, 92, 92, 0.74);
+    background-color: rgba(67, 153, 153, 0.68);
+    border-radius: 50px;
 }
 
 .navbar a:hover {
     color: #ffffff;
+}
+.part-link {
+    text-decoration: none;
+    padding: 5px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.part-link:hover {
+    color: #5191ff;
+    border-color: #0099ff;
+    background-color: rgba(123, 212, 255, 0.58);
+    border-radius: 5px;
 }
 
 
