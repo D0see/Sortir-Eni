@@ -41,8 +41,6 @@ class Sortie
     private ?string $motifAnnulation = null;
 
 
-
-
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Site $site = null;
@@ -245,4 +243,5 @@ class Sortie
 
         return $this;
     }
+
 }
