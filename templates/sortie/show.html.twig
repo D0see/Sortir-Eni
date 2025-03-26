@@ -31,6 +31,10 @@
                             <p>Vous avez jusqu'à <strong>{{ sortie.dateLimiteInscription|date('H:i') }}</strong> le <strong>{{ sortie.dateHeureDebut|date('d/m/Y') }}</strong> pour vous inscrire.</p>
                         </div>
 
+                        <div class="col-md-6 mb-2">
+                            <p><strong>Fait par :</strong> {{ sortie.organisateur.pseudo }}</p>
+                        </div>
+
                         <div class="col-md-12">
                             <div class="card mb-3 shadow-sm">
                                 <div class="card-body">
