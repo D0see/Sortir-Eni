@@ -60,11 +60,11 @@
             </dl>
 
                 {% if sortie.participants | length < sortie.nbInscriptionsMax and app.user not in sortie.participants  %}
-                <a href="/show/{{ sortie.id }}/add-participant"><button>S'inscrire</button></a>
+                <a href="/show/{{ sortie.id }}/add-participant"><button class="btn btn-primary btn-sm" >S'inscrire</button></a>
                 {% endif %}
 
                 {% if app.user in sortie.participants  %}
-                    <a href="/show/{{ sortie.id }}/remove-participant"><button>Se désinscrire</button></a>
+                    <a href="/show/{{ sortie.id }}/remove-participant"><button class="btn btn-primary btn-sm" >Se désinscrire</button></a>
                 {% endif %}
 
             <hr>
@@ -80,8 +80,8 @@
                 <tbody>
                 {% for participant in sortie.participants %}
                     <tr>
-                        <td>{{ participant.mail }}</td>
-                        <td><a class="nav-link" href="{{ path('afficher_participant',{'id':participant.id}) }}">{{ participant.nom }} {{ participant.prenom }}</a> </td>
+                        <td><a class="part-link" href="{{ path('afficher_participant',{'id':participant.id}) }}">{{ participant.pseudo }}</a></td>
+                        <td>{{ participant.nom }} {{ participant.prenom }} </td>
 
                     </tr>
                 {% else %}
