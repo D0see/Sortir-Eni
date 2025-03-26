@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,20 +30,32 @@ class SortieController extends AbstractController
     }
 
     #[Route('sortie/create', name: 'sortie_create', methods: ['GET', 'POST'])]
+
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();
+        $date = new \DateTime();
+
+        $organisteur = $this->getUser();
+        $sortie->setOrganisateur($organisteur);
 
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            if ($date >= $sortie->getDateOuverture()){
+                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['id'=>2]));
+            }
+            else{
+                $sortie->setEtat( $em->getRepository(Etat::class)->findOneBy(['id'=>1]));
+            }
+
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'La sortie a bien été ajoutée !');
 
-            // Redirection (à adapter) :
+
             return $this->redirectToRoute('sortie_list');
         }
 
