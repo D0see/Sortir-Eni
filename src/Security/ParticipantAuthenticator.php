@@ -49,7 +49,7 @@ class ParticipantAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-         return new RedirectResponse($this->urlGenerator->generate('participant_register'));
+         return new RedirectResponse($this->urlGenerator->generate('inscription_participant'));
 //        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
