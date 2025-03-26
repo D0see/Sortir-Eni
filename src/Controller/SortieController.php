@@ -189,12 +189,16 @@ class SortieController extends AbstractController
     #[Route('/show/{id}/add-participant', name: 'add_participant',requirements: ['id' => '\d+'],methods: ['GET'])]
     public function addParticipant(Sortie $sortie, EntityManagerInterface $em): Response
     {
-        $user = $this->getUser()->getUserIdentifier();
-        $participant = $em->getRepository(Participant::class)->findOneBy(['pseudo' => $user]);
-        $sortie->addParticipant($participant);
-        $em->flush();
-        return $this->redirectToRoute('show_sortie', ['id' => $sortie->getId()]);
+        $date = new \DateTime();
+        if($this->getUser()!==$sortie->getOrganisateur() && $date < $sortie->getDateLimiteInscription() ){
+            $user = $this->getUser()->getUserIdentifier();
+            $participant = $em->getRepository(Participant::class)->findOneBy(['pseudo' => $user]);
+            $sortie->addParticipant($participant);
+            $em->flush();
+            return $this->redirectToRoute('show_sortie', ['id' => $sortie->getId()]);
+        }
 
+        return $this->redirectToRoute('show_sortie', ['id' => $sortie->getId()]);
     }
 
     #[Route('/show/{id}/remove-participant', name: 'remove_participant',requirements: ['id' => '\d+'],methods: ['GET'])]
