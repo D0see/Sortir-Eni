@@ -81,7 +81,8 @@
                 {% for participant in sortie.participants %}
                     <tr>
                         <td>{{ participant.mail }}</td>
-                        <td>{{ participant.nom }} {{ participant.prenom }}</td>
+                        <td><a class="nav-link" href="{{ path('afficher_participant',{'id':participant.id}) }}">{{ participant.nom }} {{ participant.prenom }}</a> </td>
+
                     </tr>
                 {% else %}
                     <tr>
