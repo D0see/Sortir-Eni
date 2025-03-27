@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\AnnulerSortieType;
 use App\Form\SortieFiltersType;
 use App\Form\SortieType;
 use App\Model\SortieFiltersModel;
@@ -205,5 +206,90 @@ class SortieController extends AbstractController
         return $this->redirectToRoute('show_sortie', ['id' => $sortie->getId()]);
 
     }
+
+    //es amis qvemot rac weria me davwere 26/03
+
+    #[Route('/sortie/{id}/annuler', name: 'sortie_annuler', methods: ['GET','POST'])]
+    public function annuler(
+        Sortie $sortie,
+        Request $request,
+        EntityManagerInterface $em,
+        EtatRepository $etatRepository
+    ): Response {
+        // 1) Vérifier l'utilisateur (organisateur ou admin)
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour annuler une sortie.');
+            return $this->redirectToRoute('security_login');
+        }
+
+        $estOrganisateur = ($sortie->getOrganisateur() === $user);
+        $estAdmin = in_array('ROLE_ADMIN', $user->getRoles());
+        if (!$estOrganisateur && !$estAdmin) {
+            $this->addFlash('error', 'Vous n\'êtes pas autorisé à annuler cette sortie.');
+            return $this->redirectToRoute('sortie_list');
+        }
+
+        // 2) Vérifier que la sortie n'a pas commencé
+        $now = new \DateTime();
+        if ($sortie->getDateHeureDebut() <= $now) {
+            $this->addFlash('error', 'Impossible d\'annuler une sortie déjà commencée.');
+            return $this->redirectToRoute('sortie_list');
+        }
+
+        // 3) Créer le formulaire "AnnulerSortieType"
+        $form = $this->createForm(AnnulerSortieType::class, $sortie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // 4) Récupérer l'état "Annulée"
+            $etatAnnulee = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+            if (!$etatAnnulee) {
+                $this->addFlash('error', 'État "Annulée" introuvable en base.');
+                return $this->redirectToRoute('sortie_list');
+            }
+
+            // 5) Mettre la sortie en état "Annulée"
+            $sortie->setEtat($etatAnnulee);
+            // Le champ "motifAnnulation" est déjà hydraté via le formulaire
+
+            // 6) Sauvegarde
+            $em->flush();
+
+            $this->addFlash('success', 'La sortie a été annulée avec succès.');
+            return $this->redirectToRoute('sortie_list');
+        }
+
+        // 7) Affichage du formulaire
+        return $this->render('sortie/annule.html.twig', [
+            'sortie' => $sortie,
+            'form' => $form->createView(),
+        ]);
+    }
+
+//    #[Route('/sortie/{id}/annuler', name: 'sortie_annuler', methods: ['GET','POST'])]
+//    public function annuler(Sortie $sortie, Request $request, EntityManagerInterface $em, EtatRepository $etatRepository): Response
+//    {
+//        // On crée le formulaire basé sur SortieType
+//        $form = $this->createForm(SortieType::class, $sortie);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            // Par ex. changer l’état en "Annulée"
+//            $etatAnnulee = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+//            $sortie->setEtat($etatAnnulee);
+//
+//            // $sortie->setMotifAnnulation(...) est déjà hydraté par le formulaire
+//            $em->flush();
+//
+//            $this->addFlash('success', 'La sortie a été annulée avec motif.');
+//            return $this->redirectToRoute('sortie_list');
+//        }
+//
+//        return $this->render('sortie/annule.html.twig', [
+//            'sortie' => $sortie,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
 }
