@@ -101,7 +101,24 @@ class ParticipantController extends AbstractController
 
         // 3) Vérifier si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarder en base
+            $photoFile = $form->get('maPhoto')->getData();
+            if ($photoFile){
+                $newFilename = uniqid().'.'.$photoFile->guessExtension();
+                try {
+                    $photoFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur lors de l\'upload de la photo.');
+                    return $this->render('profile/edit.html.twig', [
+                        'editForm' => $form->createView(),
+                        'participant' => $participant,
+                    ]);
+                }
+
+                $participant->setMaPhoto($newFilename);
+            }
             $em->flush();
 
             $this->addFlash('success', 'Profil mis à jour avec succès.');
@@ -112,8 +129,11 @@ class ParticipantController extends AbstractController
         // 4) Afficher le formulaire
         return $this->render('profile/edit.html.twig', [
             'editForm' => $form->createView(),
+            'participant' => $participant,
         ]);
     }
+
+
     #[Route('/participant/{id}', name: 'afficher_participant', requirements: ['id' => '\d+'])]
     public function show(Participant $participant): Response {
         if ($this->getUser()->getId() == $participant->getId()) {

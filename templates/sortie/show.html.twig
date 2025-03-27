@@ -31,6 +31,10 @@
                             <p>Vous avez jusqu'à <strong>{{ sortie.dateLimiteInscription|date('H:i') }}</strong> le <strong>{{ sortie.dateHeureDebut|date('d/m/Y') }}</strong> pour vous inscrire.</p>
                         </div>
 
+                        <div class="col-md-6 mb-2">
+                             <p><strong>Organisé par :</strong><a class='part-link' href="{{ path('afficher_participant',{'id':sortie.organisateur.id}) }}"> {{ sortie.organisateur.pseudo }}</p></a>
+                        </div>
+
                         <div class="col-md-12">
                             <div class="card mb-3 shadow-sm">
                                 <div class="card-body">
@@ -53,10 +57,6 @@
 
                         <div class="col-md-6 text-muted">
                             <p><strong>Coordonnées GPS :</strong> Latitude : {{ sortie.lieu.latitude }}, Longitude : {{ sortie.lieu.longitude }}</p>
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <p><strong>Organisé par :</strong><a class='part-link' href="{{ path('afficher_participant',{'id':sortie.organisateur.id}) }}"> {{ sortie.organisateur.pseudo }}</p></a>
                         </div>
                     </dl>
 

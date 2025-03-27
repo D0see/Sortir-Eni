@@ -55,22 +55,6 @@
                 {{ form_label(form.dateOuverture) }}
                 {{ form_widget(form.dateOuverture, {'attr': {'class': 'form-control'}}) }}
             </div>
-            <div class="mb-3">
-                {{ form_label(form.motifAnnulation) }}
-                {{ form_widget(form.motifAnnulation, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="mb-3">
-                {{ form_label(form.etat) }}
-                {{ form_widget(form.etat, {'attr': {'class': 'form-select'}}) }}
-            </div>
-            <div class="mb-3">
-                {{ form_label(form.organisateur) }}
-                {{ form_widget(form.organisateur, {'attr': {'class': 'form-select'}}) }}
-            </div>
-            <div class="mb-3">
-                {{ form_label(form.participants) }}
-                {{ form_widget(form.participants, {'attr': {'class': 'form-select', 'multiple': true}}) }}
-            </div>
         </div>
     </div>
 
@@ -84,9 +68,11 @@
         </button>
 
         <!-- Bouton Annuler la sortie (name="cancel") -->
-        <button type="submit" class="btn btn-warning me-2" name="cancel" value="1">
-            Annuler la sortie
-        </button>
+{#        <button type="submit" class="btn btn-warning me-2" name="cancel" value="1">#}
+{#            Annuler la sortie#}
+{#        </button>#}
+
+        <a  href="{{ path('sortie_annuler',{'id':sortie.id}) }}" class="btn btn-warning">Anuller la sortie</a>
 
         <!-- Bouton Annuler (retour) -->
         <a href="{{ path('sortie_list') }}" class="btn btn-secondary">Retour</a>

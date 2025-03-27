@@ -5,15 +5,19 @@
 {% endblock %}
 
 {% block body %}
+<div class="d-flex justify-content-center align-items-center" style="margin-top: 20px;">
+    <div class="card shadow-sm " style="margin: 20px ;width: 500px;">
+        <div class="card-body">
     <h1 class="mb-4">
         {# On affiche le pseudo si la propriété existe, sinon on peut afficher le nom #}
         {{ participant.pseudo is defined ? participant.pseudo : participant.nom }}
     </h1>
 
     {% if participant.maPhoto %}
-        <img src="{{ asset('uploads/' ~ participant.maPhoto) }}"
-             alt="Photo de profil"
-             style="max-width: 150px; border-radius: 50%;">
+        <div style=" filter: drop-shadow(1px 1px 4px rgba(0,41,77,0.84));"><img src="{{ asset('uploads/' ~ participant.maPhoto) }}"
+                                                                                alt="Photo de profil"
+                                                                                style="max-width: 150px; border-radius: 50%;">
+        </div><br>
     {% else %}
         <p>Aucune photo de profil</p>
     {% endif %}
@@ -37,7 +41,7 @@
                 {# Exemple : si vous avez un champ site ou ville #}
                 {{ participant.site ? participant.site.nom : 'N/A' }}
             </div>
-            <a href="{{ path('sortie_list') }}" class="btn btn-secondary">Retour</a>
+            <a href="javascript:history.back(1)" class="btn btn-secondary">Retour</a><br><br>
             {% if app.user.userIdentifier == participant.userIdentifier %}
             <a href="{{ path('modifier_mon_profil') }}" class="btn btn-primary">
                 Modifier mon profil
@@ -45,5 +49,8 @@
             {% endif %}
         </div>
     </div>
+    </div>
+</div>
+</div>
 {% endblock %}
 

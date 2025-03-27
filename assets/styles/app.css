@@ -127,3 +127,25 @@ h2 {
 }
 
 
+
+#zoneFiltre {
+    display: none;
+}
+
+
+#menuToggle:checked + .menu-burger + #zoneFiltre {
+    display: block;
+}
+
+
+.menu-burger {
+    cursor: pointer;
+    font-size: 30px;
+    display: inline-block;
+}
+
+
+.menu-toggle {
+    display: none;
+}
+

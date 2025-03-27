@@ -5,7 +5,7 @@
 {% block title %}Inscription d'un participant{% endblock %}
 
 {% block body %}
-    <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="d-flex justify-content-center align-items-center" style="margin-top: 20px;">
         <div class="card shadow p-4" style="width: 500px;">
             <h2 class="text-center mb-4">📝 Inscription</h2>
 
@@ -65,6 +65,13 @@
                 <label for="{{ registrationForm.maPhoto.vars.id }}" class="form-label">Photo de profil</label>
                 {{ form_widget(registrationForm.maPhoto, { 'attr': {'class': 'form-control'} }) }}
             </div>
+
+            <div class="col-md-6">
+                <label for="{{ registrationForm.site.vars.id }}" class="form-label">{{ form_label(registrationForm.site) }}</label>
+                {{ form_widget(registrationForm.site, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <br>
+
 
             <button type="submit" class="btn btn-primary w-100">Inscrire</button>
             {{ form_end(registrationForm) }}
