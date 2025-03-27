@@ -8,14 +8,40 @@
     <h1 class="mb-4">Modifier mon profil</h1>
 
     {{ form_start(editForm) }}
-    {{ form_row(editForm.pseudo) }}
-    {{ form_row(editForm.prenom) }}
-    {{ form_row(editForm.nom) }}
-    {{ form_row(editForm.telephone) }}
-    {{ form_row(editForm.mail) }}
+    <div class="mb-3">
+        {{ form_label(editForm.pseudo) }}
+        {{ form_widget(editForm.pseudo, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(editForm.prenom) }}
+        {{ form_widget(editForm.prenom, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(editForm.nom) }}
+        {{ form_widget(editForm.nom, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(editForm.telephone) }}
+        {{ form_widget(editForm.telephone, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(editForm.mail) }}
+        {{ form_widget(editForm.mail, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(editForm.maPhoto) }}
+        {{ form_widget(editForm.maPhoto, {'attr': {'class': 'form-control'}}) }}
+    </div>
 
-    {# Si vous avez un champ "site" #}
-    {# {{ form_row(editForm.site) }} #}
+    {% if participant.maPhoto %}
+        <div class="mb-3">
+            <img src="{{ asset('uploads/' ~ participant.maPhoto) }}"
+                 alt="Photo de profil"
+                 style="max-width: 150px; border-radius: 50%;">
+        </div>
+    {% else %}
+        <p>Aucune photo de profil</p>
+    {% endif %}
 
     <button type="submit" class="btn btn-primary">Enregistrer</button>
     <a href="{{ path('mon_profil') }}" class="btn btn-secondary">Annuler</a>
