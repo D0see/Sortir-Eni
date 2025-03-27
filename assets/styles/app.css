@@ -127,3 +127,30 @@ h2 {
 }
 
 
+#menuBurger {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#zoneFiltre {
+    width: 100%;
+    background: rgba(248, 248, 248, 0.25);
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: transform 0.3s ease-in-out;
+}
+
+.filtre-cache {
+    transform: scaleY(0);
+    height: 0;
+    overflow: hidden;
+    transform-origin: top;
+}
+
+.filtre-visible {
+    transform: scaleY(1);
+    height: auto;
+}
+

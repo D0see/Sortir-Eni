@@ -5,9 +5,59 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="text-center mb-4">Liste des Sorties</h1>
+        <button id="menuBurger">☰</button>
+        <div id="zoneFiltre" class="filtre-cache">
+        <div class="card mb-4" >
+            <div class="card-body">
+                <h5 class="card-title">Filtres</h5>
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="{{ form.site.vars.id }}" class="form-label">Site</label>
+                        {{ form_widget(form.site, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="{{ form.contenu.vars.id }}" class="form-label">Contenu</label>
+                        {{ form_widget(form.contenu, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="{{ form.debut.vars.id }}" class="form-label">Date de début</label>
+                        {{ form_widget(form.debut, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="{{ form.fin.vars.id }}" class="form-label">Date de fin</label>
+                        {{ form_widget(form.fin, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="col-md-6 form-check">
+                        {{ form_widget(form.sortieQueJOrganise, { 'attr': {'class': 'form-check-input'} }) }}
+                        <label for="{{ form.sortieQueJOrganise.vars.id }}" class="form-check-label">Sorties que j'organise</label>
+                    </div>
+                    <div class="col-md-6 form-check">
+                        {{ form_widget(form.sortieOuJeSuisInscrit, { 'attr': {'class': 'form-check-input'} }) }}
+                        <label for="{{ form.sortieOuJeSuisInscrit.vars.id }}" class="form-check-label">Sorties où je suis inscrit</label>
+                    </div>
+                    <div class="col-md-6 form-check">
+                        {{ form_widget(form.sortieOuJeNeSuisPasInscrit, { 'attr': {'class': 'form-check-input'} }) }}
+                        <label for="{{ form.sortieOuJeNeSuisPasInscrit.vars.id }}" class="form-check-label">Sorties où je ne suis pas inscrit</label>
+                    </div>
+                    <div class="col-md-6 form-check">
+                        {{ form_widget(form.sortiePassees, { 'attr': {'class': 'form-check-input'} }) }}
+                        <label for="{{ form.sortiePassees.vars.id }}" class="form-check-label">Sorties passées</label>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+            <script>
+                document.getElementById("menuBurger").addEventListener("click", function() {
+                    let zoneFiltre = document.getElementById("zoneFiltre");
+                    zoneFiltre.classList.toggle("filtre-cache");
+                    zoneFiltre.classList.toggle("filtre-visible");
+                });
+            </script>
+        </div>
+        <br>
         <div class="row">
-        {{ form_start(form) }}
-        {{ form_end(form) }}
             {% for sortie in sorties|batch(2) %}
                 <div class="col-md-6 mb-4">
                     {% for s in sortie %}
@@ -31,3 +81,4 @@
         </div>
     </div>
 {% endblock %}
+
