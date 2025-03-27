@@ -31,13 +31,11 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieFiltersType::class, $filter);
         $form->handleRequest($request);
 
-        $sorties = $sortieRepository->findAll();
-        $etat = $etatRepository->findAll();
+        $sorties = $filterService->filterArchivedSorties($sortieRepository->findAll());
         if ($form->isSubmitted() && $form->isValid()) {
             $sorties = $filterService->filterSorties($sorties, $filter, $this->getUser());
             return $this->render('sortie/list.html.twig', [
                 'sorties' => $sorties,
-
                 'form' => $form->createView()
             ]);
         }

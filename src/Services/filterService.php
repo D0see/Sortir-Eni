@@ -9,6 +9,17 @@ use DateTime;
 
 class filterService
 {
+    public function filterArchivedSorties(array $data) : array {
+        // TODO updates this when states are implemented (Annulé state)
+        $returnArray = [];
+        $now = new DateTime();
+        foreach ($data as $sortie) {
+            if ($sortie->getDateHeureDebut()->modify("+ 30 days") < $now) continue;
+            $returnArray[] = $sortie;
+        }
+        return $returnArray;
+    }
+
     public function filterSorties(array $data, SortieFiltersModel $filtersObj, Participant $participant): array {
         $returnArray = [];
         foreach ($data as $sortie) {
