@@ -1,0 +1,13 @@
+pseudo,password,nom,prenom,telephone,actif,site(name),mail,admin
+BR,aaaaaa,Roger,Bernard,0203040506,1,Rennes,mail@gmail.com,0
+belette_masquee,aaaaaa,Didier,Bon,0203040507,1,Nantes,mail@gmail.com,0
+courgette,aaaaaa,LeBon,alexis,0203040508,1,Niort,mail@gmail.com,0
+banane,aaaaaa,LeMauvais,alexa,0203040509,1,Quimper,mail@gmail.com,0
+pomme,aaaaaa,LeGrand,alexandre,0203040510,1,Quimper,mail@gmail.com,0
+brouette,aaaaaa,LeFaible,alyx,0203040511,1,Quimper,mail@gmail.com,0
+charette,aaaaaa,LeScornec,album,0203040512,1,Quimper,mail@gmail.com,0
+pouet,aaaaaa,LeSida,alicopètre,0203040513,1,Quimper,mail@gmail.com,0
+pouat,aaaaaa,LaGrande,alibaba,0203040514,1,Quimper,mail@gmail.com,0
+crayon,aaaaaa,LaRelou,albatros,0203040515,1,Quimper,mail@gmail.com,0
+table,aaaaaa,olololo,albator,0203040516,1,Quimper,mail@gmail.com,0
+chaise,aaaaaa,olololo,alalalala,0203040517,1,Quimper,mail@gmail.com,0

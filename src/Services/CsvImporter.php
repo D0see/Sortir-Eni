@@ -41,8 +41,11 @@ class CsvImporter
             $participant->setSite($this->siteRepository->findOneBy(["nom" => $record['site(name)']]));
             $participant->setMail($record['mail']);
             $participant->setAdministrateur($record['admin']);
-            // TODO add logic for admin role
             $participant->setRoles(["ROLE_USER"]);
+            if ($record['admin'] == 1) {
+                $participant->addRole("ROLE_ADMIN");
+            }
+
 
             $this->entityManager->persist($participant);
             $data[] = $record;
