@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Entity\Participant;
 use App\Model\SortieFiltersModel;
+use DateInterval;
+use DateTime;
 
 class filterService
 {
@@ -24,6 +26,8 @@ class filterService
 
             //Sorties passées
             if ($filtersObj->isSortiePassees()) {
+                $now = new DateTime();
+                if ($sortie->getDateHeureDebut()->modify("+ {$sortie->getDureeEnHeures()} hours") > $now) continue;
                 // TODO
             }
 
@@ -33,13 +37,14 @@ class filterService
             }
 
             // filtre par site
-            if ($filtersObj->getSite()) {
-                // TODO
-            }
+            if ($filtersObj->getSite() &&
+                $sortie->getSite()->getNom() != $filtersObj->getSite()->getNom()) continue;
 
-            // TODO filtre par date
+            if ($filtersObj->getDebut() &&
+                $sortie->getDateHeureDebut() < $filtersObj->getDebut()
 
             $returnArray[] = $sortie;
+
         }
         return $returnArray;
     }
