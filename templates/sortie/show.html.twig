@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="col-md-6 mb-2">
-                            <p><strong>Fait par :</strong> {{ sortie.organisateur.pseudo }}</p>
+                             <p><strong>Organisé par :</strong><a class='part-link' href="{{ path('afficher_participant',{'id':sortie.organisateur.id}) }}"> {{ sortie.organisateur.pseudo }}</p></a>
                         </div>
 
                         <div class="col-md-12">
@@ -55,17 +55,15 @@
                             </p>
                         </div>
 
-                        <div class="col-md-12 text-muted">
+                        <div class="col-md-6 text-muted">
                             <p><strong>Coordonnées GPS :</strong> Latitude : {{ sortie.lieu.latitude }}, Longitude : {{ sortie.lieu.longitude }}</p>
-                        </div>
-                        <div class="col-md-12 text-muted">
-                            <p><strong>Organiser par le site de </strong> {{ sortie.site.nom }}</p>
                         </div>
                     </dl>
 
                 </div>
             </div>
-                {% if sortie.participants | length < sortie.nbInscriptionsMax and app.user not in sortie.participants  %}
+                {% if sortie.participants | length < sortie.nbInscriptionsMax and app.user not in sortie.participants
+                    and app.user != sortie.organisateur and date < sortie.dateLimiteInscription %}
                 <a href="/show/{{ sortie.id }}/add-participant"><button class="btn btn-primary btn-sm" >S'inscrire</button></a>
                 {% endif %}
 

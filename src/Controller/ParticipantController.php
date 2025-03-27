@@ -68,7 +68,6 @@ class ParticipantController extends AbstractController
             $entityManager->persist($participant);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
 
             return $security->login($participant, ParticipantAuthenticator::class, 'main');
         }
@@ -82,7 +81,7 @@ class ParticipantController extends AbstractController
     public function monProfile(): Response
     {
         $participant = $this->getUser();
-        // Sinon, on affiche le profil
+
         return $this->render('profile/profile.html.twig', [
             'participant' => $participant,
         ]);
