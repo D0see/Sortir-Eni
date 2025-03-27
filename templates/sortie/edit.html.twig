@@ -84,9 +84,11 @@
         </button>
 
         <!-- Bouton Annuler la sortie (name="cancel") -->
-        <button type="submit" class="btn btn-warning me-2" name="cancel" value="1">
-            Annuler la sortie
-        </button>
+{#        <button type="submit" class="btn btn-warning me-2" name="cancel" value="1">#}
+{#            Annuler la sortie#}
+{#        </button>#}
+
+        <a  href="{{ path('sortie_annuler',{'id':sortie.id}) }}" class="btn btn-warning">Anuller la sortie</a>
 
         <!-- Bouton Annuler (retour) -->
         <a href="{{ path('sortie_list') }}" class="btn btn-secondary">Retour</a>
