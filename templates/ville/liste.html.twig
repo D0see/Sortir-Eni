@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Gérer les villes
+{% endblock %}
+
+{% block body %}
+    <h1>Gérer les villes</h1>
+
+    {{ form_start(form) }}
+    <div class="mb-3">
+
+        {{ form_row(form.search, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <button type="submit" class="btn btn-primary">Rechercher</button>
+    {{ form_end(form) }}
+
+    <hr>
+
+    <table class="table table-striped mt-3">
+        <thead>
+        <tr>
+            <th>Ville</th>
+            <th>Code postal</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ville in villes %}
+            <tr>
+                <td>{{ ville.nom }}</td>
+                <td>{{ ville.codePostal }}</td>
+                <td>
+                    <a href="{{ path('ville_edit', {id: ville.id}) }}"
+                       class="btn btn-sm btn-warning">Modifier</a>
+                    <a href="{{ path('ville_delete', {id: ville.id}) }}"
+                       class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucune ville trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('add_ville') }}" class="btn btn-success">Ajouter</a>
+{% endblock %}
