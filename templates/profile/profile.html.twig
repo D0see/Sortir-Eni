@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<div class="container my-5">
     <h1 class="mb-4">
         {# On affiche le pseudo si la propriété existe, sinon on peut afficher le nom #}
         {{ participant.pseudo is defined ? participant.pseudo : participant.nom }}
@@ -45,5 +46,6 @@
             {% endif %}
         </div>
     </div>
+</div>
 {% endblock %}
 

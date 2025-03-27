@@ -62,10 +62,10 @@ class ParticipantType extends AbstractType
 //                'choice_label' => 'id',
 //                'multiple' => true,
 //            ])
-//            ->add('site', EntityType::class, [
-//                'class' => Site::class,
-//                'choice_label' => 'id',
-//            ])
+            ->add('site', EntityType::class, [
+                'class' => Site::class,
+                'choice_label' => 'nom',
+            ])
         ;
     }
 

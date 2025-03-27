@@ -2,47 +2,76 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\AnnulerSortieType;
+use App\Form\SortieFiltersType;
 use App\Form\SortieType;
+use App\Model\SortieFiltersModel;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Services\filterService;
 
 class SortieController extends AbstractController
 {
 
     #[Route('sortie/list', name: 'sortie_list', methods: ['GET'])]
-    public function list(SortieRepository $sortieRepository)
+    public function list(Request $request, SortieRepository $sortieRepository, SortieFiltersModel $sortieFiltersModel, filterService $filterService): Response
     {
+        $filter = new SortieFiltersModel();
+
+        $form = $this->createForm(SortieFiltersType::class, $filter);
+        $form->handleRequest($request);
+
         $sorties = $sortieRepository->findAll();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sorties = $filterService->filterSorties($sorties, $filter, $this->getUser());
+            return $this->render('sortie/list.html.twig', [
+                'sorties' => $sorties,
+                'form' => $form->createView()
+            ]);
+        }
 
         return $this->render('sortie/list.html.twig', [
             'sorties' => $sorties,
+            'form' => $form->createView()
         ]);
     }
 
     #[Route('sortie/create', name: 'sortie_create', methods: ['GET', 'POST'])]
+
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();
+        $date = new \DateTime();
+
+        $organisteur = $this->getUser();
+        $sortie->setOrganisateur($organisteur);
 
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            if ($date >= $sortie->getDateOuverture()){
+                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['id'=>2]));
+            }
+            else{
+                $sortie->setEtat( $em->getRepository(Etat::class)->findOneBy(['id'=>1]));
+            }
+
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'La sortie a bien été ajoutée !');
 
-            // Redirection (à adapter) :
             return $this->redirectToRoute('sortie_list');
         }
 
