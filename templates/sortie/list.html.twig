@@ -5,8 +5,6 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="text-center mb-4">Liste des Sorties</h1>
-        <input type="checkbox" id="menuToggle" class="menu-toggle">
-        <label for="menuToggle" class="menu-burger">☰</label>
 
         <div id="zoneFiltre" class="filtre-cache">
             <div class="card mb-4">
@@ -14,35 +12,35 @@
                     <h5 class="card-title">Filtres</h5>
                     {{ form_start(form) }}
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label for="{{ form.site.vars.id }}" class="form-label">Site</label>
                             {{ form_widget(form.site, { 'attr': {'class': 'form-control'} }) }}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label for="{{ form.contenu.vars.id }}" class="form-label">Contenu</label>
                             {{ form_widget(form.contenu, { 'attr': {'class': 'form-control'} }) }}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label for="{{ form.debut.vars.id }}" class="form-label">Date de début</label>
                             {{ form_widget(form.debut, { 'attr': {'class': 'form-control'} }) }}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label for="{{ form.fin.vars.id }}" class="form-label">Date de fin</label>
                             {{ form_widget(form.fin, { 'attr': {'class': 'form-control'} }) }}
                         </div>
-                        <div class="col-md-6 form-check">
+                        <div class="col-md-3 form-check">
                             {{ form_widget(form.sortieQueJOrganise, { 'attr': {'class': 'form-check-input'} }) }}
                             <label for="{{ form.sortieQueJOrganise.vars.id }}" class="form-check-label">Sorties que j'organise</label>
                         </div>
-                        <div class="col-md-6 form-check">
+                        <div class="col-md-3 form-check">
                             {{ form_widget(form.sortieOuJeSuisInscrit, { 'attr': {'class': 'form-check-input'} }) }}
                             <label for="{{ form.sortieOuJeSuisInscrit.vars.id }}" class="form-check-label">Sorties où je suis inscrit</label>
                         </div>
-                        <div class="col-md-6 form-check">
+                        <div class="col-md-3 form-check">
                             {{ form_widget(form.sortieOuJeNeSuisPasInscrit, { 'attr': {'class': 'form-check-input'} }) }}
                             <label for="{{ form.sortieOuJeNeSuisPasInscrit.vars.id }}" class="form-check-label">Sorties où je ne suis pas inscrit</label>
                         </div>
-                        <div class="col-md-6 form-check">
+                        <div class="col-md-3 form-check">
                             {{ form_widget(form.sortiePassees, { 'attr': {'class': 'form-check-input'} }) }}
                             <label for="{{ form.sortiePassees.vars.id }}" class="form-check-label">Sorties passées</label>
                         </div>
@@ -50,7 +48,6 @@
                     {{ form_end(form) }}
                 </div>
             </div>
-        </div>
 
         <br>
         <div class="row">
@@ -59,15 +56,24 @@
                     {% for s in sortie %}
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <h5 class="card-title">{{ s.nom }}</h5>
+                                <h5 class="card-title" style="font-size: 150%"><strong>{{ s.nom }}</strong></h5>
+                                <h5 class="card-title" style="text-align: center"><strong> organiser par {{ s.organisateur.pseudo }}</strong></h5>
 
                                 {% if s.etat.libelle == 'Annulée' %}
                                     <p>Cette sortie est annulée.</p>
                                     <p class="text-danger"><strong>Motif d'annulation :</strong> {{ s.motifAnnulation }}</p>
                                 {% else %}
                                     <p class="card-text"><strong>Infos Sortie:</strong> {{ s.infosSortie }}</p>
-                                    <p class="card-text"><strong>Durée:</strong> {{ s.dureeEnHeures }} h</p>
-                                    <p class="card-text"><strong>Commence à:</strong> {{ s.dateHeureDebut.format('d/m/Y H:i') }}</p>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <p class="card-text"><strong>Durée:</strong> {{ s.dureeEnHeures }} h</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="card-text"><strong>Commence à:</strong> {{ s.dateHeureDebut.format('d/m/Y H:i') }}</p>
+                                        </div>
+                                    </div>
+
                                     <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ s.dateOuverture.format('d/m/Y H:i') }}
                                         jusqu'à {{ s.dateLimiteInscription.format('d/m/Y H:i') }}
                                     </p>
@@ -78,6 +84,25 @@
                                     <a class="btn btn-outline-primary" href="{{ path('sortie_edit',{'id':s.id}) }}" title="Modifier la sortie">
                                         Edit
                                     </a>
+
+                                    <table class="table table-bordered table-striped" style="text-align: center">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for participant in s.participants %}
+                                            <tr>
+                                                <td><a class="part-link" href="{{ path('afficher_participant',{'id':participant.id}) }}">{{ participant.pseudo }}</a></td>
+
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="2">Aucun participant inscrit pour le moment</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
                                 {% endif %}
                             </div>
                         </div>

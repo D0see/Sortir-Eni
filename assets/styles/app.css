@@ -36,9 +36,9 @@ html, body {
 }
 
 .nav-link:hover {
-    color: rgba(71, 152, 152, 0.78);
-    border-color: rgba(42, 92, 92, 0.74);
-    background-color: rgba(67, 153, 153, 0.68);
+    color: rgba(71, 130, 152, 0.68);
+    border-color: rgba(42, 77, 92, 0.49);
+    background-color: rgba(67, 134, 153, 0.6);
     border-radius: 50px;
 }
 
@@ -55,7 +55,7 @@ html, body {
 .part-link:hover {
     color: #5191ff;
     border-color: #0099ff;
-    background-color: rgba(123, 212, 255, 0.58);
+    background-color: rgba(91, 199, 251, 0.49);
     border-radius: 5px;
 }
 
@@ -127,12 +127,6 @@ h2 {
 }
 
 
-
-#zoneFiltre {
-    display: none;
-}
-
-
 #menuToggle:checked + .menu-burger + #zoneFiltre {
     display: block;
 }
@@ -148,4 +142,12 @@ h2 {
 .menu-toggle {
     display: none;
 }
+.menu {
+    display: block;
+}
+
+.menu.hidden {
+    display: none;
+}
+
 
