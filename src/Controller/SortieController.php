@@ -183,14 +183,16 @@ class SortieController extends AbstractController
     #[Route('/show/{id}', name: 'show_sortie',requirements: ['id' => '\d+'],methods: ['GET'])]
     public function index(Sortie $sortie): Response
     {
-        return $this->render('sortie/show.html.twig',['sortie'=>$sortie]);
+        $date = new \DateTime();
+        return $this->render('sortie/show.html.twig',['sortie'=>$sortie, 'date'=>$date]);
     }
 
     #[Route('/show/{id}/add-participant', name: 'add_participant',requirements: ['id' => '\d+'],methods: ['GET'])]
     public function addParticipant(Sortie $sortie, EntityManagerInterface $em): Response
     {
         $date = new \DateTime();
-        if($this->getUser()!==$sortie->getOrganisateur() && $date < $sortie->getDateLimiteInscription() ){
+        if($this->getUser()!==$sortie->getOrganisateur() && $date < $sortie->getDateLimiteInscription()
+            &&$sortie->getParticipants()->count() < $sortie->getNbInscriptionsMax()){
             $user = $this->getUser()->getUserIdentifier();
             $participant = $em->getRepository(Participant::class)->findOneBy(['pseudo' => $user]);
             $sortie->addParticipant($participant);
