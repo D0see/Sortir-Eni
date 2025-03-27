@@ -107,7 +107,7 @@ class ParticipantController extends AbstractController
 
             $this->addFlash('success', 'Profil mis à jour avec succès.');
             // Rediriger vers la page de profil
-            return $this->redirectToRoute('participant_profile');
+            return $this->redirectToRoute('mon_profil');
         }
 
         // 4) Afficher le formulaire
