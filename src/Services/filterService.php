@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Entity\Participant;
 use App\Model\SortieFiltersModel;
+use DateInterval;
+use DateTime;
 
 class filterService
 {
@@ -24,22 +26,35 @@ class filterService
 
             //Sorties passées
             if ($filtersObj->isSortiePassees()) {
-                // TODO
+                $now = new DateTime();
+                if ($sortie->getDateHeureDebut()->modify("+ {$sortie->getDureeEnHeures()} hours") > $now) continue;
             }
 
             // filtre par contenu
             if ($filtersObj->getContenu()) {
-                // TODO
+                $str = $filtersObj->getContenu();
+                $pattern = "/{$str}/i";
+                if (!preg_match($pattern, $sortie->getNom()) &&
+                    !preg_match($pattern, $sortie->getInfosSortie()) &&
+                    !preg_match($pattern, $sortie->getLieu()->getNom()) &&
+                    !preg_match($pattern, $sortie->getSite()->getNom())) continue;
             }
 
             // filtre par site
-            if ($filtersObj->getSite()) {
-                // TODO
-            }
+            if ($filtersObj->getSite() &&
+                $sortie->getSite()->getNom() != $filtersObj->getSite()->getNom()) continue;
 
-            // TODO filtre par date
+            // Si le filtre début est après la date d'ouverture des inscriptions
+            if ($filtersObj->getDebut() &&
+                $sortie->getDateOuverture() < $filtersObj->getDebut()) continue;
+
+
+            // Si le filtre fin est avant la fin de la sortie
+            if ($filtersObj->getFin() &&
+                $sortie->getDateHeureDebut()->modify("+ {$sortie->getDureeEnHeures()} hours") > $filtersObj->getFin()) continue;
 
             $returnArray[] = $sortie;
+
         }
         return $returnArray;
     }
