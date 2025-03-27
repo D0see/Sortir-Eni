@@ -24,7 +24,7 @@ class SortieController extends AbstractController
 {
 
     #[Route('sortie/list', name: 'sortie_list', methods: ['GET'])]
-    public function list(Request $request, SortieRepository $sortieRepository, SortieFiltersModel $sortieFiltersModel, filterService $filterService): Response
+    public function list(Request $request,EtatRepository $etatRepository , SortieRepository $sortieRepository, SortieFiltersModel $sortieFiltersModel, filterService $filterService): Response
     {
         $filter = new SortieFiltersModel();
 
@@ -32,10 +32,12 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         $sorties = $sortieRepository->findAll();
+        $etat = $etatRepository->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $sorties = $filterService->filterSorties($sorties, $filter, $this->getUser());
             return $this->render('sortie/list.html.twig', [
                 'sorties' => $sorties,
+
                 'form' => $form->createView()
             ]);
         }

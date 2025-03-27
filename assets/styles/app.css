@@ -127,30 +127,25 @@ h2 {
 }
 
 
-#menuBurger {
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
 
 #zoneFiltre {
-    width: 100%;
-    background: rgba(248, 248, 248, 0.25);
-    padding: 10px;
-    border: 1px solid #ccc;
-    transition: transform 0.3s ease-in-out;
+    display: none;
 }
 
-.filtre-cache {
-    transform: scaleY(0);
-    height: 0;
-    overflow: hidden;
-    transform-origin: top;
+
+#menuToggle:checked + .menu-burger + #zoneFiltre {
+    display: block;
 }
 
-.filtre-visible {
-    transform: scaleY(1);
-    height: auto;
+
+.menu-burger {
+    cursor: pointer;
+    font-size: 30px;
+    display: inline-block;
+}
+
+
+.menu-toggle {
+    display: none;
 }
 
