@@ -57,7 +57,7 @@ final class LieuController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($lieu);
             $entityManager->flush();
-            return $this->redirectToRoute('add_lieu');
+            return $this->redirectToRoute('lieu_list');
         }
 
         return $this->render('lieu/add.html.twig', [

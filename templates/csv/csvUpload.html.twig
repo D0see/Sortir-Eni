@@ -2,8 +2,12 @@
 
 {% block body %}
     <h1>Upload CSV File</h1>
-
+<div class="card shadow-sm " style="margin: 20px ;width: 100%;">
+    <div class="card-body">
     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
     {{ form_end(form) }}
+
+    </div>
+        </div>
 
 {% endblock %}

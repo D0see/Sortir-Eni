@@ -6,13 +6,14 @@
 
 {% block body %}
     <h1>Gérer les villes</h1>
-
+    <div class="card shadow-sm " style="margin: 20px ;width: 100%;">
+    <div class="card-body">
     {{ form_start(form) }}
     <div class="mb-3">
 
         {{ form_row(form.search, {'attr': {'class': 'form-control'}}) }}
     </div>
-    <button type="submit" class="btn btn-primary">Rechercher</button>
+    <button type="submit" class="btn btn-primary" style="float: right; margin-right: 10%">Rechercher</button>
     {{ form_end(form) }}
 
     <hr>
@@ -46,4 +47,6 @@
     </table>
 
     <a href="{{ path('add_ville') }}" class="btn btn-success">Ajouter</a>
+    </div>
+    </div>
 {% endblock %}

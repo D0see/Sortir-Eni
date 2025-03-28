@@ -73,14 +73,16 @@
                                             <p class="card-text"><strong>Commence à:</strong> {{ s.dateHeureDebut.format('d/m/Y H:i') }}</p>
                                         </div>
                                     </div>
-
-                                    <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ s.dateOuverture.format('d/m/Y H:i') }}
+                                        <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ s.dateOuverture.format('d/m/Y H:i') }}
                                         jusqu'à {{ s.dateLimiteInscription.format('d/m/Y H:i') }}
                                     </p>
                                     <p class="card-text"><strong>Nombre d'inscrits max:</strong> {{ s.nbInscriptionsMax }}</p>
                                     <a class="btn btn-outline-primary" href="{{ path('show_sortie', {'id': s.id}) }}" title="Détail de la sortie">
                                         Détail
                                     </a>
+                                    {% if s.dateLimiteInscription|date('d/m/Y') > "now"|date("Y-m-d H:i:s") %}
+                                        <p> les inscription sont close</p>
+                                    {% endif %}
 
                                     {% if s.etat.libelle != 'Activité en cours' and s.etat.libelle != 'Passée' and app.user == s.organisateur  %}
                                     <a class="btn btn-outline-primary" href="{{ path('sortie_edit',{'id':s.id}) }}" title="Modifier la sortie">
