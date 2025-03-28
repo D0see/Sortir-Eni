@@ -81,10 +81,12 @@
                                     <a class="btn btn-outline-primary" href="{{ path('show_sortie', {'id': s.id}) }}" title="Détail de la sortie">
                                         Détail
                                     </a>
+
+                                    {% if s.etat.libelle != 'Activité en cours' and s.etat.libelle != 'Passée' and app.user == s.organisateur  %}
                                     <a class="btn btn-outline-primary" href="{{ path('sortie_edit',{'id':s.id}) }}" title="Modifier la sortie">
                                         Edit
                                     </a>
-
+                                    {% endif %}
                                     <table class="table table-bordered table-striped" style="text-align: center">
                                         <thead>
 
