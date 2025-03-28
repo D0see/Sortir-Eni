@@ -29,25 +29,28 @@ class EtatCheckSubscriber implements EventSubscriberInterface
         $controller = $request->attributes->get('_controller');
 
         if (str_contains($controller, 'SortieController')) {
-            $date = new \DateTime();
+
+            $date = $_SERVER['REQUEST_TIME'];
             $sorties = $this->entityManager->getRepository(Sortie::class)->findAll();
+
             foreach ($sorties as $sortie) {
-                $interval = $sortie->getDureeEnHeures();
-                $dateDebut = $sortie->getDateHeureDebut();
-                $trueDateDebut = clone $dateDebut;
-                $dateFin = $trueDateDebut->modify('+' . $interval . ' hours');
-                if ($date < $sortie->getDateOuverture()) {
+
+                $dateOuverture = $sortie->getDateOuverture()->getTimestamp();
+                $dateLimiteInscription = $sortie->getDateLimiteInscription()->getTimestamp();
+                $dateHeureDebut = $sortie->getDateHeureDebut()->getTimestamp()-3600;
+                $interval = $sortie->getDureeEnHeures()*3600;
+                $dateFin = $dateHeureDebut+$interval;
+
+                if ($date < $dateOuverture) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']);
-                } elseif ($date > $sortie->getDateOuverture() && $date < $sortie->getDateLimiteInscription()) {
+                } elseif ($date > $dateOuverture && $date < $dateLimiteInscription) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']);
-                } elseif ($date > $sortie->getDateLimiteInscription() && $date < $sortie->getDateHeureDebut()
-                    || $sortie->getParticipants()->count() >= $sortie->getNbInscriptionsMax()) {
+                } elseif ($date >  $dateLimiteInscription && $date < $dateHeureDebut || $sortie->getParticipants()->count() >= $sortie->getNbInscriptionsMax()) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Clôturée']);
-                } elseif ($trueDateDebut >= $date && $trueDateDebut <= $dateFin) {
+                } elseif ($date >= $dateHeureDebut && $date <= $dateFin) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Activité en cours']);
                 } else {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Passée']);
-
                 }
                 $sortie->setEtat($etat);
                 $this->entityManager->persist($sortie);
