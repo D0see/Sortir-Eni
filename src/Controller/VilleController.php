@@ -58,7 +58,7 @@ final class VilleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($ville);
             $entityManager->flush();
-            return $this->redirectToRoute('add_ville');
+            return $this->redirectToRoute('ville_list');
         }
 
 
