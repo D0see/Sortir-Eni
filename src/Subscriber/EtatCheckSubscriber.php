@@ -41,7 +41,9 @@ class EtatCheckSubscriber implements EventSubscriberInterface
                 $interval = $sortie->getDureeEnHeures()*3600;
                 $dateFin = $dateHeureDebut+$interval;
 
-                if ($date < $dateOuverture) {
+                if($sortie->getEtat() === $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée'])){
+                    return;
+                } elseif ($date < $dateOuverture) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']);
                 } elseif ($date > $dateOuverture && $date < $dateLimiteInscription) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']);
