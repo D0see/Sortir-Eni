@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groupe index{% endblock %}
+
+{% block body %}
+    <h1>mes groupes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for groupe in mesGroupes %}
+            <tr>
+                <td>{{ groupe.id }}</td>
+                <td>{{ groupe.nom }}</td>
+                <td>
+                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}">show</a>
+                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Tu ne possède aucun groupes</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('app_groupe_new') }}">Créer un groupe</a>
+
+    <h1>groupes ou j'apparais</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for groupe in groupesOuJeSuis %}
+            <tr>
+                <td>{{ groupe.id }}</td>
+                <td>{{ groupe.nom }}</td>
+                <td>
+                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}">show</a>
+                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Tu n'a aucun groupes</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Groupe{% endblock %}
+
+{% block body %}
+    <h1>Edit Groupe</h1>
+
+    {{ include('groupe/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('mes_groupes') }}">back to list</a>
+    <div id = "addMember">Selectionner membre à ajouter</div>
+    <h2> membres </h2>
+    <div id = "members">
+        {% for participant in groupe.participants %}
+            <p id ="{{participant.pseudo}}">{{participant.pseudo}}</p>
+        {% endfor %}
+    </div>
+
+    {{ include('groupe/_delete_form.html.twig') }}
+    <script>
+        (() => {
+
+            //Hide the auto-generated form multiple select from view
+            document.getElementById('groupe_participants').hidden = "true";
+
+            const allParticipants = [...document.getElementById('groupe_participants').childNodes];
+
+            const optionsSelected = document.getElementById('groupe_participants').selectedOptions;
+            //deselects all options
+            allParticipants.forEach(participant => participant.selected = false);
+
+            //pseudo->html-element map for all partipants
+            const allParticipantsObj = allParticipants.reduce((acc, currElem) => {
+                acc[currElem.innerText] = currElem;
+                return acc;
+            }, {})
+
+            //Select the participants that are already in the group
+            const originalGroupMembers = [...document.getElementById('members').childNodes]
+            originalGroupMembers.forEach(memberElem => {
+                if (allParticipantsObj[memberElem.innerText]) allParticipantsObj[memberElem.innerText].selected = true;
+            });
+
+            //pseudo->html-element map for originalGroupMembers
+            const originalGroupMembersObj = originalGroupMembers.reduce((acc, currElem) => {
+                acc[currElem.innerText] = currElem;
+                return acc;
+            }, {})
+
+
+            const selector = document.createElement('select');
+            selector.id = "visibleSelector";
+            document.getElementById('addMember').appendChild(selector);
+            //feed visibleSelector with all participants not in the orginals
+            allParticipants.forEach(participant => {
+                if (originalGroupMembersObj[participant.innerText]) return;
+                const clonedElem = participant.cloneNode(true);
+                clonedElem.id = participant.innerText + "-cloned";
+                clonedElem.innerText = participant.innerText;
+                selector.appendChild(clonedElem);
+            });
+
+            const addParticipantButton = document.createElement('button');
+            addParticipantButton.innerText = "ajouter membre"
+            document.getElementById('addMember').appendChild(addParticipantButton);
+            addParticipantButton.addEventListener('click', () => {
+                for (const participant of allParticipants) {
+                    if (participant.value === selector.value) {
+                        participant.selected = true;
+                        selector.removeChild(document.getElementById(participant.innerText + "-cloned"));
+                        break;
+                    }
+                }
+            })
+        })();
+    </script>
+{% endblock %}
+
+
+

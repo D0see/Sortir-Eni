@@ -82,10 +82,24 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Site $site = null;
 
+    /**
+     * @var Collection<int, Groupe>
+     */
+    #[ORM\ManyToMany(targetEntity: Groupe::class, mappedBy: 'participants')]
+    private Collection $groupes;
+
+    /**
+     * @var Collection<int, Groupe>
+     */
+    #[ORM\OneToMany(targetEntity: Groupe::class, mappedBy: 'createur')]
+    private Collection $groupeCrees;
+
     public function __construct()
     {
         $this->sortiesParticipees = new ArrayCollection();
         $this->sortiesOrganisees = new ArrayCollection();
+        $this->groupes = new ArrayCollection();
+        $this->groupeCrees = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -314,6 +328,63 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSite(?Site $site): static
     {
         $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Groupe>
+     */
+    public function getGroupes(): Collection
+    {
+        return $this->groupes;
+    }
+
+    public function addGroupe(Groupe $groupe): static
+    {
+        if (!$this->groupes->contains($groupe)) {
+            $this->groupes->add($groupe);
+            $groupe->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupe(Groupe $groupe): static
+    {
+        if ($this->groupes->removeElement($groupe)) {
+            $groupe->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Groupe>
+     */
+    public function getGroupeCrees(): Collection
+    {
+        return $this->groupeCrees;
+    }
+
+    public function addGroupeCree(Groupe $groupeCree): static
+    {
+        if (!$this->groupeCrees->contains($groupeCree)) {
+            $this->groupeCrees->add($groupeCree);
+            $groupeCree->setCreateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupeCree(Groupe $groupeCree): static
+    {
+        if ($this->groupeCrees->removeElement($groupeCree)) {
+            // set the owning side to null (unless already changed)
+            if ($groupeCree->getCreateur() === $this) {
+                $groupeCree->setCreateur(null);
+            }
+        }
 
         return $this;
     }
