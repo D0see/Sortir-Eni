@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Gérer les lieu
+{% endblock %}
+
+{% block body %}
+    <h1>Gérer les lieu</h1>
+
+    {{ form_start(form) }}
+    <div class="mb-3">
+
+        {{ form_row(form.search, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <button type="submit" class="btn btn-primary">Rechercher</button>
+    {{ form_end(form) }}
+
+    <hr>
+
+    <table class="table table-striped mt-3">
+        <thead>
+        <tr>
+            <th>Lieu</th>
+            <th>Rue</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Ville</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for lieu in lieus %}
+            <tr>
+                <td>{{ lieu.nom }}</td>
+                <td>{{ lieu.rue }}</td>
+                <td>{{ lieu.latitude }}</td>
+                <td>{{ lieu.longitude }}</td>
+                <td>{{ lieu.ville.nom }}</td>
+                <td>
+                    <a href="{{ path('lieu_edit', {id: lieu.id}) }}"
+                       class="btn btn-sm btn-warning">Modifier</a>
+                    <a href="{{ path('lieu_delete', {id: lieu.id}) }}"
+                       class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucune lieu trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('add_lieu') }}" class="btn btn-success">Ajouter</a>
+{% endblock %}
