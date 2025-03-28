@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VilleRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,6 +21,10 @@ class Ville
     private ?string $nom = null;
 
     #[ORM\Column(length: 5)]
+    #[Assert\Regex(
+        pattern: "/^[0-9]{5}$/",
+        message: "Le code postal doit être composé de 5 chiffres."
+    )]
     private ?string $codePostal = null;
 
     /**

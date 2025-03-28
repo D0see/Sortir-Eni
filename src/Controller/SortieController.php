@@ -23,6 +23,7 @@ use App\Services\filterService;
 class SortieController extends AbstractController
 {
 
+    #[Route('/')]
     #[Route('sortie/list', name: 'sortie_list', methods: ['GET'])]
     public function list(Request $request,EtatRepository $etatRepository , SortieRepository $sortieRepository, SortieFiltersModel $sortieFiltersModel, filterService $filterService): Response
     {
