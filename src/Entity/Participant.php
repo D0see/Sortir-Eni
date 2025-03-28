@@ -6,6 +6,7 @@ use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -40,9 +41,17 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(length: 10)]
+    #[Assert\Regex(
+        pattern: "/^(\+?[0-9]{1,3})?([-. ]?[0-9]{2,4}){3,5}$/",
+        message: "Le numéro de téléphone n'est pas valide."
+    )]
     private ?string $telephone = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email(
+        message: "L'email '{{ value }}' n'est pas valide.",
+        mode: "html5"
+    )]
     private ?string $mail = null;
 
     #[ORM\Column]

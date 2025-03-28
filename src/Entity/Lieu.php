@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
@@ -22,9 +24,17 @@ class Lieu
     private ?string $rue = null;
 
     #[ORM\Column]
+    #[Assert\Range(
+        min: -90,
+        max: 90,
+    )]
     private ?float $latitude = null;
 
     #[ORM\Column]
+    #[Assert\Range(
+        min: -180,
+        max: 180,
+    )]
     private ?float $longitude = null;
 
     /**

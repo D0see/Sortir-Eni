@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
     <div class="container-fluid">
-        <a href="{{ path('app_main') }}" title="Revenir à l'accueil">
+        <a href="{{ path('sortie_list') }}" title="Revenir à l'accueil">
             <img style="width: 20px;height: auto;transform: scale(6.5);margin-left: 15px; margin-right: 20px;" src="{{ asset('img/logoblanc.png') }}" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,9 +9,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 {% if app.user %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_main')}}" title="main">Menu</a>
-                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('sortie_list') }}">Les Sorties</a>
