@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}New Groupe{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
 {% block body %}
     <h1>Create new Groupe</h1>
 
-    {{ include('groupe/_form.html.twig') }}
+
 
     <a href="{{ path('mes_groupes') }}">back to list</a>
     <div id = "addMember">Selectionner membre à ajouter</div>
@@ -20,7 +23,7 @@
     </div>
 
     <div id = "members"></div>
-
+    {{ include('groupe/_form.html.twig') }}
     <script>
         (() => {
             const userPseudo = document.getElementById('userPseudo').innerText;
@@ -102,7 +105,7 @@
             refreshDisplayList(listElem, allParticipants, selector);
 
             const addParticipantButton = document.createElement('button');
-            addParticipantButton.innerText = "ajouter membre"
+            addParticipantButton.innerText = "ajouter"
             document.getElementById('addMember').appendChild(addParticipantButton);
             addParticipantButton.addEventListener('click', () => {
                 for (const participant of allParticipants) {

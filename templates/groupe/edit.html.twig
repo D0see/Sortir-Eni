@@ -1,15 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit Groupe{% endblock %}
+    {% block stylesheets %}
+    {{ parent() }}
+    {% endblock %}
 
 {% block body %}
     <h1>Edit Groupe</h1>
 
-    {{ include('groupe/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('mes_groupes') }}">back to list</a>
-    <div id = "addMember">Selectionner membre à ajouter</div>
-    <h2> membres </h2>
+    <div id="main-content">
+        <a href="{{ path('mes_groupes') }}">back to list</a>
+        <p id="titre">Selectionner membre à ajouter</p>
+        <div id = "addMember"></div>
+        <div id = "members"></div>
+    </div>
+
+
+    <div id="formStuff">
+        {{ include('groupe/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('groupe/_delete_form.html.twig') }}
+    </div>
 
     <!-- Used to load groupe infos -->
     <div id="userPseudo" style="display : none">{{ userPseudo }}</div>
@@ -19,11 +30,6 @@
         {% endfor %}
     </div>
 
-    <div id = "members">
-    </div>
-
-
-    {{ include('groupe/_delete_form.html.twig') }}
     <script>
         (() => {
             const userPseudo = document.getElementById('userPseudo').innerText;
@@ -107,7 +113,7 @@
             refreshDisplayList(listElem, allParticipants, selector);
 
             const addParticipantButton = document.createElement('button');
-            addParticipantButton.innerText = "ajouter membre"
+            addParticipantButton.innerText = "ajouter"
             document.getElementById('addMember').appendChild(addParticipantButton);
             addParticipantButton.addEventListener('click', () => {
                 for (const participant of allParticipants) {
