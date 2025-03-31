@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Entity\User;
+use App\Form\editProfileType;
 use App\Form\ParticipantType;
 use App\Form\RegistrationFormType;
 use App\Repository\SiteRepository;
@@ -96,7 +97,7 @@ class ParticipantController extends AbstractController
         $participant = $this->getUser();
 
         // 2) Créer le formulaire
-        $form = $this->createForm(ParticipantType::class, $participant);
+        $form = $this->createForm(editProfileType::class, $participant);
         $form->handleRequest($request);
 
         // 3) Vérifier si le formulaire est soumis et valide
