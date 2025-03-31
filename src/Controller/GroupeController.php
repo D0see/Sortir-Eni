@@ -41,6 +41,7 @@ final class GroupeController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $groupe = new Groupe();
+        $groupe->addParticipant($this->getUser());
         $form = $this->createForm(GroupeType::class, $groupe);
         $form->handleRequest($request);
 
@@ -55,6 +56,7 @@ final class GroupeController extends AbstractController
         return $this->render('groupe/new.html.twig', [
             'groupe' => $groupe,
             'form' => $form,
+            'userPseudo' => $this->getUser()->getPseudo(),
         ]);
     }
 
@@ -80,6 +82,7 @@ final class GroupeController extends AbstractController
         return $this->render('groupe/edit.html.twig', [
             'groupe' => $groupe,
             'form' => $form,
+            'userPseudo' => $this->getUser()->getPseudo(),
         ]);
     }
 
