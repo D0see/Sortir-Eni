@@ -142,9 +142,6 @@ fabric.properties
 ### PHPUnit ###
 # Covers PHPUnit
 # Reference: https://phpunit.de/
-.env
-.env.dev
-.env.test
 # Generated files
 .phpunit.result.cache
 .phpunit.cache
