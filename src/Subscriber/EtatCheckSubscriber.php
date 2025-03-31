@@ -35,19 +35,22 @@ class EtatCheckSubscriber implements EventSubscriberInterface
 
             foreach ($sorties as $sortie) {
 
-                $dateOuverture = $sortie->getDateOuverture()->getTimestamp();
-                $dateLimiteInscription = $sortie->getDateLimiteInscription()->getTimestamp();
-                $dateHeureDebut = $sortie->getDateHeureDebut()->getTimestamp()-3600;
+                $dateOuverture = $sortie->getDateOuverture()->getTimestamp()-7200;
+                $dateLimiteInscription = $sortie->getDateLimiteInscription()->getTimestamp()-7200;
+                $dateHeureDebut = $sortie->getDateHeureDebut()->getTimestamp()-7200;
                 $interval = $sortie->getDureeEnHeures()*3600;
                 $dateFin = $dateHeureDebut+$interval;
 
                 if($sortie->getEtat() === $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée'])){
                     return;
+                }
+                if($sortie->getParticipants()->count() >= $sortie->getNbInscriptionsMax()){
+                    $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Clôturée']);
                 } elseif ($date < $dateOuverture) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']);
                 } elseif ($date > $dateOuverture && $date < $dateLimiteInscription) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']);
-                } elseif ($date >  $dateLimiteInscription && $date < $dateHeureDebut || $sortie->getParticipants()->count() >= $sortie->getNbInscriptionsMax()) {
+                } elseif ($date > $dateLimiteInscription && $date < $dateHeureDebut) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Clôturée']);
                 } elseif ($date >= $dateHeureDebut && $date <= $dateFin) {
                     $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Activité en cours']);
