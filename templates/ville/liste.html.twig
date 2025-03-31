@@ -1,19 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Gérer les villes
+    Liste des villes
 {% endblock %}
 
 {% block body %}
-    <h1>Gérer les villes</h1>
-    <div class="card shadow-sm " style="margin: 20px ">
+    <h1>Liste des villes</h1>
+    <div class="card shadow-sm " style="margin: 20px ;width: 100%;">
     <div class="card-body">
+
     {{ form_start(form) }}
     <div class="mb-3">
 
         {{ form_row(form.search, {'attr': {'class': 'form-control'}}) }}
     </div>
-    <button type="submit" class="btn btn-primary" style="float: right; margin-right: 10%">Rechercher</button>
+    <button type="submit" class="btn btn-primary" >Rechercher</button>
     {{ form_end(form) }}
 
     <hr>

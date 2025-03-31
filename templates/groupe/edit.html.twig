@@ -1,24 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit Groupe{% endblock %}
+    {% block stylesheets %}
+    {{ parent() }}
+    {% endblock %}
 
 {% block body %}
     <h1>Edit Groupe</h1>
 
-    {{ include('groupe/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('mes_groupes') }}">back to list</a>
-    <div id = "addMember">Selectionner membre à ajouter</div>
-    <h2> membres </h2>
-    <div id = "members">
+    <div id="main-content">
+        <a href="{{ path('mes_groupes') }}">back to list</a>
+        <p id="titre">Selectionner membre à ajouter</p>
+        <div id = "addMember"></div>
+        <div id = "members"></div>
+    </div>
+
+
+    <div id="formStuff">
+        {{ include('groupe/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('groupe/_delete_form.html.twig') }}
+    </div>
+
+    <!-- Used to load groupe infos -->
+    <div id="userPseudo" style="display : none">{{ userPseudo }}</div>
+    <div id = "ogMembers" style="display : none">
         {% for participant in groupe.participants %}
             <p id ="{{participant.pseudo}}">{{participant.pseudo}}</p>
         {% endfor %}
     </div>
 
-    {{ include('groupe/_delete_form.html.twig') }}
     <script>
         (() => {
+            const userPseudo = document.getElementById('userPseudo').innerText;
 
             //Hide the auto-generated form multiple select from view
             document.getElementById('groupe_participants').hidden = "true";
@@ -29,14 +43,14 @@
             //deselects all options
             allParticipants.forEach(participant => participant.selected = false);
 
-            //pseudo->html-element map for all partipants
+            //pseudo->html-element map for all participants
             const allParticipantsObj = allParticipants.reduce((acc, currElem) => {
                 acc[currElem.innerText] = currElem;
                 return acc;
             }, {})
 
             //Select the participants that are already in the group
-            const originalGroupMembers = [...document.getElementById('members').childNodes]
+            const originalGroupMembers = [...document.getElementById('ogMembers').childNodes]
             originalGroupMembers.forEach(memberElem => {
                 if (allParticipantsObj[memberElem.innerText]) allParticipantsObj[memberElem.innerText].selected = true;
             });
@@ -60,13 +74,52 @@
                 selector.appendChild(clonedElem);
             });
 
+            //Creates display for selected Members
+            const listElem = document.getElementById("members");
+            const refreshDisplayList = (listElem, allParticipants, selector) => {
+                for (const participant of allParticipants) {
+                    if (!participant.selected || participant?.displayed) continue;
+
+                    participant.displayed = true;
+
+                    const participantDisplay = document.createElement('div');
+                    const participantName = document.createElement('p');
+                    participantName.innerText = participant.innerText;
+                    participantDisplay.appendChild(participantName);
+                    listElem.appendChild(participantDisplay);
+                    const deleteParticipantBtn = document.createElement('button');
+
+                    if (participantName.innerText === userPseudo) {
+                        participantName.innerText += " (créateur du groupe)";
+                        continue;
+                    }
+
+                    deleteParticipantBtn.innerText = "Supprimer"
+                    deleteParticipantBtn.addEventListener('click', () => {
+                        const clonedElem = participant.cloneNode(true);
+                        clonedElem.id = participant.innerText + "-cloned";
+                        clonedElem.innerText = participant.innerText;
+                        selector.appendChild(clonedElem);
+                        participantDisplay.remove();
+                        console.log(participantDisplay, "removed");
+                        participant.displayed = false;
+                        participant.selected = false;
+                    })
+
+                    participantDisplay.appendChild(deleteParticipantBtn);
+
+                }
+            }
+            refreshDisplayList(listElem, allParticipants, selector);
+
             const addParticipantButton = document.createElement('button');
-            addParticipantButton.innerText = "ajouter membre"
+            addParticipantButton.innerText = "ajouter"
             document.getElementById('addMember').appendChild(addParticipantButton);
             addParticipantButton.addEventListener('click', () => {
                 for (const participant of allParticipants) {
                     if (participant.value === selector.value) {
                         participant.selected = true;
+                        refreshDisplayList(listElem, allParticipants, selector);
                         selector.removeChild(document.getElementById(participant.innerText + "-cloned"));
                         break;
                     }
