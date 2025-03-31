@@ -24,7 +24,9 @@
         <tr>
             <th>Ville</th>
             <th>Code postal</th>
-            <th>Actions</th>
+            {% if not app.session.get('is_mobile') %}
+                <th>Actions</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -33,10 +35,12 @@
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
+                    {% if not app.session.get('is_mobile') %}
                     <a href="{{ path('ville_edit', {id: ville.id}) }}"
                        class="btn btn-sm btn-warning">Modifier</a>
                     <a href="{{ path('ville_delete', {id: ville.id}) }}"
                        class="btn btn-danger btn-sm">Supprimer</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -46,8 +50,9 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('add_ville') }}" class="btn btn-success">Ajouter</a>
+        {% if not app.session.get('is_mobile') %}
+            <a href="{{ path('add_ville') }}" class="btn btn-success">Ajouter</a>
+        {% endif %}
     </div>
     </div>
 {% endblock %}

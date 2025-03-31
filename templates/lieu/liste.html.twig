@@ -19,6 +19,7 @@
 
     <hr>
 
+        <div class="table-responsive">
     <table class="table table-striped mt-3">
         <thead>
         <tr>
@@ -27,7 +28,9 @@
             <th>Latitude</th>
             <th>Longitude</th>
             <th>Ville</th>
-            <th>Actions</th>
+            {% if not app.session.get('is_mobile') %}
+                <th>Actions</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -39,10 +42,12 @@
                 <td>{{ lieu.longitude }}</td>
                 <td>{{ lieu.ville.nom }}</td>
                 <td>
+                    {% if not app.session.get('is_mobile') %}
                     <a href="{{ path('lieu_edit', {id: lieu.id}) }}"
                        class="btn btn-sm btn-warning">Modifier</a>
                     <a href="{{ path('lieu_delete', {id: lieu.id}) }}"
                        class="btn btn-danger btn-sm">Supprimer</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -52,8 +57,10 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('add_lieu') }}" class="btn btn-success">Ajouter</a>
+        {% if not app.session.get('is_mobile') %}
+        <a href="{{ path('add_lieu') }}" class="btn btn-success">Ajouter</a>
+        {% endif %}
+            </div>
     </div>
     </div>
 {% endblock %}
