@@ -1,4 +1,6 @@
-
+/*:root {*/
+/*    --primary-color : */
+/*}*/
 html, body {
     height: 100%;
     margin: 0;
@@ -154,4 +156,22 @@ h2 {
     display: none;
 }
 
+.info-sortie {
+    position: relative;
+}
 
+.short-info {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;  /* Vous pouvez ajuster cette largeur en fonction de votre design */
+}
+
+.full-info {
+    margin-top: 10px;
+}
+
+.info-sortie button {
+    display: block;
+    margin-top: 10px;
+}
