@@ -33,9 +33,9 @@
 
 
 	INSERT INTO `participant` (`id`, `site_id`, `nom`, `prenom`, `telephone`, `mail`, `administrateur`, `actif`, `pseudo`, `roles`, `password`, `ma_photo`) VALUES
-	(1, 1, 'a', 'a', 'a', 'a', 0, 0, 'a', '[\"ROLE_USER\"]', '$2y$13$LssaxmmvcccoeiD92uz6WubMO/3cTBM4VmYN.uUv1kHRChtugEjfO', NULL);
+	(1, 1, 'a', 'a', 'a', 'a', 0, 0, 'a', '[\"ROLE_USER\", \"ROLE_ADMIN\"]', '$2y$13$LssaxmmvcccoeiD92uz6WubMO/3cTBM4VmYN.uUv1kHRChtugEjfO', NULL);
 
-
+    <!-- login : a , mdp : aaaaaa -->
 
 
 

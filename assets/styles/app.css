@@ -8,6 +8,23 @@
     color: var(--terminal-green);
 }
 
+button {
+    color : black;
+}
+
+input {
+    color : white;
+}
+
+.btn {
+    color: var(--terminal-green);
+    background-color: hsl(0,0,0);
+}
+
+.card-title {
+    color: var(--terminal-green);
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -146,3 +163,12 @@ h2 {
 @keyframes cursor-blink {
     50% { opacity: 0; }
 }
+
+/* Add this to your existing CSS */
+
+/* Scanline animation container */
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
