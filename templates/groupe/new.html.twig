@@ -6,24 +6,51 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Create new Groupe</h1>
+    <div class="col-md-6 mb-4 mx-auto mt-4">
+        <div class="row justify-content-center">
+            <div class="card shadow-lg">
+                <div class="card-header text-white text-center">
+                    <h2>Crée un nouveau groupe</h2>
+                </div>
+                <div class="card-body">
+                    <a href="{{ path('mes_groupes') }}" class="btn btn-outline-secondary mb-3">Retour a la list</a>
 
+                    <div id="addMember" class="mb-3">
+                        <strong>Selection un membre a ajouter</strong>
+                    </div>
 
+                    <h3 class="mb-3">Members</h3>
 
-    <a href="{{ path('mes_groupes') }}">back to list</a>
-    <div id = "addMember">Selectionner membre à ajouter</div>
-    <h2> membres </h2>
+                    <!-- Used to load group info -->
+                    <div id="userPseudo" class="d-none">{{ userPseudo }}</div>
 
-    <!-- Used to load groupe infos -->
-    <div id="userPseudo" style="display : none">{{ userPseudo }}</div>
-    <div id = "ogMembers" style="display : none">
-        {% for participant in groupe.participants %}
-            <p id ="{{participant.pseudo}}">{{participant.pseudo}}</p>
-        {% endfor %}
+                    <div id="ogMembers" class="d-none">
+                        {% for participant in groupe.participants %}
+                            <p id="{{ participant.pseudo }}" class="participant-pseudo">{{ participant.pseudo }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <div id="members" class="mb-3"></div>
+                    {{ form_start(form) }}
+
+                    {# Rendre le champ 'nom' manuellement #}
+                    <div class="mb-3">
+                        <label for="{{ form.nom.vars.id }}" class="form-label">Nom du groupe</label>
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    {# Rendre le champ 'participants' manuellement #}
+                    {{ form_row(form.participants, {'label': false}) }}
+
+                    <br>
+                    <button class="btn btn-outline-success"> Crée le groupe</button>
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id = "members"></div>
-    {{ include('groupe/_form.html.twig') }}
     <script>
         (() => {
             const userPseudo = document.getElementById('userPseudo').innerText;
@@ -58,6 +85,7 @@
 
             const selector = document.createElement('select');
             selector.id = "visibleSelector";
+            selector.classList.add('btn', 'btn-primary', 'dropdown-toggle');
             document.getElementById('addMember').appendChild(selector);
             //feed visibleSelector with all participants not in the orginals
             allParticipants.forEach(participant => {
@@ -77,6 +105,9 @@
                     participant.displayed = true;
 
                     const participantDisplay = document.createElement('div');
+                    const participantContainer = document.createElement('div');
+                    participantContainer.classList.add('participant-container');
+
                     const participantName = document.createElement('p');
                     participantName.innerText = participant.innerText;
                     participantDisplay.appendChild(participantName);
@@ -86,9 +117,11 @@
                         participantName.innerText += " (créateur du groupe)";
                         continue;
                     }
+                    participantContainer.appendChild(participantName);
 
                     const deleteParticipantBtn = document.createElement('button');
-                    deleteParticipantBtn.innerText = "Supprimer"
+                    deleteParticipantBtn.innerText = "Supprimer";
+                    deleteParticipantBtn.classList.add('btn', 'btn-outline-danger', 'btn-sm');
                     deleteParticipantBtn.addEventListener('click', () => {
                         const clonedElem = participant.cloneNode(true);
                         clonedElem.id = participant.innerText + "-cloned";
@@ -97,15 +130,27 @@
                         participantDisplay.remove();
                         participant.displayed = false;
                         participant.selected = false;
-                    })
-                    participantDisplay.appendChild(deleteParticipantBtn);
+                    });
 
+                    participantContainer.appendChild(deleteParticipantBtn);
+                    participantDisplay.appendChild(participantContainer);  // Ajoute le conteneur à l'affichage
+
+                    listElem.appendChild(participantDisplay);
+
+                    if (participantName.innerText === userPseudo) {
+                        participantName.innerText += " (créateur du groupe)";
+                        continue;
+                    }
+
+                    participantDisplay.classList.add('deleteParticipantBtn');
                 }
+
             }
             refreshDisplayList(listElem, allParticipants, selector);
 
             const addParticipantButton = document.createElement('button');
             addParticipantButton.innerText = "ajouter"
+            addParticipantButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'w-100', 'btn-margin');
             document.getElementById('addMember').appendChild(addParticipantButton);
             addParticipantButton.addEventListener('click', () => {
                 for (const participant of allParticipants) {

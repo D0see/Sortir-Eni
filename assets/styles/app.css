@@ -193,3 +193,16 @@ body::before {
         transform: translateY(100vh);
     }
 }
+
+.participant-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.deleteParticipantBtn {
+    margin-bottom: 10px;
+}
+.btn-margin {
+    margin-top: 10px; /* Ajustez la valeur selon vos besoins */
+}
