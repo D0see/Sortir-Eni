@@ -1,81 +1,91 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Groupe{% endblock %}
-    {% block stylesheets %}
+{% block title %}Mise à jour du groupe{% endblock %}
+
+{% block stylesheets %}
     {{ parent() }}
-    {% endblock %}
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Groupe</h1>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-header text-white text-center">
+                        <h2 class="mb-1">Mise à jour du groupe</h2>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ path('mes_groupes') }}" class="btn btn-outline-secondary mb-3">
+                            <i class="fas fa-arrow-left"></i> Retour à la liste
+                        </a>
 
+                        <h5 class="mb-3"><strong>Sélectionner un membre à ajouter</strong></h5>
 
-    <div id="main-content">
-        <a href="{{ path('mes_groupes') }}">back to list</a>
-        <p id="titre">Selectionner membre à ajouter</p>
-        <div id = "addMember"></div>
-        <div id = "members"></div>
+                        <div id="addMember" class="mb-3"></div>
+                        <div id="members"></div>
+
+                        <hr>
+
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <button class="btn btn-success">mise a jour</button>
+                        {{ form_end(form) }}
+
+                        <form method="post" action="{{ path('app_groupe_delete', {'id': groupe.id}) }}"
+                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce groupe ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ groupe.id) }}">
+                            <button type="submit" class="btn btn-danger "><i class="fas fa-trash-alt"></i> Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-    <div id="formStuff">
-        {{ include('groupe/_form.html.twig', {'button_label': 'Update'}) }}
-        {{ include('groupe/_delete_form.html.twig') }}
-    </div>
-
-    <!-- Used to load groupe infos -->
-    <div id="userPseudo" style="display : none">{{ userPseudo }}</div>
-    <div id = "ogMembers" style="display : none">
+    <div id="userPseudo" style="display: none">{{ userPseudo }}</div>
+    <div id="ogMembers" style="display: none">
         {% for participant in groupe.participants %}
-            <p id ="{{participant.pseudo}}">{{participant.pseudo}}</p>
+            <p id="{{ participant.pseudo }}">{{ participant.pseudo }}</p>
         {% endfor %}
     </div>
 
     <script>
         (() => {
             const userPseudo = document.getElementById('userPseudo').innerText;
-
-            //Hide the auto-generated form multiple select from view
-            document.getElementById('groupe_participants').hidden = "true";
+            document.getElementById('groupe_participants').hidden = true;
 
             const allParticipants = [...document.getElementById('groupe_participants').childNodes];
-
-            const optionsSelected = document.getElementById('groupe_participants').selectedOptions;
-            //deselects all options
             allParticipants.forEach(participant => participant.selected = false);
 
-            //pseudo->html-element map for all participants
             const allParticipantsObj = allParticipants.reduce((acc, currElem) => {
                 acc[currElem.innerText] = currElem;
                 return acc;
-            }, {})
+            }, {});
 
-            //Select the participants that are already in the group
-            const originalGroupMembers = [...document.getElementById('ogMembers').childNodes]
+            const originalGroupMembers = [...document.getElementById('ogMembers').childNodes];
             originalGroupMembers.forEach(memberElem => {
                 if (allParticipantsObj[memberElem.innerText]) allParticipantsObj[memberElem.innerText].selected = true;
             });
 
-            //pseudo->html-element map for originalGroupMembers
             const originalGroupMembersObj = originalGroupMembers.reduce((acc, currElem) => {
                 acc[currElem.innerText] = currElem;
                 return acc;
-            }, {})
-
+            }, {});
 
             const selector = document.createElement('select');
             selector.id = "visibleSelector";
+            selector.classList.add('form-select', 'mb-3');
             document.getElementById('addMember').appendChild(selector);
-            //feed visibleSelector with all participants not in the orginals
+
             allParticipants.forEach(participant => {
                 if (originalGroupMembersObj[participant.innerText]) return;
                 const clonedElem = participant.cloneNode(true);
                 clonedElem.id = participant.innerText + "-cloned";
-                clonedElem.innerText = participant.innerText;
                 selector.appendChild(clonedElem);
             });
 
-            //Creates display for selected Members
             const listElem = document.getElementById("members");
+
             const refreshDisplayList = (listElem, allParticipants, selector) => {
                 for (const participant of allParticipants) {
                     if (!participant.selected || participant?.displayed) continue;
@@ -83,38 +93,42 @@
                     participant.displayed = true;
 
                     const participantDisplay = document.createElement('div');
-                    const participantName = document.createElement('p');
+                    participantDisplay.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'border', 'p-2', 'mb-2');
+
+                    const participantName = document.createElement('span');
                     participantName.innerText = participant.innerText;
                     participantDisplay.appendChild(participantName);
                     listElem.appendChild(participantDisplay);
-                    const deleteParticipantBtn = document.createElement('button');
 
                     if (participantName.innerText === userPseudo) {
                         participantName.innerText += " (créateur du groupe)";
                         continue;
                     }
 
-                    deleteParticipantBtn.innerText = "Supprimer"
+                    const deleteParticipantBtn = document.createElement('button');
+                    deleteParticipantBtn.classList.add('btn', 'btn-outline-danger', 'btn-sm');
+                    deleteParticipantBtn.innerHTML = '<i class="fas fa-user-times"></i> Supprimer';
+
                     deleteParticipantBtn.addEventListener('click', () => {
                         const clonedElem = participant.cloneNode(true);
                         clonedElem.id = participant.innerText + "-cloned";
-                        clonedElem.innerText = participant.innerText;
                         selector.appendChild(clonedElem);
                         participantDisplay.remove();
-                        console.log(participantDisplay, "removed");
                         participant.displayed = false;
                         participant.selected = false;
-                    })
+                    });
 
                     participantDisplay.appendChild(deleteParticipantBtn);
-
                 }
-            }
+            };
             refreshDisplayList(listElem, allParticipants, selector);
 
             const addParticipantButton = document.createElement('button');
-            addParticipantButton.innerText = "ajouter"
+            addParticipantButton.classList.add('btn', 'btn-primary', 'w-100');
+            addParticipantButton.innerHTML = '<i class="fas fa-user-plus"></i> Ajouter';
+
             document.getElementById('addMember').appendChild(addParticipantButton);
+
             addParticipantButton.addEventListener('click', () => {
                 for (const participant of allParticipants) {
                     if (participant.value === selector.value) {
@@ -124,10 +138,8 @@
                         break;
                     }
                 }
-            })
+            });
         })();
     </script>
+
 {% endblock %}
-
-
-

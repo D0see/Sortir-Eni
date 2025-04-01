@@ -3,15 +3,24 @@
 {% block title %}Groupe{% endblock %}
 
 {% block body %}
+<div class="col-md-6 mb-4" style="margin-top: 20px; margin-left: 20%;text-align: center">
+    <div class="card shadow-sm">
+        <div class="card-body">
     <h1>Groupe "{{ groupe.nom }}"</h1>
     <h2>membres</h2>
     {% for participant in groupe.participants %}
         <p>{{ participant.pseudo }}</p>
     {% endfor %}
 
-    <a href="{{ path('mes_groupes') }}">back to list</a>
+    <a href="{{ path('mes_groupes') }}" class="btn btn-warning">retourner a la list</a>
 
-    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}">edit</a>
+    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-success">modifier</a>
+            <form method="post" action="{{ path('app_groupe_delete', {'id': groupe.id}) }}" onsubmit="return confirm('Êtes-vous sûr ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ groupe.id) }}">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
 
-    {{ include('groupe/_delete_form.html.twig') }}
+            </div>
+            </div>
+            </div>
 {% endblock %}
