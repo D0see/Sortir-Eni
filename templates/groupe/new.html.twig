@@ -13,7 +13,7 @@
                     <h2>Crée un nouveau groupe</h2>
                 </div>
                 <div class="card-body">
-                    <a href="{{ path('mes_groupes') }}" class="btn btn-outline-light mb-3">Retour a la list</a>
+                    <a href="{{ path('mes_groupes') }}" class="btn btn-outline-secondary mb-3">Retour a la list</a>
 
                     <div id="addMember" class="mb-3">
                         <strong>Selection un membre a ajouter</strong>
@@ -34,7 +34,10 @@
                     {{ form_start(form) }}
 
                     {# Rendre le champ 'nom' manuellement #}
-                    {{ form_row(form.nom) }}
+                    <div class="mb-3">
+                        <label for="{{ form.nom.vars.id }}" class="form-label">Nom du groupe</label>
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
 
                     {# Rendre le champ 'participants' manuellement #}
                     {{ form_row(form.participants, {'label': false}) }}

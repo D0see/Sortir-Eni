@@ -29,7 +29,11 @@
                         {{ form_start(form) }}
 
                         {# Rendre le champ 'nom' manuellement #}
-                        {{ form_row(form.nom) }}
+
+                        <div class="mb-3">
+                            <label for="{{ form.nom.vars.id }}" class="form-label">Nom du groupe</label>
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                        </div>
 
                         <br>
                         {{ form_row(form.participants, {'label': false}) }}
