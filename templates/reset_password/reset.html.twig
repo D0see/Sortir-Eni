@@ -1,0 +1,65 @@
+{# reset_password.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialiser votre mot de passe{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center mb-4">Réinitialiser votre mot de passe</h1>
+
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        {{ form_start(resetForm) }}
+
+                        <div class="mb-3 d-flex flex-column  align-items-center">
+                            {{ form_label(resetForm.plainPassword, null, {'label_attr': {'class': 'form-label',}}) }}
+                            {{ form_widget(resetForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(resetForm.plainPassword) }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Réinitialiser</button>
+
+                        {{ form_end(resetForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Réinitialiser votre mot de passe{% endblock %}#}
+
+{#{% block body %}#}
+{#    <h1>Réinitialiser votre mot de passe</h1>#}
+{#    {{ form_start(resetForm) }}#}
+{#    {{ form_row(resetForm.plainPassword, {'attr': {'class': 'form-control'}}) }}#}
+{#    <button type="submit" class="btn btn-primary mt-3">Réinitialiser</button>#}
+{#    {{ form_end(resetForm) }}#}
+{#{% endblock %}#}

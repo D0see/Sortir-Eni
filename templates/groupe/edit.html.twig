@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-
+    <div id="groupCreatorPseudo" style="display : none">{{ groupe.createur.pseudo }}</div>
     <div id="userPseudo" style="display: none">{{ userPseudo }}</div>
     <div id="ogMembers" style="display: none">
         {% for participant in groupe.participants %}
@@ -111,7 +111,7 @@
                     participantDisplay.appendChild(participantName);
                     listElem.appendChild(participantDisplay);
 
-                    if (participantName.innerText === userPseudo) {
+                    if (participantName.innerText === document.getElementById("groupCreatorPseudo").innerText) {
                         participantName.innerText += " (créateur du groupe)";
                         continue;
                     }
