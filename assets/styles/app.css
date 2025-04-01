@@ -74,6 +74,11 @@ body::after {
     letter-spacing: 1px;
 }
 
+.navbar-toggler {
+    background-color: rgba(25, 63, 89, 0.69);
+    border-color: rgba(22, 53, 74, 0.65);
+}
+
 .nav-link {
     position: relative;
     transition: all 0.2s linear;
@@ -204,5 +209,13 @@ body::before {
     margin-bottom: 10px;
 }
 .btn-margin {
-    margin-top: 10px; /* Ajustez la valeur selon vos besoins */
+    margin-top: 10px;
+}
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+.col-md-6 {
+    padding-left: 10px;
+    padding-right: 10px;
 }

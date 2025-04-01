@@ -21,7 +21,7 @@
 
 	INSERT INTO `lieu` (`id`, `ville_id`, `nom`, `rue`, `latitude`, `longitude`) VALUES
 	(1, 2, 'bar sympas', 'rue du megafun', 152.02, 597.36),
-	(2, 1, 'bar moins sympas', 'rue du chouette', 236.85, 458.12);
+	(2, 1, 'bar moins sympas', 'rue du chouette', 236.85, 458.12),
 	(3, 1, 'patinore', 'rue du boulot', 236.85, 458.12);
 
 	INSERT INTO `site` (`id`, `nom`) VALUES
