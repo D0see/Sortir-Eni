@@ -19,6 +19,7 @@ final class GroupeController extends AbstractController
     {
         $groupesOuJeSuis = $groupeRepository->getGroupesApparus($this->getUser());
         $mesgroupes = $groupeRepository->getGroupesPossedes($this->getUser());
+
         return $this->render('groupe/index.html.twig', [
             'controller_name' => 'GroupeController',
             'mesGroupes' => $mesgroupes,

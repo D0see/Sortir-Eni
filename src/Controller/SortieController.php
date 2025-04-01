@@ -33,7 +33,8 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         //TODO custom dql request
-        $sorties = $filterService->filterArchivedSorties($sortieRepository->findAll());
+        $sorties = $sortieRepository->getNonArchivedSorties();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $sorties = $filterService->filterSorties($sorties, $filter, $this->getUser());
             return $this->render('sortie/list.html.twig', [
