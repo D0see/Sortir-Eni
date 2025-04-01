@@ -17,7 +17,7 @@
     <button type="submit" class="btn btn-primary">Rechercher</button>
     {{ form_end(form) }}
 
-    <hr>
+
 
         <div class="table-responsive">
     <table class="table table-striped mt-3">
@@ -25,12 +25,12 @@
         <tr>
             <th>Lieu</th>
             <th>Rue</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
+{#            <th>Latitude</th>#}
+{#            <th>Longitude</th>#}
             <th>Ville</th>
-            {% if not app.session.get('is_mobile') %}
-                <th>Actions</th>
-            {% endif %}
+{#            {% if not app.session.get('is_mobile') %}#}
+{#                <th>Actions</th>#}
+{#            {% endif %}#}
         </tr>
         </thead>
         <tbody>
@@ -38,17 +38,17 @@
             <tr>
                 <td>{{ lieu.nom }}</td>
                 <td>{{ lieu.rue }}</td>
-                <td>{{ lieu.latitude }}</td>
-                <td>{{ lieu.longitude }}</td>
+{#                <td>{{ lieu.latitude }}</td>#}
+{#                <td>{{ lieu.longitude }}</td>#}
                 <td>{{ lieu.ville.nom }}</td>
-                <td>
-                    {% if not app.session.get('is_mobile') %}
-                    <a href="{{ path('lieu_edit', {id: lieu.id}) }}"
-                       class="btn btn-sm btn-warning">Modifier</a>
-                    <a href="{{ path('lieu_delete', {id: lieu.id}) }}"
-                       class="btn btn-danger btn-sm">Supprimer</a>
-                    {% endif %}
-                </td>
+{#                <td>#}
+{#                    {% if not app.session.get('is_mobile') %}#}
+{#                    <a href="{{ path('lieu_edit', {id: lieu.id}) }}"#}
+{#                       class="btn btn-sm btn-warning">Modifier</a>#}
+{#                    <a href="{{ path('lieu_delete', {id: lieu.id}) }}"#}
+{#                       class="btn btn-danger btn-sm">Supprimer</a>#}
+{#                    {% endif %}#}
+{#                </td>#}
             </tr>
         {% else %}
             <tr>

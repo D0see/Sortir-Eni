@@ -28,7 +28,6 @@ class SortietVoter extends Voter
     {
         $participant = $token->getUser();
 
-
         if(!$participant instanceof Participant){
             return false;
         }
@@ -45,7 +44,6 @@ class SortietVoter extends Voter
 
     private function peutAnnuler(Sortie $sortie, Participant $participant): bool
     {
-
         if($sortie->getOrganisateur()!==$participant && !in_array('ROLE_ADMIN', $participant->getRoles())){
             return false;
         }
