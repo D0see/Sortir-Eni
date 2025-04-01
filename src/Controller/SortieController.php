@@ -36,7 +36,7 @@ class SortieController extends AbstractController
         $sorties = $sortieRepository->getNonArchivedSorties();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sorties = $filterService->filterSorties($sorties, $filter, $this->getUser());
+            $sorties = $sortieRepository->getSortieFiltered($this->getUser(), $filter);
             return $this->render('sortie/list.html.twig', [
                 'sorties' => $sorties,
                 'form' => $form->createView(),

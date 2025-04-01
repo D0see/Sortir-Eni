@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Model\SortieFiltersModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -29,13 +30,75 @@ class SortieRepository extends ServiceEntityRepository
     }
 
     public function getSortieFiltered(Participant $user, SortieFiltersModel $filtersObj):array {
-        return $this->createQueryBuilder('g')
-            ->leftJoin('g.participants', 'p')
-            ->Where('p = :user')
-            ->AndWhere('g.createur != :user')
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
+
+        $threshold = new \DateTime();
+        $threshold->modify('- 1 month');
+         $filteredQuery = $this->createQueryBuilder('s')
+             ->Where('s.dateHeureDebut > :threshold')
+             ->setParameter('threshold', $threshold)
+            ->leftJoin('s.participants', 'p')->addSelect('p')
+            ->leftJoin('s.etat', 'e')->addSelect('e')
+            ->leftJoin('s.site', 'si')->addSelect('si');
+
+        //Sortie Organisée par l'utilisateur
+        if ($filtersObj->isSortieQueJOrganise()) {
+            $filteredQuery
+                ->andwhere('s.organisateur = :user')
+                ->setParameter('user', $user);
+        }
+
+        //Sortie ou l'utilisateur est inscrit
+        if ($filtersObj->isSortieOuJeNeSuisPasInscrit()) {
+            $filteredQuery
+                ->andWhere(':user not member of s.participants')
+                ->setParameter('user', $user);
+        }
+
+        //Sortie ou l'utilisateur n'est pas inscrit
+         if ($filtersObj->isSortieOuJeSuisInscrit()) {
+            $filteredQuery
+                ->andWhere(':user member of s.participants')
+                ->setParameter('user', $user);
+        }
+
+        //Sortie passées
+        if ($filtersObj->isSortiePassees()) {
+            $filteredQuery
+                ->andwhere('e.libelle = :libelle')
+                ->setParameter('libelle', 'passée');
+        }
+
+        // filtre par contenu
+        if ($filtersObj->getContenu()) {
+            $filteredQuery
+                ->andwhere('UPPER(s.infosSortie) LIKE UPPER(:contenu) OR UPPER(s.nom) LIKE UPPER(:contenu)')
+                ->setParameter('contenu', '%'.$filtersObj->getContenu().'%');
+        }
+
+        // filtre par site
+        if ($filtersObj->getSite()) {
+            $filteredQuery
+                ->andwhere('si = :inputtedSite')
+                ->setParameter('inputtedSite', $filtersObj->getSite());
+        }
+
+        // Si le filtre début est après la date d'ouverture des inscriptions
+        if ($filtersObj->getDebut()) {
+            $filteredQuery
+                ->andwhere('s.dateHeureDebut > :dateDebut')
+                ->setParameter('dateDebut', $filtersObj->getDebut());
+        }
+
+        // Si le filtre fin est avant la fin de la sortie
+        //TODO add sortie.duree to dateHeureDebut before comparing
+        if ($filtersObj->getFin()) {
+            $filteredQuery
+                ->andwhere('s.dateHeureDebut < :dateFin')
+                ->setParameter('dateFin', $filtersObj->getFin());
+        }
+
+
+        return $filteredQuery->getQuery()->getResult();
     }
 
     //    /**
