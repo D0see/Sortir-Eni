@@ -32,8 +32,15 @@
 
                     <div id="members" class="mb-3"></div>
                     {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    <button class="btn btn-success"> Crée le groupe</button>
+
+                    {# Rendre le champ 'nom' manuellement #}
+                    {{ form_row(form.nom) }}
+
+                    {# Rendre le champ 'participants' manuellement #}
+                    {{ form_row(form.participants, {'label': false}) }}
+
+                    <br>
+                    <button class="btn btn-outline-success"> Crée le groupe</button>
                     {{ form_end(form) }}
 
                 </div>
@@ -95,6 +102,9 @@
                     participant.displayed = true;
 
                     const participantDisplay = document.createElement('div');
+                    const participantContainer = document.createElement('div');
+                    participantContainer.classList.add('participant-container');
+
                     const participantName = document.createElement('p');
                     participantName.innerText = participant.innerText;
                     participantDisplay.appendChild(participantName);
@@ -104,9 +114,10 @@
                         participantName.innerText += " (créateur du groupe)";
                         continue;
                     }
+                    participantContainer.appendChild(participantName);
 
                     const deleteParticipantBtn = document.createElement('button');
-                    deleteParticipantBtn.innerText = "Supprimer"
+                    deleteParticipantBtn.innerText = "Supprimer";
                     deleteParticipantBtn.classList.add('btn', 'btn-outline-danger', 'btn-sm');
                     deleteParticipantBtn.addEventListener('click', () => {
                         const clonedElem = participant.cloneNode(true);
@@ -116,10 +127,21 @@
                         participantDisplay.remove();
                         participant.displayed = false;
                         participant.selected = false;
-                    })
-                    participantDisplay.appendChild(deleteParticipantBtn);
+                    });
 
+                    participantContainer.appendChild(deleteParticipantBtn);
+                    participantDisplay.appendChild(participantContainer);  // Ajoute le conteneur à l'affichage
+
+                    listElem.appendChild(participantDisplay);
+
+                    if (participantName.innerText === userPseudo) {
+                        participantName.innerText += " (créateur du groupe)";
+                        continue;
+                    }
+
+                    participantDisplay.classList.add('deleteParticipantBtn');
                 }
+
             }
             refreshDisplayList(listElem, allParticipants, selector);
 

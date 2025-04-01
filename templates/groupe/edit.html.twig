@@ -28,13 +28,13 @@
 
                         {{ form_start(form) }}
                         {{ form_widget(form) }}
-                        <button class="btn btn-success">mise a jour</button>
+                        <button class="btn btn-outline-success">mise a jour</button>
                         {{ form_end(form) }}
 
                         <form method="post" action="{{ path('app_groupe_delete', {'id': groupe.id}) }}"
                               onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce groupe ?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ groupe.id) }}">
-                            <button type="submit" class="btn btn-danger "><i class="fas fa-trash-alt"></i> Supprimer</button>
+                            <button type="submit" class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i> Supprimer</button>
                         </form>
                     </div>
                 </div>

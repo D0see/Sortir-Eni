@@ -12,12 +12,12 @@
         <p>{{ participant.pseudo }}</p>
     {% endfor %}
 
-    <a href="{{ path('mes_groupes') }}" class="btn btn-warning">retourner a la list</a>
+    <a href="{{ path('mes_groupes') }}" class="btn btn-outline-warning">retourner a la list</a>
 
-    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-success">modifier</a>
+    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-outline-success">modifier</a>
             <form method="post" action="{{ path('app_groupe_delete', {'id': groupe.id}) }}" onsubmit="return confirm('Êtes-vous sûr ?');">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ groupe.id) }}">
-                <button type="submit" class="btn btn-danger">Supprimer</button>
+                <button type="submit" class="btn btn-outline-danger">Supprimer</button>
             </form>
 
             </div>
