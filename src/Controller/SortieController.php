@@ -32,6 +32,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieFiltersType::class, $filter);
         $form->handleRequest($request);
 
+        //TODO custom dql request
         $sorties = $filterService->filterArchivedSorties($sortieRepository->findAll());
         if ($form->isSubmitted() && $form->isValid()) {
             $sorties = $filterService->filterSorties($sorties, $filter, $this->getUser());

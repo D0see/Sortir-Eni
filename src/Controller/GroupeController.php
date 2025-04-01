@@ -17,19 +17,8 @@ final class GroupeController extends AbstractController
     #[Route('/mesGroupes', name: 'mes_groupes')]
     public function index(GroupeRepository $groupeRepository): Response
     {
-
-        $queryForGroupesOuJeSuis = $groupeRepository->createQueryBuilder('g')
-            ->leftJoin('g.participants', 'p')
-            ->Where('p.id = :userId')
-            ->setParameter('userId', $this->getUser()->getId());
-        $groupesOuJeSuis = $queryForGroupesOuJeSuis->getQuery()->getResult();
-
-        $queryFormesgroupes = $groupeRepository->createQueryBuilder('g')
-            ->Where('g.createur = :user')
-            ->setParameter('user', $this->getUser());
-        $mesgroupes = $queryFormesgroupes->getQuery()->getResult();
-
-
+        $groupesOuJeSuis = $groupeRepository->getGroupesApparus($this->getUser());
+        $mesgroupes = $groupeRepository->getGroupesPossedes($this->getUser());
         return $this->render('groupe/index.html.twig', [
             'controller_name' => 'GroupeController',
             'mesGroupes' => $mesgroupes,
