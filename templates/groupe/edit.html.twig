@@ -12,12 +12,13 @@
             <div class="col-md-8">
                 <div class="card shadow-lg">
                     <div class="card-header text-white text-center">
-                        <h2 class="mb-1">Mise à jour du groupe</h2>
+                        <h2 class="mb-1">Mettre le groupe à jour</h2>
                     </div>
                     <div class="card-body">
                         <a href="{{ path('mes_groupes') }}" class="btn btn-outline-secondary mb-3">
                             <i class="fas fa-arrow-left"></i> Retour à la liste
                         </a>
+
 
                         <h5 class="mb-3"><strong>Sélectionner un membre à ajouter</strong></h5>
 
@@ -37,7 +38,7 @@
 
                         <br>
                         {{ form_row(form.participants, {'label': false}) }}
-                        <button class="btn btn-outline-success">mise a jour</button>
+                        <button class="btn btn-outline-success">Mettre le groupe à jour</button>
 
                         {{ form_end(form) }}
                         <br>

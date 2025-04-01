@@ -65,7 +65,7 @@
                             <div class="card shadow-sm">
                                 <div class="card-body">
                                     <h5 class="card-title" style="font-size: 150%"><strong>{{ sortie.nom }}</strong></h5>
-                                    <h5 class="card-title" style="text-align: center"><strong>organisé par {{ sortie.organisateur.pseudo }}</strong></h5>
+                                    <h5 class="card-title" style="text-align: center"><strong>Organisé par {{ sortie.organisateur.pseudo }}</strong></h5>
                                     {% if sortie.etat.libelle == 'Annulée' %}
                                         <p>Cette sortie est annulée.</p>
                                         <p class="text-danger"><strong>Motif d'annulation :</strong> {{ sortie.motifAnnulation }}</p>
@@ -117,13 +117,13 @@
                                         <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ sortie.dateOuverture.format('d/m/Y H:i') }}
                                             jusqu'à {{ sortie.dateLimiteInscription.format('d/m/Y H:i') }}</p>
                                         <p class="card-text"><strong>Nombre d'inscrits max:</strong> {{ sortie.nbInscriptionsMax }}</p>
-                                        <a class="btn btn-outline-primary" href="{{ path('show_sortie', {'id': sortie.id}) }}" title="Détail de la sortie">
+                                        <a class="btn btn-outline-primary btn-sortie-create" href="{{ path('show_sortie', {'id': sortie.id}) }}" title="Détail de la sortie">
                                             Détail
                                         </a>
 
                                     {% if sortie.etat.libelle != 'Activité en cours' and sortie.etat.libelle != 'Passée' and app.user == sortie.organisateur  %}
-                                        <a class="btn btn-outline-primary" href="{{ path('sortie_edit',{'id':sortie.id}) }}" title="Modifier la sortie">
-                                            Edit
+                                        <a class="btn btn-outline-primary btn-sortie-create" href="{{ path('sortie_edit',{'id':sortie.id}) }}" title="Modifier la sortie">
+                                            Modifier
                                         </a>
                                     {% endif %}
                                     <br>
