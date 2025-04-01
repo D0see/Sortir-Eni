@@ -35,9 +35,15 @@
                         </label>
                     </div>
                     <input type="hidden" name="_target_path" value="{{ path('sortie_list') }}"/>
-                    <button class="btn btn-lg btn-primary" type="submit">
-                        Sign in
-                    </button>
+
+                     <div class="mb-3 d-flex">
+                         <button class="btn btn-lg btn-primary" type="submit">
+                             Sign in
+                         </button>
+                     <a class="btn btn-primary btn-sm ms-3 text-center fs-7" href="{{ path('app_forgot_password') }}">Mot de passe oublié</a>
+
+                    </div>
+
                 </form>
             </div>
         </div>
