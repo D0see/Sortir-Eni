@@ -3,13 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
-use App\Entity\User;
 use App\Form\editProfileType;
 use App\Form\ParticipantType;
-use App\Form\RegistrationFormType;
 use App\Repository\SiteRepository;
 use App\Security\ParticipantAuthenticator;
-use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -33,19 +30,16 @@ class ParticipantController extends AbstractController
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 
-        //aq davamate chemi kodi
         if ($form->isSubmitted() && $form->isValid()) {
             $photo=$form->get('maPhoto')->getData();
             if ($photo){
                 $newFilename=uniqid().'.'.$photo->guessExtension();
                 try {
-                    // Déplacer le fichier dans le dossier défini
                     $photo->move(
                         $this->getParameter('uploads_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Gestion d'erreur lors de l'upload
                     $this->addFlash('error', 'Erreur lors de l\'upload de la photo.');
                     return $this->render('registration/participant_register.html.twig', [
                         'registrationForm' => $form->createView(),
@@ -53,11 +47,9 @@ class ParticipantController extends AbstractController
                 }
                 $participant->setMaPhoto($newFilename);
             }
-            //aq mtavrdeba chamatebuli kodi
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // encode the plain password
             $participant->setPassword(
                 $userPasswordHasher->hashPassword($participant, $plainPassword)
             );
@@ -68,7 +60,6 @@ class ParticipantController extends AbstractController
 
             $entityManager->persist($participant);
             $entityManager->flush();
-
 
             return $security->login($participant, ParticipantAuthenticator::class, 'main');
         }
@@ -82,7 +73,6 @@ class ParticipantController extends AbstractController
     public function monProfile(): Response
     {
         $participant = $this->getUser();
-
         return $this->render('profile/profile.html.twig', [
             'participant' => $participant,
         ]);
@@ -93,14 +83,11 @@ class ParticipantController extends AbstractController
         Request $request,
         EntityManagerInterface $em
     ): Response {
-        // 1) Récupérer l'utilisateur connecté
         $participant = $this->getUser();
 
-        // 2) Créer le formulaire
         $form = $this->createForm(editProfileType::class, $participant);
         $form->handleRequest($request);
 
-        // 3) Vérifier si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('maPhoto')->getData();
             if ($photoFile){
@@ -121,13 +108,10 @@ class ParticipantController extends AbstractController
                 $participant->setMaPhoto($newFilename);
             }
             $em->flush();
-
             $this->addFlash('success', 'Profil mis à jour avec succès.');
-            // Rediriger vers la page de profil
             return $this->redirectToRoute('mon_profil');
         }
 
-        // 4) Afficher le formulaire
         return $this->render('profile/edit.html.twig', [
             'editForm' => $form->createView(),
             'participant' => $participant,

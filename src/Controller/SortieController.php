@@ -82,7 +82,7 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/sortie/{id}/edit', name: 'sortie_edit', methods: ['GET','POST'])]
+    #[Route('/sortie/{id}/modifier', name: 'sortie_edit', methods: ['GET','POST'])]
     #[IsGranted('modifier','sortie')]
     #[IsGranted('annuler','sortie')]
     public function edit(

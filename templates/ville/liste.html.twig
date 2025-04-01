@@ -17,16 +17,15 @@
     <button type="submit" class="btn btn-primary" >Rechercher</button>
     {{ form_end(form) }}
 
-    <hr>
 
     <table class="table table-striped mt-3">
         <thead>
         <tr>
             <th>Ville</th>
             <th>Code postal</th>
-            {% if not app.session.get('is_mobile') %}
-                <th>Actions</th>
-            {% endif %}
+{#            {% if not app.session.get('is_mobile') %}#}
+{#                <th>Actions</th>#}
+{#            {% endif %}#}
         </tr>
         </thead>
         <tbody>
@@ -34,14 +33,14 @@
             <tr>
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
-                <td>
-                    {% if not app.session.get('is_mobile') %}
-                    <a href="{{ path('ville_edit', {id: ville.id}) }}"
-                       class="btn btn-sm btn-warning">Modifier</a>
-                    <a href="{{ path('ville_delete', {id: ville.id}) }}"
-                       class="btn btn-danger btn-sm">Supprimer</a>
-                    {% endif %}
-                </td>
+{#                <td>#}
+{#                    {% if not app.session.get('is_mobile') %}#}
+{#                    <a href="{{ path('ville_edit', {id: ville.id}) }}"#}
+{#                       class="btn btn-sm btn-warning">Modifier</a>#}
+{#                    <a href="{{ path('ville_delete', {id: ville.id}) }}"#}
+{#                       class="btn btn-danger btn-sm">Supprimer</a>#}
+{#                    {% endif %}#}
+{#                </td>#}
             </tr>
         {% else %}
             <tr>

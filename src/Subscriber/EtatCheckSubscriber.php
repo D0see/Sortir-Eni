@@ -11,18 +11,14 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class EtatCheckSubscriber implements EventSubscriberInterface
 {
-
-
     public function __construct(EntityManagerInterface $entityManager)
     {
      $this->entityManager = $entityManager;
     }
-
     public static function getSubscribedEvents(): array
     {
         return [KernelEvents::REQUEST =>'checkEtat'];
     }
-
     public function checkEtat(RequestEvent $event): void
     {
         $request = $event->getRequest();
