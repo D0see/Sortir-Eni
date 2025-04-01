@@ -203,3 +203,6 @@ body::before {
 .deleteParticipantBtn {
     margin-bottom: 10px;
 }
+.btn-margin {
+    margin-top: 10px; /* Ajustez la valeur selon vos besoins */
+}
