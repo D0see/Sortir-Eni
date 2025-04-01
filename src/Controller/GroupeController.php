@@ -71,6 +71,9 @@ final class GroupeController extends AbstractController
     #[Route('/{id}/edit', name: 'app_groupe_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Groupe $groupe, EntityManagerInterface $entityManager): Response
     {
+        if ($groupe->getCreateur()->getId() !== $this->getUser()->getId()) {
+            throw $this->createAccessDeniedException();
+        }
         $form = $this->createForm(GroupeType::class, $groupe);
         $form->handleRequest($request);
 
@@ -89,6 +92,10 @@ final class GroupeController extends AbstractController
     #[Route('/{id}', name: 'app_groupe_delete', methods: ['POST'])]
     public function delete(Request $request, Groupe $groupe, EntityManagerInterface $entityManager): Response
     {
+        if ($groupe->getCreateur()->getId() !== $this->getUser()->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         if ($this->isCsrfTokenValid('delete'.$groupe->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($groupe);
             $entityManager->flush();

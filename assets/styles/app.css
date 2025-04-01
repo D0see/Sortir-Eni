@@ -10,6 +10,9 @@
 h1 {
     color: var(--terminal-green);
 }
+h3{
+    color:var(--terminal-green);
+}
 
 button {
     color : black;
@@ -205,4 +208,19 @@ body::before {
 }
 .btn-margin {
     margin-top: 10px; /* Ajustez la valeur selon vos besoins */
+}
+.btn-sortie-create{
+    margin-left: 10px;
+    margin-bottom: 25px;
+    float: right;
+}
+.btn-sortie-create:hover{
+    background: var(--terminal-green) !important;
+    color: #000 !important;
+    box-shadow: 0 0 12px var(--terminal-green);
+}
+
+
+#btn-ajout-grp{
+    margin-top: 25px;
 }
