@@ -132,6 +132,7 @@ h2 {
     border: 1px solid var(--terminal-green);
     color: var(--terminal-green) !important;
     border-radius: 0;
+    cursor: pointer;
     padding: 8px;
 }
 
@@ -236,4 +237,16 @@ body::before {
 .col-md-6 {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.btn-outline-secondary {
+    border: 1px solid var(--terminal-green);
+    border-radius: 0;
+    transition: all 0.2s linear;
+}
+
+.btn-outline-secondary:hover{
+    background: var(--terminal-green) !important;
+    color: #000 !important;
+    box-shadow: 0 0 12px var(--terminal-green);
 }
