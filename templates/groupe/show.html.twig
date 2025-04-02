@@ -12,14 +12,14 @@
         <p>{{ participant.pseudo }}</p>
     {% endfor %}
             {% if app.user.id == groupe.createur.id%}
-            <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-outline-success">Modifier le groupe</a>
+            <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">Modifier le groupe</a>
             <br>
             <br>
 
             <form method="post" action="{{ path('app_groupe_delete', {'id': groupe.id}) }}" onsubmit="return confirm('Êtes-vous sûr ?');">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ groupe.id) }}">
 
-                <button type="submit" class="btn btn-outline-danger">Supprimer le groupe</button>
+                <button type="submit" class="btn btn-primary btn-cancel">Supprimer le groupe</button>
             </form>
             <br>
             {% endif %}

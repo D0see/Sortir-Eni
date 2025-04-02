@@ -38,14 +38,14 @@
 
                         <br>
                         {{ form_row(form.participants, {'label': false}) }}
-                        <button class="btn btn-outline-success">Mettre le groupe à jour</button>
+                        <button class="btn btn-primary">Mettre le groupe à jour</button>
 
                         {{ form_end(form) }}
                         <br>
                         <form method="post" action="{{ path('app_groupe_delete', {'id': groupe.id}) }}"
                               onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce groupe ?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ groupe.id) }}">
-                            <button type="submit" class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i> Supprimer</button>
+                            <button type="submit" class="btn btn-primary btn-cancel "><i class="fas fa-trash-alt"></i> Supprimer</button>
                         </form>
                     </div>
                 </div>
