@@ -42,8 +42,9 @@
     {% else %}
         <p>Aucune photo de profil</p>
     {% endif %}
-
-    <button type="submit" class="btn btn-primary">Enregistrer</button>
-    <a href="{{ path('mon_profil') }}" class="btn btn-secondary">Annuler</a>
+    <div style="display: flex; flex-direction: row">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="{{ path('mon_profil') }}" class="btn btn-secondary">Annuler</a>
+    </div>
     {{ form_end(editForm) }}
 {% endblock %}
