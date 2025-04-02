@@ -14,45 +14,49 @@
         {% endfor %}
 
         <form method="post">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>
-                        <input type="checkbox" id="select-all">
-                    </th>
-                    <th>Pseudo</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Email</th>
-                    <th>Rôles</th>
-                    <th>Actif</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user in users %}
-                    <tr>
-                        <td>
-                            {% if 'ROLE_ADMIN' in user.roles %}
-                                <!-- Pas de case pour les administrateurs -->
-                                --
-                            {% else %}
-                                <input type="checkbox" name="selected_users[]" value="{{ user.id }}">
-                            {% endif %}
-                        </td>
-                        <td>{{ user.pseudo }}</td>
-                        <td>{{ user.nom }}</td>
-                        <td>{{ user.prenom }}</td>
-                        <td>{{ user.mail }}</td>
-                        <td>{{ user.roles|join(', ') }}</td>
-                        <td>{{ user.actif ? 'Oui' : 'Non' }}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="7">Aucun utilisateur trouvé</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="select-all">
+                            </th>
+                            <th>Pseudo</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th>Rôles</th>
+                            <th>Actif</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>
+                                    {% if 'ROLE_ADMIN' in user.roles %}
+                                        <!-- Pas de case pour les administrateurs -->
+                                        --
+                                    {% else %}
+                                        <input type="checkbox" name="selected_users[]" value="{{ user.id }}">
+                                    {% endif %}
+                                </td>
+                                <td>{{ user.pseudo }}</td>
+                                <td>{{ user.nom }}</td>
+                                <td>{{ user.prenom }}</td>
+                                <td>{{ user.mail }}</td>
+                                <td>{{ user.roles|join(', ') }}</td>
+                                <td>{{ user.actif ? 'Oui' : 'Non' }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7">Aucun utilisateur trouvé</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="d-flex gap-3">
                 <button type="submit" name="disable" class="btn btn-primary">Désactiver</button>
                 <button type="submit" name="enable" class="btn btn-primary">Activer</button>
