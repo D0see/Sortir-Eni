@@ -3,9 +3,7 @@
 {% block title %}Gestion des utilisateurs{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <h1 class="mb-4">Gestion des utilisateurs</h1>
-
+    <h1 class="mb-4 text-center">Gestion des utilisateurs</h1>
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
@@ -56,11 +54,10 @@
                 </tbody>
             </table>
             <div class="d-flex gap-3">
-                <button type="submit" name="disable" class="btn btn-warning">Désactiver</button>
-                <button type="submit" name="enable" class="btn btn-success">Activer</button>
+                <button type="submit" name="disable" class="btn btn-primary">Désactiver</button>
+                <button type="submit" name="enable" class="btn btn-primary">Activer</button>
             </div>
         </form>
-    </div>
 
     <script>
         document.getElementById('select-all').addEventListener('change', function(){
