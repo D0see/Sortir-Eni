@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Upload CSV File</h1>
-<div class="card shadow-sm " style="margin: 20px ;width: 100%;">
+    <h1 class="mb-4 text-center">Chargement de participants par CSV</h1>
+<div class="card shadow-sm " style="margin: 0 auto;width: 100%;">
     <div class="card-body">
     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
     {{ form_end(form) }}
 
     </div>
-        </div>
+</div>
 
 {% endblock %}

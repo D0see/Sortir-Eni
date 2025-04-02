@@ -3,7 +3,7 @@
 {% block title %}Groupe{% endblock %}
 
 {% block body %}
-<div class="col-md-6 mb-4" style="margin-top: 20px; margin-left: 20%;text-align: center">
+<div class="col-md-6 mb-4" style="margin: 0 auto; margin-top: 50px; text-align: center">
     <div class="card shadow-sm">
         <div class="card-body">
     <h1>Groupe "{{ groupe.nom }}"</h1>
@@ -23,9 +23,9 @@
             </form>
             <br>
             {% endif %}
-            <a href="{{ path('mes_groupes') }}" class="btn btn-outline-warning">Retourner à la liste des groupes</a>
+            <a href="{{ path('mes_groupes') }}" class="btn btn-primary">Retourner à la liste des groupes</a>
 
-            </div>
-            </div>
-            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
