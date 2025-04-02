@@ -78,8 +78,9 @@ body::after {
 }
 
 .navbar-toggler {
-    background-color: rgba(25, 63, 89, 0.69);
+    background-color: rgba(0, 255, 247, 0.57);
     border-color: rgba(22, 53, 74, 0.65);
+
 }
 
 .nav-link {
@@ -240,6 +241,12 @@ body::before {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.navbar-toggler[aria-expanded="true"] {
+    position: relative;
+    right: 50%;
+}
+
 
 .btn-outline-secondary {
     border: 1px solid var(--terminal-green);
