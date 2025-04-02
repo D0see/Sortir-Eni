@@ -62,6 +62,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             if ($date >= $sortie->getDateOuverture()){
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle'=>'Ouverte']));
             }

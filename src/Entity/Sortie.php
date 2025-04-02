@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -17,27 +19,80 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le pseudo est obligatoire")]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: "Le pseudo doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le pseudo ne peut pas dépasser {{ limit }} caractères"
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: "La date et l'heure de début sont obligatoires")]
+    #[Assert\GreaterThanOrEqual(
+        value: "today",
+        message: "La date de début ne peut pas être inférieure à aujourd'hui"
+    )]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "La durée est obligatoire")]
+    #[Assert\Positive(message: "La durée doit être supérieure à 0")]
+    #[Assert\Type(
+        type: "integer",
+        message: "La durée doit être un nombre entier"
+    )]
     private ?int $dureeEnHeures = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: "La date limite d'inscription est obligatoire")]
+    #[Assert\GreaterThanOrEqual(
+        value: "today",
+        message: "La date limite d'inscription ne peut pas être inférieure à aujourd'hui"
+    )]
+    #[Assert\Expression(
+        "this.getDateLimiteInscription() <= this.getDateHeureDebut()",
+        message: "La date limite d'inscription doit être avant la date de début"
+    )]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le nombre maximum d'inscriptions est obligatoire")]
+    #[Assert\Positive(message: "Le nombre maximum d'inscriptions doit être supérieur à 0")]
+    #[Assert\Type(
+        type: "integer",
+        message: "Le nombre d'inscriptions maximum doit être un nombre entier"
+    )]
     private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Les informations sur la sortie sont obligatoires")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Les informations ne peuvent pas dépasser {{ limit }} caractères"
+    )]
     private ?string $infosSortie = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: "La date d'ouverture est obligatoire")]
+    #[Assert\GreaterThanOrEqual(
+        value: "today",
+        message: "La date d'ouverture ne peut pas être inférieure à aujourd'hui"
+    )]
+    #[Assert\Expression(
+        "this.getDateLimiteInscription() <= this.getDateHeureDebut()",
+        message: "La date d'ouverture doit être avant la date limte d'inscription"
+    )]
     private ?\DateTimeInterface $dateOuverture = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage:"Le motif d'annulation doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le motif d'annulation ne peut pas dépasser {{ limit }} caractères"
+    )]
     private ?string $motifAnnulation = null;
 
 
@@ -63,6 +118,19 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Participant $organisateur = null;
 
+
+
+    #[Assert\Callback]
+    public function validateDateOuverture(ExecutionContextInterface $context, $payload): void
+    {
+        if ($this->dateOuverture !== null && $this->dateLimiteInscription !== null) {
+            if ($this->dateOuverture > $this->dateLimiteInscription) {
+                $context->buildViolation("La date d'ouverture doit être avant ou égale à la date limite d'inscription")
+                    ->atPath('dateOuverture')
+                    ->addViolation();
+            }
+        }
+    }
     public function __construct()
     {
         $this->participants = new ArrayCollection();
