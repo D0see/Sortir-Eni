@@ -9,7 +9,7 @@
     <h1>Groupe "{{ groupe.nom }}"</h1>
     <h2>membres</h2>
     {% for participant in groupe.participants %}
-        <p>{{ participant.pseudo }}</p>
+        <p> <a class='part-link' href="{{ path('afficher_participant',{'id':participant.id}) }}">{{ participant.pseudo }}</a></p>
     {% endfor %}
             {% if app.user.id == groupe.createur.id%}
             <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">Modifier le groupe</a>
