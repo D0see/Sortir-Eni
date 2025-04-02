@@ -44,7 +44,10 @@
                         </div>
 
                         <div class="col-md-6 mb-2">
-                            <p><strong>Places disponibles :</strong> {{ sortie.nbInscriptionsMax }}</p>
+                            <p><strong>Places restantes
+                                    : </strong> {{ sortie.nbInscriptionsMax - sortie.participants | length }}
+                            </p>
+
                         </div>
 
                         <div class="col-md-6 mb-2">
@@ -63,11 +66,11 @@
             </div>
                 {% if sortie.participants | length < sortie.nbInscriptionsMax and app.user not in sortie.participants
                     and app.user != sortie.organisateur and date < sortie.dateLimiteInscription %}
-                <a href="/show/{{ sortie.id }}/add-participant"><button class="btn btn-primary btn-sm" >S'inscrire</button></a>
+                <a href="/sortie/{{ sortie.id }}/add-participant"><button class="btn btn-primary btn-sm" >S'inscrire</button></a>
                 {% endif %}
 
                 {% if app.user in sortie.participants  %}
-                    <a href="/show/{{ sortie.id }}/remove-participant"><button class="btn btn-primary btn-sm" >Se désinscrire</button></a>
+                    <a href="/sortie/{{ sortie.id }}/remove-participant"><button class="btn btn-primary btn-sm" >Se désinscrire</button></a>
                 {% endif %}
 
             <hr>
