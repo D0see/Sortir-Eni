@@ -65,7 +65,8 @@
                             <div class="card shadow-sm">
                                 <div class="card-body">
                                     <h5 class="card-title" style="font-size: 150%"><strong>{{ sortie.nom }}</strong></h5>
-                                    <h5 class="card-title" style="text-align: center"><strong>Organisé par {{ sortie.organisateur.pseudo }}</strong></h5>
+                                    <h5 class="card-title" style="text-align: center"><strong>Organisé par </strong><a class='part-link' href="{{ path('afficher_participant',{'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></h5>
+
                                     {% if sortie.etat.libelle == 'Annulée' %}
                                         <p>Cette sortie est annulée.</p>
                                         <p class="text-danger"><strong>Motif d'annulation :</strong> {{ sortie.motifAnnulation }}</p>
@@ -73,17 +74,20 @@
 
                                         <div id="infos-sortie-{{ sortie.id }}" class="info-sortie">
                                             <p class="short-info">
-                                                {{ sortie.infosSortie | slice(0, 100) }}{% if sortie.infosSortie|length > 100 %}...{% endif %}
+                                                <strong>Informations :</strong> {{ sortie.infosSortie | slice(0, 100) }}{% if sortie.infosSortie|length > 100 %}...{% endif %}
                                             </p>
+
                                             {% if sortie.infosSortie|length > 100 %}
-                                                <button class="btn btn-secondary btn-sm" onclick="toggleFullInfo({{ sortie.id }})" id="show-more-{{ sortie.id }}">Afficher plus</button>
+                                                <button class="btn btn-primary btn-sm" onclick="toggleFullInfo({{ sortie.id }})" id="show-more-{{ sortie.id }}">Afficher plus</button>
                                             {% endif %}
                                         </div>
 
-                                        <div id="full-info-{{ sortie.id }}" class="full-info" style="display: none;">
-                                            <p>{{ sortie.infosSortie }}</p>
-                                            <button class="btn btn-secondary btn-sm" onclick="toggleFullInfo({{ sortie.id }})" id="show-less-{{ sortie.id }}">Afficher moins</button>
+                                        <div id="full-info-{{ sortie.id }}" class="info-sortie" style="display: none;">
+                                            <p><strong>Informations : </strong>{{ sortie.infosSortie }}</p>
+                                            <button class="btn btn-primary btn-sm" onclick="toggleFullInfo({{ sortie.id }})" id="show-less-{{ sortie.id }}">Afficher moins</button>
                                         </div>
+
+
 
                                         <script>
                                             function toggleFullInfo(sortieId) {
@@ -106,28 +110,13 @@
                                             }
                                         </script>
 
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <p class="card-text"><strong>Durée:</strong> {{ sortie.dureeEnHeures }} h</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p class="card-text"><strong>Commence à:</strong> {{ sortie.dateHeureDebut.format('d/m/Y H:i') }}</p>
-                                            </div>
-                                        </div>
-                                        <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ sortie.dateOuverture.format('d/m/Y H:i') }}
-                                            jusqu'à {{ sortie.dateLimiteInscription.format('d/m/Y H:i') }}</p>
-                                        <p class="card-text"><strong>Nombre d'inscrits max:</strong> {{ sortie.nbInscriptionsMax }}</p>
-                                        <a class="btn btn-outline-primary btn-sortie-create" href="{{ path('show_sortie', {'id': sortie.id}) }}" title="Détail de la sortie">
-                                            Détail
-                                        </a>
+                                        <p class="card-text"><strong>Durée:</strong> {{ sortie.dureeEnHeures }} h</p>
+                                        <p class="card-text"><strong>Commence à:</strong> {{ sortie.dateHeureDebut.format('d/m/Y H:i') }}</p>
+                                        <p class="card-text"><strong>Inscriptions:</strong> Du {{ sortie.dateOuverture.format('d/m/Y H:i') }}
+                                            jusqu'au {{ sortie.dateLimiteInscription.format('d/m/Y H:i') }}</p>
+                                        <p class="card-text"><strong>Places restantes : </strong> {{ sortie.nbInscriptionsMax - sortie.participants | length }}</p>
+                                        <p class="card-text"><strong>Statut : </strong> {{ sortie.etat.libelle }}</p>
 
-                                    {% if sortie.etat.libelle != 'Activité en cours' and sortie.etat.libelle != 'Passée' and app.user == sortie.organisateur  %}
-                                        <a class="btn btn-outline-primary btn-sortie-create" href="{{ path('sortie_edit',{'id':sortie.id}) }}" title="Modifier la sortie">
-                                            Modifier
-                                        </a>
-                                    {% endif %}
-                                    <br>
-                                    <br>
                                         <table class="table table-bordered table-striped" style="text-align: center">
                                             <thead>
 
@@ -145,6 +134,17 @@
                                             {% endfor %}
                                             </tbody>
                                         </table>
+
+                                        <a class="btn btn-outline-primary btn-sortie-create" href="{{ path('show_sortie', {'id': sortie.id}) }}" title="Détail de la sortie">
+                                            Détail
+                                        </a>
+
+                                    {% if sortie.etat.libelle != 'Activité en cours' and sortie.etat.libelle != 'Passée' and app.user == sortie.organisateur  %}
+                                        <a class="btn btn-outline-primary btn-sortie-create" href="{{ path('sortie_edit',{'id':sortie.id}) }}" title="Modifier la sortie">
+                                            Modifier
+                                        </a>
+                                    {% endif %}
+
 
                                     {% endif %}
                                 </div>
