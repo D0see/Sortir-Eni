@@ -11,6 +11,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 {{ form_start(form) }}
+                {{ form_errors(form) }}
                 <div class="row g-3">
                     <div class="col-md-6">
                         {{ form_row(form.nom, {'attr': {'class': 'form-control'}}) }}
@@ -29,6 +30,7 @@
                                 {{ form_widget(form.lieu, {'attr': {'class': 'form-control'}}) }}
                                 <a style ="font-size: 20px" href="{{ path("add_lieu") }}" class="btn btn-sm btn-outline-secondary">+</a>
                             </div>
+                            {{ form_errors(form.lieu) }}
                         </div>
                     </div>
 
@@ -68,4 +70,10 @@
                 {{ form_end(form) }}
             </div>
         </div>
+    <style>
+        .invalid-feedback {
+            display: block !important;
+            color: red;
+        }
+    </style>
 {% endblock %}
