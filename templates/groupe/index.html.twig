@@ -6,20 +6,18 @@
 <div class="col-md-9 mb-4" style="margin-top: 20px">
     <div class="card shadow-sm">
         <div class="card-body">
-    <h1>mes groupes</h1>
+    <h1>Mes Groupes</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for groupe in mesGroupes %}
             <tr>
-                <td>{{ groupe.id }}</td>
                 <td>{{ groupe.nom }}</td>
                 <td>
                     <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">show</a>
@@ -34,24 +32,26 @@
         </tbody>
     </table>
             <a href="{{ path('app_groupe_new') }}" class="btn btn-primary">Créer un groupe</a>
-            <h1>groupes ou j'apparais</h1>
+
+            <hr>
+            <h1>Groupes auxquels j'appartiens</h1>
 
     <table class="table">
         <thead>
         <tr>
-            <th>Id</th>
             <th>Nom</th>
-            <th>actions</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for groupe in groupesOuJeSuis %}
             <tr>
-                <td>{{ groupe.id }}</td>
                 <td>{{ groupe.nom }}</td>
                 <td>
                     <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">show</a>
+                    {% if app.user.id == groupe.createur.id%}
                     <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

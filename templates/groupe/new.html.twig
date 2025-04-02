@@ -10,16 +10,19 @@
         <div class="row justify-content-center">
             <div class="card shadow-lg">
                 <div class="card-header text-white text-center">
-                    <h2>Crée un nouveau groupe</h2>
+                    <h2>Créer un nouveau groupe</h2>
                 </div>
                 <div class="card-body">
-                    <a href="{{ path('mes_groupes') }}" class="btn btn-outline-secondary mb-3">Retour a la list</a>
+                    <a href="{{ path('mes_groupes') }}" class="btn btn-outline-secondary mb-3">Retour à la liste</a>
+                    <hr>
 
                     <div id="addMember" class="mb-3">
-                        <strong>Selection un membre a ajouter</strong>
+                        <strong>Membre à ajouter : </strong>
                     </div>
 
-                    <h3 class="mb-3">Members</h3>
+                    <hr>
+
+                    <h3 class="mb-3">Membres : </h3>
 
                     <!-- Used to load group info -->
                     <div id="userPseudo" class="d-none">{{ userPseudo }}</div>
@@ -43,7 +46,7 @@
                     {{ form_row(form.participants, {'label': false}) }}
 
                     <br>
-                    <button class="btn btn-outline-success"> Crée le groupe</button>
+                    <button class="btn btn-outline-success"> Créer le groupe</button>
                     {{ form_end(form) }}
 
                 </div>
@@ -151,8 +154,9 @@
             refreshDisplayList(listElem, allParticipants, selector);
 
             const addParticipantButton = document.createElement('button');
-            addParticipantButton.innerText = "ajouter"
-            addParticipantButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'w-100', 'btn-margin');
+            addParticipantButton.innerText = "Ajouter au groupe"
+            addParticipantButton.classList.add('btn', 'btn-primary', 'w-100');
+            addParticipantButton.id = 'btn-ajout-grp'
             document.getElementById('addMember').appendChild(addParticipantButton);
             addParticipantButton.addEventListener('click', () => {
                 for (const participant of allParticipants) {
