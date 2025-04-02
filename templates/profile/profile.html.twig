@@ -41,7 +41,7 @@
                 {# Exemple : si vous avez un champ site ou ville #}
                 {{ participant.site ? participant.site.nom : 'N/A' }}
             </div>
-            <a href="javascript:history.back(1)" class="btn btn-secondary">Retour</a><br><br>
+            <a href="javascript:history.back(1)" class="btn btn-primary">Retour</a><br><br>
             {% if app.user.userIdentifier == participant.userIdentifier %}
             <a href="{{ path('modifier_mon_profil') }}" class="btn btn-primary">
                 Modifier mon profil

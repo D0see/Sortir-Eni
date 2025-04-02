@@ -21,8 +21,8 @@
             <tr>
                 <td>{{ groupe.nom }}</td>
                 <td>
-                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">show</a>
-                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">edit</a>
+                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">Détails</a>
+                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -49,9 +49,9 @@
             <tr>
                 <td>{{ groupe.nom }}</td>
                 <td>
-                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">show</a>
+                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">Détails</a>
                     {% if app.user.id == groupe.createur.id%}
-                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">edit</a>
+                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">Modifier</a>
                     {% endif %}
                 </td>
             </tr>
