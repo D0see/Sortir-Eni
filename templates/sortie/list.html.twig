@@ -56,104 +56,104 @@
             </div>
 
             <br>
-            <div class="row">
-                {% set group_size = 2 %}
-                {% for sortiesChunk in sorties|batch(group_size) %}
-                <div class="row">
-                    {% for sortie in sortiesChunk %}
-                        <div class="col-md-6 mb-4">
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title" style="font-size: 150%"><strong>{{ sortie.nom }}</strong></h5>
-                                    <h5 class="card-title" style="text-align: center"><strong>Organisé par {{ sortie.organisateur.pseudo }}</strong></h5>
-                                    {% if sortie.etat.libelle == 'Annulée' %}
-                                        <p>Cette sortie est annulée.</p>
-                                        <p class="text-danger"><strong>Motif d'annulation :</strong> {{ sortie.motifAnnulation }}</p>
-                                    {% else %}
+            <div class="container">
+                <div class="row sorties">
+                    {% set group_size = 2 %}
+                    {% for sortiesChunk in sorties|batch(group_size) %}
+                        <div class="row">
+                            {% for sortie in sortiesChunk %}
+                                <div class="col-md-6 mb-4 sortie-item">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="font-size: 150%"><strong>{{ sortie.nom }}</strong></h5>
+                                            <h5 class="card-title" style="text-align: center"><strong>organisé par {{ sortie.organisateur.pseudo }}</strong></h5>
+                                            {% if sortie.etat.libelle == 'Annulée' %}
+                                                <p>Cette sortie est annulée.</p>
+                                                <p class="text-danger"><strong>Motif d'annulation :</strong> {{ sortie.motifAnnulation }}</p>
+                                            {% else %}
+                                                <div id="infos-sortie-{{ sortie.id }}" class="info-sortie">
+                                                    <p class="short-info">
+                                                        {{ sortie.infosSortie | slice(0, 100) }}{% if sortie.infosSortie|length > 100 %}...{% endif %}
+                                                    </p>
+                                                    {% if sortie.infosSortie|length > 100 %}
+                                                        <button class="btn btn-secondary btn-sm" onclick="toggleFullInfo({{ sortie.id }})" id="show-more-{{ sortie.id }}">Afficher plus</button>
+                                                    {% endif %}
+                                                </div>
 
-                                        <div id="infos-sortie-{{ sortie.id }}" class="info-sortie">
-                                            <p class="short-info">
-                                                {{ sortie.infosSortie | slice(0, 100) }}{% if sortie.infosSortie|length > 100 %}...{% endif %}
-                                            </p>
-                                            {% if sortie.infosSortie|length > 100 %}
-                                                <button class="btn btn-secondary btn-sm" onclick="toggleFullInfo({{ sortie.id }})" id="show-more-{{ sortie.id }}">Afficher plus</button>
+                                                <div id="full-info-{{ sortie.id }}" class="full-info" style="display: none;">
+                                                    <p>{{ sortie.infosSortie }}</p>
+                                                    <button class="btn btn-secondary btn-sm" onclick="toggleFullInfo({{ sortie.id }})" id="show-less-{{ sortie.id }}">Afficher moins</button>
+                                                </div>
+
+                                                <script>
+                                                    function toggleFullInfo(sortieId) {
+                                                        var fullInfo = document.getElementById('full-info-' + sortieId);
+                                                        var shortInfo = document.getElementById('infos-sortie-' + sortieId);
+                                                        var showMoreButton = document.getElementById('show-more-' + sortieId);
+                                                        var showLessButton = document.getElementById('show-less-' + sortieId);
+
+                                                        if (fullInfo.style.display === 'none') {
+                                                            fullInfo.style.display = 'block';
+                                                            shortInfo.style.display = 'none';
+                                                            showMoreButton.style.display = 'none';
+                                                            showLessButton.style.display = 'block';
+                                                        } else {
+                                                            fullInfo.style.display = 'none';
+                                                            shortInfo.style.display = 'block';
+                                                            showMoreButton.style.display = 'block';
+                                                            showLessButton.style.display = 'none';
+                                                        }
+                                                    }
+                                                </script>
+
+                                                <div class="row mb-3">
+                                                    <div class="col-md-6">
+                                                        <p class="card-text"><strong>Durée:</strong> {{ sortie.dureeEnHeures }} h</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="card-text"><strong>Commence à:</strong> {{ sortie.dateHeureDebut.format('d/m/Y H:i') }}</p>
+                                                    </div>
+                                                </div>
+                                                <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ sortie.dateOuverture.format('d/m/Y H:i') }}
+                                                    jusqu'à {{ sortie.dateLimiteInscription.format('d/m/Y H:i') }}</p>
+                                                <p class="card-text"><strong>Nombre d'inscrits max:</strong> {{ sortie.nbInscriptionsMax }}</p>
+                                                <a class="btn btn-outline-primary" href="{{ path('show_sortie', {'id': sortie.id}) }}" title="Détail de la sortie">
+                                                    Détail
+                                                </a>
+
+                                            {% if sortie.etat.libelle != 'Activité en cours' and sortie.etat.libelle != 'Passée' and app.user == sortie.organisateur  %}
+                                                <a class="btn btn-outline-primary" href="{{ path('sortie_edit',{'id':sortie.id}) }}" title="Modifier la sortie">
+                                                    Edit
+                                                </a>
+                                            {% endif %}
+                                            <br>
+                                            <br>
+                                                <table class="table table-bordered table-striped" style="text-align: center">
+                                                    <thead>
+
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for participant in sortie.participants %}
+                                                        <tr>
+                                                            <td><a class="part-link" href="{{ path('afficher_participant',{'id':participant.id}) }}">{{ participant.pseudo }}</a></td>
+                                                        </tr>
+                                                    {% else %}
+                                                        <tr>
+                                                            <td colspan="2">Aucun participant inscrit pour le moment</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+
                                             {% endif %}
                                         </div>
-
-                                        <div id="full-info-{{ sortie.id }}" class="full-info" style="display: none;">
-                                            <p>{{ sortie.infosSortie }}</p>
-                                            <button class="btn btn-secondary btn-sm" onclick="toggleFullInfo({{ sortie.id }})" id="show-less-{{ sortie.id }}">Afficher moins</button>
-                                        </div>
-
-                                        <script>
-                                            function toggleFullInfo(sortieId) {
-                                                var fullInfo = document.getElementById('full-info-' + sortieId);
-                                                var shortInfo = document.getElementById('infos-sortie-' + sortieId);
-                                                var showMoreButton = document.getElementById('show-more-' + sortieId);
-                                                var showLessButton = document.getElementById('show-less-' + sortieId);
-
-                                                if (fullInfo.style.display === 'none') {
-                                                    fullInfo.style.display = 'block';
-                                                    shortInfo.style.display = 'none';
-                                                    showMoreButton.style.display = 'none';
-                                                    showLessButton.style.display = 'block';
-                                                } else {
-                                                    fullInfo.style.display = 'none';
-                                                    shortInfo.style.display = 'block';
-                                                    showMoreButton.style.display = 'block';
-                                                    showLessButton.style.display = 'none';
-                                                }
-                                            }
-                                        </script>
-
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <p class="card-text"><strong>Durée:</strong> {{ sortie.dureeEnHeures }} h</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p class="card-text"><strong>Commence à:</strong> {{ sortie.dateHeureDebut.format('d/m/Y H:i') }}</p>
-                                            </div>
-                                        </div>
-                                        <p class="card-text"><strong>Inscriptions:</strong> à partir de {{ sortie.dateOuverture.format('d/m/Y H:i') }}
-                                            jusqu'à {{ sortie.dateLimiteInscription.format('d/m/Y H:i') }}</p>
-                                        <p class="card-text"><strong>Nombre d'inscrits max:</strong> {{ sortie.nbInscriptionsMax }}</p>
-                                        <a class="btn btn-outline-primary btn-sortie-create" href="{{ path('show_sortie', {'id': sortie.id}) }}" title="Détail de la sortie">
-                                            Détail
-                                        </a>
-
-                                    {% if sortie.etat.libelle != 'Activité en cours' and sortie.etat.libelle != 'Passée' and app.user == sortie.organisateur  %}
-                                        <a class="btn btn-outline-primary btn-sortie-create" href="{{ path('sortie_edit',{'id':sortie.id}) }}" title="Modifier la sortie">
-                                            Modifier
-                                        </a>
-                                    {% endif %}
-                                    <br>
-                                    <br>
-                                        <table class="table table-bordered table-striped" style="text-align: center">
-                                            <thead>
-
-                                            </thead>
-                                            <tbody>
-                                            {% for participant in sortie.participants %}
-                                                <tr>
-                                                    <td><a class="part-link" href="{{ path('afficher_participant',{'id':participant.id}) }}">{{ participant.pseudo }}</a></td>
-
-                                                </tr>
-                                            {% else %}
-                                                <tr>
-                                                    <td colspan="2">Aucun participant inscrit pour le moment</td>
-                                                </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
-
-                                    {% endif %}
+                                    </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     {% endfor %}
                 </div>
             </div>
-            {% endfor %}
         </div>
     </div>
 {% endblock %}
