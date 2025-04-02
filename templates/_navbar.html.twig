@@ -9,46 +9,45 @@
         <div class="collapse navbar-collapse" id="navbarNav" style="text-align: center">
             <ul class="navbar-nav">
                 {% if app.user %}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('sortie_list') }}">Les Sorties</a>
-                </li>
-                <li class="nav-item">
-                    {% if not app.session.get('is_mobile') %}
-                    <a class="nav-link" href="{{ path('sortie_create') }}">Créér une Sortie</a>
-                    {% endif %}
-                </li>
-                <li class="nav-item">
-
-                    <a class="nav-link" href="{{ path('mes_groupes') }}">Afficher mes groupes</a>
-                </li>
-                <li class="nav-item">
-                
-                    <a class="nav-link" href="{{ path('ville_list') }}">Liste des villes</a>
-                </li>
-                <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('sortie_list') }}">Les Sorties</a>
+                    </li>
+                    <li class="nav-item">
+                        {% if not app.session.get('is_mobile') %}
+                            <a class="nav-link" href="{{ path('sortie_create') }}">Créer une Sortie</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('mes_groupes') }}">Afficher mes groupes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('ville_list') }}">Liste des villes</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('lieu_list') }}">Liste des lieux</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
-                </li>
-                    {% if is_granted("ROLE_ADMIN")  %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                    {% if is_granted("ROLE_ADMIN") %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('inscription_participant') }}">Inscription</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('upload_csv') }}">Inscription par csv</a>
+                            <a class="nav-link" href="{{ path('upload_csv') }}">Inscription par CSV</a>
                         </li>
                     {% endif %}
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
         {% if app.user %}
-            <div style="font-size: 20px; color: #cccccc ; padding-right: 55px" ><a class="nav-link" href="{{ path('mon_profil') }}">{{ app.user.pseudo }} </a></div>
+            <div style="font-size: 20px; color: #cccccc; padding-right: 55px">
+                <a class="nav-link" href="{{ path('mon_profil') }}">{{ app.user.pseudo }} </a>
+            </div>
         {% endif %}
     </div>
 </nav>
