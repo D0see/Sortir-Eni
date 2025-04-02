@@ -53,6 +53,9 @@
 
                 </div>
             </div>
+            <div style="margin: 0 auto; width: fit-content">
+                {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary'} }) }}
+            </div>
             {{ form_end(form) }}
         </div>
     </div>
@@ -155,7 +158,7 @@
                                     </tbody>
                                 </table>
 
-                                <a class="btn btn-outline-primary btn-sortie-create"
+                                <a class="btn btn-primary btn-sortie-create"
                                    href="{{ path('show_sortie', {'id': sortie.id}) }}"
                                    title="Détail de la sortie">
                                     Détail
