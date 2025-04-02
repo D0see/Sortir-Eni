@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Afficher une sortie
+    {{ sortie.nom }} - Détail
 {% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-12">
-            <h1 class="mb-4">Afficher une sortie</h1>
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <dl class="row">
@@ -32,7 +31,7 @@
                         </div>
 
                         <div class="col-md-6 mb-2">
-                             <p><strong>Organisé par :</strong><a class='part-link' href="{{ path('afficher_participant',{'id':sortie.organisateur.id}) }}"> {{ sortie.organisateur.pseudo }}</p></a>
+                             <p><strong>Organisé par : </strong><a class='part-link' href="{{ path('afficher_participant',{'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</p></a>
                         </div>
 
                         <div class="col-md-12">
@@ -53,10 +52,6 @@
                                 <strong>Lieu :</strong> {{ sortie.lieu.nom }}, {{ sortie.lieu.rue }}
                                 ({{ sortie.lieu.ville.nom }} - {{ sortie.lieu.ville.codePostal }})
                             </p>
-                        </div>
-
-                        <div class="col-md-6 text-muted">
-                            <p><strong>Coordonnées GPS :</strong> Latitude : {{ sortie.lieu.latitude }}, Longitude : {{ sortie.lieu.longitude }}</p>
                         </div>
 
                         <div class="col-md-6 text-muted">

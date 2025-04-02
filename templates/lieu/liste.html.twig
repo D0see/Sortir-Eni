@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Lieux de rendez-vous</h1>
-    <div class="card shadow-sm " style="margin: 20px ;width: 100%;">
+    <h1 class="mb-4 text-center">Liste des lieux</h1>
+    <div class="card shadow-sm " style="margin: 0 auto;width: 100%;">
     <div class="card-body">
 
     {{ form_start(form) }}
@@ -58,7 +58,7 @@
         </tbody>
     </table>
         {% if not app.session.get('is_mobile') %}
-        <a href="{{ path('add_lieu') }}" class="btn btn-success">Ajouter</a>
+        <a href="{{ path('add_lieu') }}" class="btn btn-primary">Ajouter</a>
         {% endif %}
             </div>
     </div>

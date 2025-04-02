@@ -7,12 +7,10 @@
 * {
     color: var(--terminal-green);
 }
-h1 {
+h1,h3,h4 {
     color: var(--terminal-green);
 }
-h3{
-    color:var(--terminal-green);
-}
+
 
 button {
     color : black;
@@ -26,7 +24,9 @@ input {
     color: var(--terminal-green);
     background-color: hsl(0,0,0);
 }
-
+.btn-outline-danger{
+    border-radius: 0;
+}
 .card-title {
     color: var(--terminal-green);
 }
@@ -133,6 +133,7 @@ h2 {
     border: 1px solid var(--terminal-green);
     color: var(--terminal-green) !important;
     border-radius: 0;
+    cursor: pointer;
     padding: 8px;
 }
 
@@ -219,6 +220,8 @@ body::before {
     margin-left: 10px;
     margin-bottom: 25px;
     float: right;
+    border-color: var(--terminal-green);
+    border-radius: 0;
 }
 .btn-sortie-create:hover{
     background: var(--terminal-green) !important;
@@ -238,7 +241,39 @@ body::before {
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .navbar-toggler[aria-expanded="true"] {
     position: relative;
     right: 50%;
+}
+
+
+.btn-outline-secondary {
+    border: 1px solid var(--terminal-green);
+    border-radius: 0;
+    transition: all 0.2s linear;
+}
+
+.btn-outline-secondary:hover{
+    background: var(--terminal-green) !important;
+    color: #000 !important;
+    box-shadow: 0 0 12px var(--terminal-green);
+}
+input::placeholder{
+    color: var(--terminal-green)!important;
+    opacity: 0.5!important;
+}
+
+.info-sortie{
+    border: 2px solid var(--terminal-green);
+    padding: 8px;
+    margin-top: 25px;
+    margin-bottom: 40px;
+}
+
+.btn-cancel:hover{
+    background-color: red !important;
+    color: #000 !important;
+    box-shadow: 0 0 12px red;
+    border-color: darkred !important;
 }

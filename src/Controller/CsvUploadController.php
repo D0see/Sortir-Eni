@@ -48,7 +48,7 @@ class CsvUploadController extends AbstractController
                 return new Response('CSV uploaded and processed! Found ' . count($data) . ' records.');
             }
         }
-
+//        $this->addFlash("success","Fichier importé avec succès !");
         return $this->render('csv/csvUpload.html.twig', [
             'form' => $form->createView(),
         ]);

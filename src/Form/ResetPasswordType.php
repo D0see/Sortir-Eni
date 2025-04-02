@@ -14,8 +14,8 @@ class ResetPasswordType extends AbstractType
     {
         $builder->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
-            'first_options'  => ['label' => 'Nouveau mot de passe'],
-            'second_options' => ['label' => 'Confirmer le nouveau mot de passe'],
+            'first_options'  => ['label' => 'Nouveau mot de passe','attr'=>['class'=> 'form-control text-dark bg-white','style'=>'color: #000; background-color: #fff;',]],
+            'second_options' => ['label' => 'Confirmer le nouveau mot de passe','attr'=>['class'=>'form-control text-dark bg-white','style'=>'color: #000; background-color: #fff;',]],
         ]);
     }
 

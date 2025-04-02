@@ -1,0 +1,11 @@
+pseudo;nom;prenom;mail;telephone
+jdupont;Dupont;Jean;jdupont@example.com;0612345678
+mboucher;Boucher;Marie;mboucher@example.com;0698765432
+lmarchand;Marchand;Luc;lmarchand@example.com;0678912345
+paubry;Aubry;Paul;paubry@example.com;0623456789
+emorel;Morel;Emma;emorel@example.com;0687654321
+tbernard;Bernard;Thomas;tbernard@example.com;0634567890
+lalexandre;Alexandre;Léa;lalexandre@example.com;0665432109
+vlefevre;Lefevre;Victor;vlefevre@example.com;0676543210
+cschneider;Schneider;Claire;cschneider@example.com;0654321098
+mdurand;Durand;Mathieu;mdurand@example.com;0643210987

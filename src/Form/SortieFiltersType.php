@@ -23,12 +23,12 @@ class SortieFiltersType extends AbstractType
                 'choice_label' => 'nom',
                 'label' => 'Site',
                 'required' => false,
-                'placeholder' => 'Choisser votre site',
+                'placeholder' => 'Filtrer par site',
             ])
             ->add('contenu', TextType::class, [
                 'label' => 'Contenu',
                 'required' => false,
-                'attr' => ['placeholder' => 'Choisir votre contenu'],
+                'attr' => ['placeholder' => 'Filtrer par contenu'],
             ])
             ->add('debut', DateType::class, [
                 'widget' => 'single_text',

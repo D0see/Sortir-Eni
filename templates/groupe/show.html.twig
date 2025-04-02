@@ -3,7 +3,7 @@
 {% block title %}Groupe{% endblock %}
 
 {% block body %}
-<div class="col-md-6 mb-4" style="margin-top: 20px; margin-left: 20%;text-align: center">
+<div class="col-md-6 mb-4" style="margin: 0 auto; margin-top: 50px; text-align: center">
     <div class="card shadow-sm">
         <div class="card-body">
     <h1>Groupe "{{ groupe.nom }}"</h1>
@@ -12,20 +12,20 @@
         <p>{{ participant.pseudo }}</p>
     {% endfor %}
             {% if app.user.id == groupe.createur.id%}
-            <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-outline-success">Modifier le groupe</a>
+            <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">Modifier le groupe</a>
             <br>
             <br>
 
             <form method="post" action="{{ path('app_groupe_delete', {'id': groupe.id}) }}" onsubmit="return confirm('Êtes-vous sûr ?');">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ groupe.id) }}">
 
-                <button type="submit" class="btn btn-outline-danger">Supprimer le groupe</button>
+                <button type="submit" class="btn btn-primary btn-cancel">Supprimer le groupe</button>
             </form>
             <br>
             {% endif %}
-            <a href="{{ path('mes_groupes') }}" class="btn btn-outline-warning">Retourner à la liste des groupes</a>
+            <a href="{{ path('mes_groupes') }}" class="btn btn-primary">Retourner à la liste des groupes</a>
 
-            </div>
-            </div>
-            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

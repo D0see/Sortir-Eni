@@ -3,7 +3,8 @@
 {% block title %}Groupe index{% endblock %}
 
 {% block body %}
-<div class="col-md-9 mb-4" style="margin-top: 20px">
+<h1 class="mb-4 text-center">Liste des groupes</h1>
+<div class="col-md-9 mb-4" style="margin: 0 auto">
     <div class="card shadow-sm">
         <div class="card-body">
     <h1>Mes Groupes</h1>
@@ -20,8 +21,8 @@
             <tr>
                 <td>{{ groupe.nom }}</td>
                 <td>
-                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">show</a>
-                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">edit</a>
+                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">Détails</a>
+                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -48,9 +49,9 @@
             <tr>
                 <td>{{ groupe.nom }}</td>
                 <td>
-                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">show</a>
+                    <a href="{{ path('app_groupe_show', {'id': groupe.id}) }}" class="btn btn-primary">Détails</a>
                     {% if app.user.id == groupe.createur.id%}
-                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">edit</a>
+                    <a href="{{ path('app_groupe_edit', {'id': groupe.id}) }}" class="btn btn-primary">Modifier</a>
                     {% endif %}
                 </td>
             </tr>
