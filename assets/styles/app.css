@@ -1,6 +1,6 @@
 :root {
-    --terminal-green: #00fff7;
-    --crt-background: #0A0A0A;
+    --terminal-green: #00ffea;
+    --crt-background: #212121;
     --scanline: rgba(167, 255, 236, 0.1);
 }
 
@@ -9,6 +9,10 @@
 }
 h1 {
     color: var(--terminal-green);
+}
+
+h3{
+    color:var(--terminal-green);
 }
 
 button {
@@ -109,11 +113,12 @@ footer {
 }
 
 .card {
-    background: #000 !important;
-    border: 2px solid var(--terminal-green);
-    border-radius: 0 !important;
+    background: rgba(0, 0, 0, 0.97) !important;
+    border: 1px solid var(--terminal-green);
     margin: 10px 0;
-    box-shadow: 4px 4px 0 var(--terminal-green);
+    box-shadow: 3px 3px 0 var(--terminal-green);
+    padding: 12px;
+    color: #cccccc;
 }
 
 h2 {
@@ -209,7 +214,22 @@ body::before {
     margin-bottom: 10px;
 }
 .btn-margin {
-    margin-top: 10px;
+    margin-top: 10px; /* Ajustez la valeur selon vos besoins */
+}
+.btn-sortie-create{
+    margin-left: 10px;
+    margin-bottom: 25px;
+    float: right;
+}
+.btn-sortie-create:hover{
+    background: var(--terminal-green) !important;
+    color: #000 !important;
+    box-shadow: 0 0 12px var(--terminal-green);
+}
+
+
+#btn-ajout-grp{
+    margin-top: 25px;
 }
 .row {
     margin-left: 0;
