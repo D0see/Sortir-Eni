@@ -250,3 +250,8 @@ body::before {
     color: #000 !important;
     box-shadow: 0 0 12px var(--terminal-green);
 }
+input::placeholder{
+    color: var(--terminal-green)!important;
+    opacity: 0.5!important;
+}
+

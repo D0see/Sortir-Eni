@@ -33,7 +33,6 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieFiltersType::class, $filter);
         $form->handleRequest($request);
 
-        //TODO custom dql request
         $sorties = $sortieRepository->getNonArchivedSorties();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,14 +62,12 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             if ($date >= $sortie->getDateOuverture()){
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle'=>'Ouverte']));
             }
             else{
                 $sortie->setEtat( $em->getRepository(Etat::class)->findOneBy(['libelle'=>'Créée']));
             }
-
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'La sortie a bien été ajoutée !');
@@ -105,10 +102,8 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->addFlash('success', 'Modifications enregistrées avec succès.');
             $em->flush();
-
             return $this->redirectToRoute('sortie_list');
         }
 
