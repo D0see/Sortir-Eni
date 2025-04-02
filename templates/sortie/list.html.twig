@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste de sorties {% endblock %}
+{% block title %} Liste des sorties {% endblock %}
 
 {% block body %}
     <div class="container mt-4">
@@ -156,5 +156,11 @@
             </div>
         </div>
     </div>
+    <script>
+        const SITE_SELECTOR = document.getElementById('sortie_filters_site');
+        SITE_SELECTOR.insertAdjacentText("beforeend", 'pouet')
+    </script>
 {% endblock %}
+
+
 
