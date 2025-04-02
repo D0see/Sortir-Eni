@@ -27,25 +27,22 @@ class CsvImporter
         // Load CSV file
         $csv = Reader::createFromPath($filePath, 'r');
         $csv->setHeaderOffset(0);
+        $csv->setDelimiter(';');
         $records = Statement::create()->process($csv);
 
         $data = [];
         foreach ($records as $record) {
             $participant = new Participant();
             $participant->setPseudo($record['pseudo']);
-            $participant->setPassword($this->passwordHasher->hashPassword($participant, $record['password']));
+            $participant->setPassword($this->passwordHasher->hashPassword($participant, "aaaaaa"));
             $participant->setNom($record['nom']);
             $participant->setPrenom($record['prenom']);
             $participant->setTelephone($record['telephone']);
-            $participant->setActif($record['actif'] == 1);
-            $participant->setSite($this->siteRepository->findOneBy(["nom" => $record['site(name)']]));
+            $participant->setActif(1);
+            $participant->setSite($this->siteRepository->findOneBy(["nom" => "Rennes"]));
             $participant->setMail($record['mail']);
-            $participant->setAdministrateur($record['admin']);
+            $participant->setAdministrateur(0);
             $participant->setRoles(["ROLE_USER"]);
-            if ($record['admin'] == 1) {
-                $participant->addRole("ROLE_ADMIN");
-            }
-
 
             $this->entityManager->persist($participant);
             $data[] = $record;

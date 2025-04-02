@@ -29,6 +29,7 @@ security:
                 target: /
             custom_authenticator: App\Security\ParticipantAuthenticator
             entry-point: App\Security\ParticipantAuthenticator
+            user_checker: App\Security\UserChecker
 
             remember_me:
                 secret: '%kernel.secret%'
@@ -51,6 +52,7 @@ security:
         - { path: ^/forgot-password, roles: PUBLIC_ACCESS }
         - { path: ^/reset-password, roles: PUBLIC_ACCESS }
         - { path: ^/participant/inscription, roles: ROLE_ADMIN }
+        - { path: ^/admin/users, roles: ROLE_ADMIN }
         - { path: ^/, roles: ROLE_USER }
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
