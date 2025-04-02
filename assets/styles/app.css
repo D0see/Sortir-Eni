@@ -1,6 +1,6 @@
 :root {
-    --terminal-green: #00ffea;
-    --crt-background: #212121;
+    --terminal-green: #00fff7;
+    --crt-background: #0A0A0A;
     --scanline: rgba(167, 255, 236, 0.1);
 }
 
@@ -10,7 +10,6 @@
 h1 {
     color: var(--terminal-green);
 }
-
 h3{
     color:var(--terminal-green);
 }
@@ -113,12 +112,11 @@ footer {
 }
 
 .card {
-    background: rgba(0, 0, 0, 0.97) !important;
-    border: 1px solid var(--terminal-green);
+    background: #000 !important;
+    border: 2px solid var(--terminal-green);
+    border-radius: 0 !important;
     margin: 10px 0;
-    box-shadow: 3px 3px 0 var(--terminal-green);
-    padding: 12px;
-    color: #cccccc;
+    box-shadow: 4px 4px 0 var(--terminal-green);
 }
 
 h2 {
