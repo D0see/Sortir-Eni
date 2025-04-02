@@ -18,20 +18,22 @@
 
                     <div class="col-md-6">
                         {{ form_row(form.nom, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_row(form.site, {'attr': {'class': 'form-select'}}) }}
+                        {{ form_row(form.site, {'attr': {'class': 'form-control'}}) }}
                         {{ form_row(form.nbInscriptionsMax, {'attr': {'class': 'form-control'}}) }}
                     </div>
 
 
                     <div class="col-md-6">
                         {{ form_row(form.infosSortie, {'attr': {'class': 'form-control', 'rows': 3}}) }}
-
                         <div class="mb-3">
-                            <label class="form-label d-flex justify-content-between align-items-center">
+                            <label class="justify-content-between align-items-center">
                                 {{ form_label(form.lieu) }}
-                                <a href="#" class="btn btn-sm btn-outline-secondary">+</a>
                             </label>
-                            {{ form_widget(form.lieu, {'attr': {'class': 'form-select'}}) }}
+                            <div style ="display : flex; gap : 5px">
+
+                                {{ form_widget(form.lieu, {'attr': {'class': 'form-control'}}) }}
+                                <a style ="font-size: 20px" href="{{ path("add_lieu") }}" class="btn btn-sm btn-outline-secondary">+</a>
+                            </div>
                         </div>
                     </div>
 
@@ -63,9 +65,9 @@
                 </div>
 
                 <!-- Boutons -->
-                <div class="mt-4 btn-group" role="group">
-                    <button type="submit" name="publish" value="1" class="btn btn-success">Publier la sortie</button>
-                    <a href="{{ path('sortie_list') }}" class="btn btn-secondary">Annuler</a>
+                <div class="mt-4 btn-group" role="group" style="display: inline-block; gap: 8px">
+                    <button type="submit" name="publish" value="1" class="btn btn-primary">Publier la sortie</button>
+                    <a href="{{ path('sortie_list') }}" class="btn btn-primary">Annuler</a>
                 </div>
 
                 {{ form_end(form) }}
