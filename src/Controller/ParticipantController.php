@@ -62,6 +62,8 @@ class ParticipantController extends AbstractController
             $entityManager->flush();
 
             return $security->login($participant, ParticipantAuthenticator::class, 'main');
+        }else {
+            $this->addFlash('error', 'Veuillez remplir tous les champs correctement.');
         }
 
         return $this->render('registration/participant_register.html.twig', [

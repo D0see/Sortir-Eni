@@ -17,20 +17,30 @@ class Lieu
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
+    #[Assert\Length(
+        min: 1,
+        max: 255,
+        minMessage: "Le nom du groupe doit comporter au moins {{ limit }} caractères.",
+        maxMessage: "Le nom du groupe ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
     private ?string $rue = null;
 
-    #[ORM\Column]
+    #[ORM\Column( nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
     #[Assert\Range(
         min: -90,
         max: 90,
     )]
     private ?float $latitude = null;
 
-    #[ORM\Column]
+    #[ORM\Column( nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
     #[Assert\Range(
         min: -180,
         max: 180,

@@ -277,3 +277,39 @@ input::placeholder{
     box-shadow: 0 0 12px red;
     border-color: darkred !important;
 }
+
+
+
+.check input[type="checkbox"] {
+    display: none;
+}
+
+
+.check label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+
+    font-size: 18px;
+    line-height: 20px;
+}
+
+/* Le carré qui représentera la case à cocher */
+.check label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    background-color: rgba(255, 255, 255, 0); /* Fond par défaut */
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+/* Lorsque la case est cochée, colorier l'intérieur */
+.check input[type="checkbox"]:checked + label::before {
+    background-color: #4caf96; /* Couleur de fond lorsqu'elle est cochée */
+    border-color: #4caf82; /* Couleur de bordure quand cochée */
+}

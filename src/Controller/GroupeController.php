@@ -41,7 +41,10 @@ final class GroupeController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('mes_groupes', [], Response::HTTP_SEE_OTHER);
+        }else {
+            $this->addFlash('error', 'Veuillez remplir tous les champs correctement.');
         }
+
 
         return $this->render('groupe/new.html.twig', [
             'groupe' => $groupe,

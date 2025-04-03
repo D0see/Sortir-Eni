@@ -6,6 +6,9 @@ use App\Repository\GroupeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 
 #[ORM\Entity(repositoryClass: GroupeRepository::class)]
 class Groupe
@@ -15,8 +18,16 @@ class Groupe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
+    #[Assert\Length(
+        min: 1,
+        max: 255,
+        minMessage: "Le nom du groupe doit comporter au moins {{ limit }} caractères.",
+        maxMessage: "Le nom du groupe ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $nom = null;
+
 
     /**
      * @var Collection<int, Participant>
