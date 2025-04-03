@@ -67,7 +67,7 @@
                 <div class="row">
                     {% for sortie in sortiesChunk %}
                         <div class="col-md-6 mb-4">
-                            <div class="card shadow-sm h-100 d-flex flex-column">
+                            <div class="card shadow-sm h-100 d-flex flex-column {% if sortie.etat.libelle == 'Annulée' %}annulée{% endif %}">
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title" style="font-size: 150%">
                                         <strong>{{ sortie.nom }}</strong>
@@ -78,10 +78,10 @@
                                             {{ sortie.organisateur.pseudo }}
                                         </a>
                                     </h5>
-
                                     {% if sortie.etat.libelle == 'Annulée' %}
-                                        <p class="text-danger">
+                                        <p class="text-danger" style="font-size: 160%; border: 2px solid darkred;">
                                             <strong>Sortie annulée :</strong> {{ sortie.motifAnnulation }}
+{#                                            <img src="{{ asset('img/rick.gif') }}" alt="rick">#}
                                         </p>
                                     {% else %}
                                         <div id="infos-sortie-{{ sortie.id }}" class="info-sortie">

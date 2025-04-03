@@ -277,8 +277,15 @@ input::placeholder{
     box-shadow: 0 0 12px red;
     border-color: darkred !important;
 }
+.card.shadow-sm.h-100.d-flex.flex-column {
+    /* Styles par défaut pour la carte */
+    padding: 10px;
+    margin: 10px;
+}
 
-
+.card.shadow-sm.h-100.d-flex.flex-column.annulée {
+    border: 2px solid darkred;
+}
 
 .check input[type="checkbox"] {
     display: none;
