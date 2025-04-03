@@ -8,6 +8,14 @@
 
 {% block body %}
     <h1 class="mb-4 text-center">Créer une sortie</h1>
+{#    {% for label, messages in app.flashes %}#}
+{#        {% for message in messages %}#}
+{#            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">#}
+{#                {{ message }}#}
+{#                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    {% endfor %}#}
         <div class="card shadow-sm">
             <div class="card-body">
                 {{ form_start(form) }}
@@ -40,13 +48,14 @@
                 <div class="card shadow-sm mt-3">
                     <div class="card-body">
                         <div class="row g-3">
+                            <div class="col-md-6">
+                                {{ form_row(form.dateHeureDebut, {'attr': {'class': 'form-control', 'min': date()|date('Y-m-d')}}) }}
+                            </div>
 
                             <div class="col-md-6">
                                 {{ form_row(form.dureeEnHeures, {'attr': {'class': 'form-control'}}) }}
                             </div>
-                            <div class="col-md-6">
-                                {{ form_row(form.dateHeureDebut, {'attr': {'class': 'form-control', 'min': date()|date('Y-m-d')}}) }}
-                            </div>
+
                         </div>
 
                         <div class="row g-3 mt-3">
@@ -76,5 +85,20 @@
             color: red;
         }
     </style>
-
+    <script>
+        const sortieEnHeures = document.getElementById('sortie_dureeEnHeures')
+        sortieEnHeures.min = 1
+        // const debutSortie = document.getElementById('sortie_dateHeureDebut')
+        // const aujourdhui = new Date();
+        // const annee = aujourdhui.getFullYear();
+        // const mois = String(aujourdhui.getMonth() + 1).padStart(2, '0');
+        // const jour = String(aujourdhui.getDate()).padStart(2, '0');
+        // const dateFormatee = `${jour}-${mois}-${annee}`;
+        // debutSortie.min = dateFormatee
+        // debutSortie.addEventListener('change', function() {
+        //     if (this.value < debutSortie.min) {
+        //         this.value = debutSortie.min;
+        //         alert("Vous ne pouvez pas sélectionner une date antérieure à aujourd'hui.");
+        //     }})
+    </script>
 {% endblock %}
