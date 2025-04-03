@@ -52,6 +52,8 @@ final class LieuController extends AbstractController
             $entityManager->persist($lieu);
             $entityManager->flush();
             return $this->redirectToRoute('lieu_list');
+        }else {
+            $this->addFlash('error', 'Veuillez remplir tous les champs correctement.');
         }
 
         return $this->render('lieu/add.html.twig', [

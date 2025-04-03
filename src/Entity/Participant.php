@@ -19,7 +19,8 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 180, nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
     private ?string $pseudo = null;
 
     /**
@@ -34,24 +35,28 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
     private ?string $prenom = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $resetToken = null;
 
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 10, nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
     #[Assert\Regex(
         pattern: "/^(\+?[0-9]{1,3})?([-. ]?[0-9]{2,4}){3,5}$/",
         message: "Le numéro de téléphone n'est pas valide."
     )]
     private ?string $telephone = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank(message: "Le nom du groupe ne peut pas être vide.")]
     #[Assert\Email(
         message: "L'email '{{ value }}' n'est pas valide.",
         mode: "html5"
