@@ -23,8 +23,9 @@ class EtatCheckSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
         $controller = $request->attributes->get('_controller');
+        $route = $request->attributes->get('_route');
 
-        if (str_contains($controller, 'SortieController')) {
+        if (str_contains($controller, 'SortieController') && $route == 'sortie_list') {
 
             $date = $_SERVER['REQUEST_TIME'];
             $sorties = $this->entityManager->getRepository(Sortie::class)->findAll();
