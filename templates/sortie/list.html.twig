@@ -165,7 +165,7 @@
                                 </a>
 
                             {% if sortie.etat.libelle != 'Activité en cours' and sortie.etat.libelle != 'Passée' and app.user == sortie.organisateur %}
-                                <a class="btn btn-outline-primary btn-sortie-create"
+                                <a class="btn btn-primary btn-sortie-create"
                                    href="{{ path('sortie_edit',{'id':sortie.id}) }}" title="Modifier la sortie">
                                     Modifier
                                 </a>
