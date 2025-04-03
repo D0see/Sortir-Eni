@@ -6,14 +6,14 @@
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h1 class="text-center mb-4">Réinitialiser votre mot de passe</h1>
+                <h1 class="text-center mb-4">Réinitialisation du mot de pass</h1>
 
                 <div class="card shadow-sm">
                     <div class="card-body">
                         {{ form_start(resetForm) }}
 
                         <div class="mb-3 d-flex flex-column  align-items-center">
-                            {{ form_label(resetForm.plainPassword, null, {'label_attr': {'class': 'form-label',}}) }}
+{#                            {{ form_label(resetForm.plainPassword, null, {'label_attr': {'class': 'form-label',}}) }}#}
                             {{ form_widget(resetForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(resetForm.plainPassword) }}
                         </div>
