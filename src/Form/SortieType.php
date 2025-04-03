@@ -35,15 +35,24 @@ class SortieType extends AbstractType
             ->add('nom')
             ->add('dateHeureDebut', null, [
                 'widget' => 'single_text',
+                'label' => 'Début de la sortie',
             ])
-            ->add('dureeEnHeures')
+            ->add('dureeEnHeures',null,[
+                'label'=>"Durée de l'activité (en heures)"
+            ])
             ->add('dateLimiteInscription', null, [
                 'widget' => 'single_text',
+                'label' => "Date limite pour s'inscrire"
             ])
-            ->add('nbInscriptionsMax')
-            ->add('infosSortie')
+            ->add('nbInscriptionsMax',null,[
+                'label'=>'Nombre maximum de participants',
+            ])
+            ->add('infosSortie',null,[
+                'label'=>'Description',
+            ])
             ->add('dateOuverture', null, [
                 'widget' => 'single_text',
+                'label'=>"Date d'ouverture des inscriptions",
             ])
 
             ->add('site', EntityType::class, [

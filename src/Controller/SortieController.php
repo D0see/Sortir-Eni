@@ -74,12 +74,14 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie a bien été ajoutée !');
 
             return $this->redirectToRoute('sortie_list');
+
         }else {
             $this->addFlash('error', 'Veuillez remplir tous les champs correctement.');
         }
 
+
         return $this->render('sortie/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
