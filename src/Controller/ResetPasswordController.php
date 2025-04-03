@@ -42,7 +42,7 @@ final class ResetPasswordController extends AbstractController
             $resetLink = $this->generateUrl('app_reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
 
-            $this->addFlash('success', 'Un lien de réinitialisation a été généré : ' . $resetLink);
+//            $this->addFlash('success', 'Un lien de réinitialisation a été généré : ' . $resetLink);
 
             return $this->redirectToRoute('app_reset_password', ['token' => $token] );
 
@@ -55,7 +55,8 @@ final class ResetPasswordController extends AbstractController
     }
 
 
-    #[\Symfony\Component\Routing\Annotation\Route('/reset-password/{token}', name: 'app_reset_password', methods: ['GET','POST'])]
+    //    #[\Symfony\Component\Routing\Annotation\Route('/reset-password/{token}', name: 'app_reset_password', methods: ['GET','POST'])]
+    #[Route('/reset-password/{token}', name: 'app_reset_password', methods: ['GET','POST'])]
     public function reset(
         string $token,
         Request $request,
