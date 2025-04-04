@@ -131,7 +131,9 @@ class SortieController extends AbstractController
     {
         $date = new \DateTime();
         if($this->getUser()!==$sortie->getOrganisateur() && $date < $sortie->getDateLimiteInscription()
-            &&$sortie->getParticipants()->count() < $sortie->getNbInscriptionsMax()){
+            && $sortie->getParticipants()->count() < $sortie->getNbInscriptionsMax()
+            && $sortie->getEtat()=== $em->getRepository(Etat::class)->findOneBy(['libelle'=>'Ouverte']))
+        {
             $user = $this->getUser()->getUserIdentifier();
             $participant = $em->getRepository(Participant::class)->findOneBy(['pseudo' => $user]);
             $sortie->addParticipant($participant);

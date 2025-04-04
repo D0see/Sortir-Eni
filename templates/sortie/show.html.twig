@@ -65,7 +65,7 @@
                 </div>
             </div>
                 {% if sortie.participants | length < sortie.nbInscriptionsMax and app.user not in sortie.participants
-                    and app.user != sortie.organisateur and date < sortie.dateLimiteInscription %}
+                    and app.user != sortie.organisateur and sortie.etat.libelle == 'Ouverte'  %}
                 <a href="/sortie/{{ sortie.id }}/add-participant"><button class="btn btn-primary btn-sm" >S'inscrire</button></a>
                 {% endif %}
 
