@@ -36,29 +36,28 @@ class SortieRepository extends ServiceEntityRepository
          $filteredQuery = $this->createQueryBuilder('s')
              ->Where('s.dateHeureDebut > :threshold')
              ->setParameter('threshold', $threshold)
-            ->leftJoin('s.participants', 'p')->addSelect('p')
-            ->leftJoin('s.etat', 'e')->addSelect('e')
-            ->leftJoin('s.site', 'si')->addSelect('si');
+             ->setParameter('user', $user)
+             ->leftJoin('s.participants', 'p')->addSelect('p')
+             ->leftJoin('s.etat', 'e')->addSelect('e')
+             ->leftJoin('s.site', 'si')->addSelect('si');
+
 
         //Sortie Organisée par l'utilisateur
         if ($filtersObj->isSortieQueJOrganise()) {
             $filteredQuery
-                ->andwhere('s.organisateur = :user')
-                ->setParameter('user', $user);
+                ->andwhere('s.organisateur = :user');
         }
 
         //Sortie ou l'utilisateur est inscrit
         if ($filtersObj->isSortieOuJeNeSuisPasInscrit()) {
             $filteredQuery
-                ->andWhere(':user not member of s.participants')
-                ->setParameter('user', $user);
+                ->andWhere(':user not member of s.participants');
         }
 
         //Sortie ou l'utilisateur n'est pas inscrit
          if ($filtersObj->isSortieOuJeSuisInscrit()) {
             $filteredQuery
-                ->andWhere(':user member of s.participants')
-                ->setParameter('user', $user);
+                ->andWhere(':user member of s.participants');
         }
 
         //Sortie passées

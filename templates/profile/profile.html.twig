@@ -42,10 +42,10 @@
                 {{ participant.site ? participant.site.nom : 'N/A' }}
             </div>
             <div style="display: flex; flex-direction: row; gap: 12px">
-                <a href="javascript:history.back(1)" class="btn btn-primary">Retour</a>
+                <!--a href="javascript:history.back(1)" class="btn btn-primary">Retour</a>-->
                 {% if app.user.userIdentifier == participant.userIdentifier %}
                 <a href="{{ path('modifier_mon_profil') }}" class="btn btn-primary" style="width: fit-content">
-                    Enregistrer
+                    Modifier
                 </a>
             </div>
             {% endif %}

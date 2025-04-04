@@ -33,8 +33,6 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieFiltersType::class, $filter);
         $form->handleRequest($request);
 
-        $sorties = $sortieRepository->getNonArchivedSorties();
-
         if ($form->isSubmitted() && $form->isValid()) {
             $sorties = $sortieRepository->getSortieFiltered($this->getUser(), $filter);
             return $this->render('sortie/list.html.twig', [
@@ -42,6 +40,8 @@ class SortieController extends AbstractController
                 'form' => $form->createView(),
             ]);
         }
+
+        $sorties = $sortieRepository->getNonArchivedSorties();
 
         return $this->render('sortie/list.html.twig', [
             'sorties' => $sorties,
